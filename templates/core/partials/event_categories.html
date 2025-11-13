@@ -1,0 +1,32 @@
+<div id='event_categories' class='relative container md:w-3/4 mx-auto py-6'>
+
+        
+        <h1 class="text-xl mx-2 md:text-3xl font-semibold text-left md:text-center mt-2 mb-2">Events Categories</h1>
+        {% if event_categories %}
+        <div class="flex gap-5 py-2 md:py-4 overflow-x-auto scrollbar-hide  lg:grid-cols-4 px-4 sm:px-0 scroll-smooth snap-x snap-mandatory">
+            <a href="" class='group shrink-0 md:w-45 w-20 text-center text-sm font-semibold md:text-normal text-white border bg-blue-500 shadow-lg cursor-pointer rounded-full p-2.5'
+            >
+                All
+            </a>
+            {% for event_category in  event_categories%}
+                <button  class='group shrink-0 md:w-45 w-30 text-center text-sm md:text-normal text-blue-700 border border-gray-500 bg-blue-500/20 shadow-md cursor-pointer rounded-full p-2.5 hover:scale-104 duration-300 hover:bg-blue-400 hover:text-white'
+                
+                hx-get="{% url 'category-events' event_category.slug%}"
+                hx-trigger="click delay:1000ms"
+                hx-target="#event-list"
+                hx-indicator="#spinner"
+                hx-on::before-request="document.getElementById('event-list').style.opacity=0.4"
+                hx-on::after-request="document.getElementById('event-list').style.opacity=1"
+                hx-on:click="document.getElementById('event-list').scrollIntoView({behavior: 'smooth'})"
+                >
+                    {{event_category.name}}
+                  
+                    
+                </button>
+                
+            {% endfor %}
+
+
+        </div>
+        {% endif %}
+    </div>

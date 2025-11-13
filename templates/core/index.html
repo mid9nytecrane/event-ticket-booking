@@ -5,49 +5,34 @@
 
 <!--hero section-->
 <section class=''>
-    <div class='h-100' >
+    {% comment %} <div class='h-screen' >
         {% include "core/partials/carousel.html" %}
-    </div>
+    </div> {% endcomment %}
+
+    {% include "core/partials/hero.html" %}
 
     
 </section>
 
 <!--categories-->
 <section class='bg-white'>
-    <div class='container md:w-3/4 mx-auto py-6'>
-        <h1 class="text-xl mx-2 md:text-3xl font-semibold text-left md:text-center mt-2 mb-2">Events Categories</h1>
-        <div class="flex gap-5 overflow-x-auto scrollbar-hide  lg:grid-cols-4 px-4 sm:px-0 scroll-smooth snap-x snap-mandatory">
-            <div class='group shrink-0 w-45 text-center text-gray-500 border border-gray-500 shadow-md cursor-pointer rounded-full p-2.5'>
-                Sports
-
-            </div>
-            <div class='group shrink-0 w-45 text-center text-gray-500 border border-gray-500 shadow-md cursor-pointer rounded-full p-2.5'>
-                Music Concert
-
-            </div>
-            <div class='group shrink-0 w-45 text-center text-gray-500 border border-gray-500 shadow-md cursor-pointer rounded-full p-2.5'>
-                Movies
-
-            </div>
-            <div class='group shrink-0 w-45 text-center text-gray-500 border border-gray-500 shadow-md cursor-pointer rounded-full p-2.5'>
-                Conference
-
-            </div>
-            <div class='group shrink-0 w-45 text-center text-gray-500 border border-gray-500 shadow-md cursor-pointer rounded-full p-2.5'>
-                Reception
-
-            </div>
-
-
-        </div>
-    </div>
-
+    {% include "core/partials/event_categories.html" %}
 
 </section>
 
-{% include "core/partials/events_section.html" %}
+<section  class='bg-[#acbdaa]/20'>
+    {% include "core/partials/searchbox.html" %}
+    
+    <h1 class='text-xl py-4 mx-2 md:text-3xl font-semibold text-left md:text-center mt-2 mb-2'>Upcoming Events</h1>
+
+
+    {% include "core/partials/events_section.html" %}
+</section>
+
+
 
 <section class='bg-white'>
+   
     <div class='container md:w-3/4 mx-auto py-6 px-2'>
         <h1 class="text-xl mx-2 md:text-3xl font-semibold text-left md:text-center mt-2 mb-2">Advertisement</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

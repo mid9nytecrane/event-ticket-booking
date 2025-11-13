@@ -1,30 +1,73 @@
-<div class="navbar bg-base-100 shadow-sm">
-  <div class="navbar-start">
-    <div class="dropdown">
-      <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /> </svg>
-      </div>
-      <ul
-        tabindex="-1"
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-        <li><a>Homepage</a></li>
-        <li><a>Portfolio</a></li>
-        <li><a>About</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="navbar-center">
-    <a class="btn btn-ghost text-xl">daisyUI</a>
-  </div>
-  <div class="navbar-end">
-    <button class="btn btn-ghost btn-circle">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /> </svg>
+<header class='fixed top-0 left-0 z-50 
+              w-full bg-[#acbdaa]
+              shadow-md flex justify-between 
+              items-center  
+              px-4 
+              md:px-12
+              h-12
+              md:h-20
+              transition-all duration-300
+              '
+              :class="{'md:h-20': ! scrollFromTop, 'md:h-12': scrollFromTop}"
+              >
+  <!--logo-->
+  <a href="/" >
+    <span 
+      class='h-4 
+      text-[#de9d2b] 
+      text-2xl
+      font-bold
+      md:text-2xl
+      transition-all duration-300
+      '
+      :class="{'md:text-2xl': ! scrollFromTop, 'md:text-lg': scrollFromTop}"
+      >
+      EventTribe
+    </span>
+
+  </a>
+
+  <nav>
+    <button class="md:hidden" @click="navbarOpen = ! navbarOpen">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8">
+        <path fill-rule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
+      </svg>
+
     </button>
-    <button class="btn btn-ghost btn-circle">
-      <div class="indicator">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /> </svg>
-        <span class="badge badge-xs badge-primary indicator-item"></span>
+
+    <ul class='fixed top-12 left-10 
+        w-full min-h-screen 
+        space-y-4 
+        bg-[#acbdaa] p-4
+        transition duration-300
+        transform
+        translate-x-full
+        md:relative md:space-y-0 md:space-x-6 md:p-0
+        md:min-h-0 md:left-0
+        md:translate-x-0
+        md:flex md:items-center
+        md:top-0
+        '
+        :class="{
+          'translate-x-0': navbarOpen,
+          'translate-x-full': ! navbarOpen,
+        }">
+      
+      <li class=''><a href="">home</a></li>
+      <li class=''><a href="">home</a></li>
+      <li class=''><a href="">home</a></li>
+
+      <div class="md:hidden border-t py-4 border-gray-800  flex justify-center items-center">
+        <a href="">
+          <button type="button" class="py-2.5 px-5 me-2 mb-2 mr-2 w-80 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+            Login
+          </button>
+
+        </a>
+
       </div>
-    </button>
-  </div>
-</div>
+    </ul>
+    
+  </nav>
+
+</header>
