@@ -1,9 +1,10 @@
 from django.db import models
-from accounts.models import CustomUser
+from django.contrib.auth.models import User
 from django.utils.text import slugify
 import uuid 
 
 # Create your models here.
+
 
 class EventCategory(models.Model):
     name = models.CharField(max_length=255, null=True)
@@ -26,7 +27,7 @@ class Event(models.Model):
         'free': 'Free'
     }
 
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='events', null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='events', null=True)
     category = models.ForeignKey(EventCategory, 
                                  on_delete=models.CASCADE, 
                                  related_name='events', null=True)
@@ -34,7 +35,7 @@ class Event(models.Model):
     organizer = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     slug = models.CharField(max_length=100)
-    description = models.CharField(max_length=255 , blank=True)
+    description = models.TextField(max_length=255 , blank=True)
     location = models.CharField(max_length=255)
     date = models.DateField()
     banner = models.ImageField(upload_to='event_banners/')
@@ -58,7 +59,7 @@ class Event(models.Model):
 
 
 class Ticket(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='tickets')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tickets')
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='tickets')
     ticket_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     purchased_at = models.DateField(auto_now_add=True)

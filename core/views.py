@@ -29,6 +29,7 @@ def event_details(request,pk):
     event = get_object_or_404(Event, pk=pk)
     context = {'event':event}
     return render(request, 'core/events_details.html',context)
+    
 
 
 #search for events
@@ -49,6 +50,7 @@ def search_event(request):
     }
 
     return render(request, 'core/partials/events_section.html', context)
+    
 
 
 def list_of_events_by_category(request, slug):
@@ -60,3 +62,4 @@ def list_of_events_by_category(request, slug):
         'events':events
     }
     return render(request,'core/partials/event_category_list.html',context)
+    

@@ -26,7 +26,11 @@
     </style>
 </head>
 <body 
-    x-data="{navbarOpen:false, scrollFromTop: false}" 
+    x-data="{
+        navbarOpen:false, 
+        scrollFromTop: false,
+
+        }" 
     x-init="console.log(window.pageYOffset > 60 ? scrollFromTop = true : scrollFromTop = false)"
     @scroll.window="console.log(window.pageYOffset > 60 ? scrollFromTop = true : scrollFromTop = false)"
     :class="{

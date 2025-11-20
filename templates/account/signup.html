@@ -1,0 +1,64 @@
+{% extends "core/base.html" %}
+{% load allauth i18n %}
+{% load widget_tweaks %}
+
+{% block head_title %}
+    {% trans "Sign Up" %}
+{% endblock head_title %}
+
+{% block content %}
+
+<div class="min-h-screen flex items-center justify-center mt-12 bg-white px-4 py-12">
+    <div class="w-full max-w-md">
+
+        <!-- Title -->
+        <h1 class="text-3xl font-extrabold text-center text-gray-900 mb-2">
+            {% trans "Sign Up" %}
+        </h1>
+
+        <!-- Small subtitle -->
+        <p class="text-center text-gray-600 text-sm mb-8">
+            {% setvar link %}<a href="{{ login_url }}" class="text-blue-600 hover:underline font-medium">{% endsetvar %}
+            {% setvar end_link %}</a>{% endsetvar %}
+            {% blocktranslate %}Already have an account? Then please {{ link }}sign in{{ end_link }}.{% endblocktranslate %}
+        </p>
+
+        {% if not SOCIALACCOUNT_ONLY %}
+            {% url 'account_signup' as action_url %}
+            <form action="{{ action_url }}" method="post" class="space-y-6">
+                {% csrf_token %}
+
+                <!-- Form fields -->
+                {% for field in form %}
+                    <div>
+                        <label class="text-sm font-medium text-gray-700 mb-1 block">
+                            {{ field.label }}
+                        </label>
+
+                        {% render_field field class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800" placeholder=field.label %}
+                        
+                        {% if field.errors %}
+                            <p class="text-red-500 text-sm mt-1">{{ field.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                {{ redirect_field }}
+
+                <!-- Submit button -->
+                <button 
+                    type="submit"
+                    class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-500 transition">
+                    {% trans "Sign Up" %}
+                </button>
+            </form>
+        {% endif %}
+
+        <!-- Social Signup -->
+        {% include "core/auth/social_logins.html" %}
+      
+
+    </div>
+</div>
+
+{% endblock content %}

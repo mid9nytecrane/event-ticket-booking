@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load allauth %}
+{% load socialaccount %}
+{% load widget_tweaks%}
+
+{% get_providers as socialaccount_providers %}
+{% if socialaccount_providers %}
+    {% if not SOCIALACCOUNT_ONLY %}
+        <div class="flex items-center my-8 gap-2">
+            <div class="flex-grow border border-t border-gray-300"></div>
+            <span class='text-sm text-gray-500'>{% translate "or register with" %}</span>
+            <div class="flex-grow border border-t border-gray-300"></div>
+        </div>
+        
+    {% endif %}
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+    {% include "socialaccount/snippets/login_extra.html" %}
+{% endif %}

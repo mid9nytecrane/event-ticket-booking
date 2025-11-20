@@ -1,0 +1,54 @@
+{% load allauth socialaccount %}
+{% get_providers as socialaccount_providers %}
+
+{% if socialaccount_providers %}
+<div class="social-login">
+    
+    <div class="space-y-4">
+        {% for provider in socialaccount_providers %}
+            {% if provider.id == "openid" %}
+                {% for brand in provider.get_brands %}
+                    {% provider_login_url provider openid=brand.openid_url process=process as href %}
+                    <a href="{{ href }}" class="w-full flex items-center justify-center py-3 px-4 rounded-lg social-btn 
+                        {% if brand.name == 'Google' %}google-btn{% endif %}
+                        {% if brand.name == 'Facebook' %}facebook-btn{% endif %}
+                        {% if brand.name == 'Twitter' %}twitter-btn{% endif %}">
+                        
+                        {% if brand.name == 'Google' %}
+                            <svg class="w-5 h-5 mr-3" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z" fill="#757575"/>
+                            </svg>
+                        {% elif brand.name == 'Facebook' %}
+                            <i class="fab fa-facebook-f mr-3"></i>
+                        {% elif brand.name == 'Twitter' %}
+                            <i class="fab fa-twitter mr-3"></i>
+                        {% endif %}
+                        
+                        Sign up with {{ brand.name }}
+                    </a>
+                {% endfor %}
+            {% endif %}
+            
+            {% provider_login_url provider process=process scope=scope auth_params=auth_params as href %}
+            <a href="{{ href }}" class="w-full flex items-center justify-center py-3 px-4 rounded-lg social-btn 
+                {% if provider.name == 'Google' %}google-btn{% endif %}
+                {% if provider.name == 'Facebook' %}facebook-btn{% endif %}
+                {% if provider.name == 'Twitter' %}twitter-btn{% endif %}
+                {% if provider.name == 'GitHub' %}github-btn{% endif %}">
+                
+                {% if provider.name == 'Google' %}
+                    <img width="48" height="48" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"/>
+                {% elif provider.name == 'Facebook' %}
+                    <i class="fab fa-facebook-f mr-3"></i>
+                {% elif provider.name == 'Twitter' %}
+                    <i class="fab fa-twitter mr-3"></i>
+                {% elif provider.name == 'GitHub' %}
+                    <i class="fab fa-github mr-3"></i>
+                {% endif %}
+                
+                {% comment %} Sign up with {{ provider.name }} {% endcomment %}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
