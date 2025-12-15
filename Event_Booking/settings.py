@@ -43,8 +43,14 @@ INSTALLED_APPS = [
     #django apps
     'core',
     'user_account',
+    'payment',
+    'booking',
+    'organizers',
+  
 
     #django packages
+    'cloudinary',
+    'cloudinary_storage',
     'widget_tweaks',
     'django_extensions',
     'allauth',
@@ -146,6 +152,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+#PAYSTACK CONFIG    
+PAYSTACK_SECRET_KEY = config("PAYSTACK_SECRET_KEY")
+PAYSTACK_PUBLIC_KEY = config("PAYSTACK_PUBLIC_KEY")
+
 
 
 # Internationalization
@@ -171,6 +181,18 @@ STATICFILES_DIRS = [
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+
+
+MEDIA_ROOT = 'media/'
+MEDIA_URL = 'media/'
+#cloudinary config
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config("CLOUDINARY_CLOUD_NAME"),
+    'API_KEY': config("CLOUDINARY_API_KEY"),
+    'API_SECRET': config("CLOUDINARY_API_SECRET")
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

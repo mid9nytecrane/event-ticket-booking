@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404
-from .models import Event, EventCategory
+from .models import Event, EventCategory, Ticket
 from django.core.paginator import Paginator
 from django.db.models import Q
 
@@ -7,7 +7,7 @@ import time
 # Create your views here.
 
 def index(request):
-    events = Event.objects.all().order_by('-created_at')
+    events = Event.objects.all().order_by('-created_at')[:8]
     event_categories = EventCategory.objects.all()
 
     paginator = Paginator(events, 2)
@@ -24,10 +24,25 @@ def index(request):
     return render(request, 'core/index.html', context)
 
 
+def browse_events(request):
+    events = Event.objects.all().order_by('-created_at')
+
+    context = {
+        'events':events
+    }
+
+    return render(request, 'core/browse_events.html', context)
+    
+
+
 #events details
 def event_details(request,pk):
     event = get_object_or_404(Event, pk=pk)
-    context = {'event':event}
+    # exist_ticket = Ticket.objects.filter(event=event, attendee=request.user).first()
+    # if exist_ticket:
+    #     return render(request, 'booking/event_booked_already.html', {"exist_ticket":exist_ticket})
+    
+    context = {'event':event, }
     return render(request, 'core/events_details.html',context)
     
 
@@ -43,7 +58,7 @@ def search_event(request):
             Q(event_tag__icontains=query)
         )
     else:
-        events = Event.objects.all()
+        events = Event.objects.all().order_by('-created_at')
         
     context = {
         'events':events,

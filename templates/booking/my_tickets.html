@@ -1,0 +1,66 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-8 mt-20">
+    <div class="max-w-4xl  mx-auto px-4">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">My Tickets</h1>
+        
+        {% if tickets %}
+            <div class="grid gap-6 md:grid-cols-2">
+                {% for ticket in tickets %}
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition">
+                    <div class="p-6">
+                        <!-- Event Info -->
+                        <h3 class="text-lg font-bold text-gray-800">{{ ticket.event.title }}</h3>
+                        <p class="text-gray-600 text-sm mt-1">{{ ticket.event.date|date:"F j, Y" }}</p>
+                        {% if ticket.event.event_tag == 'free' %}
+                            <p class="text-green-600 text-sm mt-1">{{ ticket.event.event_tag }} event</p>
+                        {% else %}
+                            <p class="text-amber-600 text-sm mt-1">{{ ticket.event.event_tag }} event</p>
+
+                        {% endif %}
+                        
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-full text-xs font-medium
+                                {% if ticket.is_used %}
+                                    bg-red-100 text-red-800
+                                {% else %}
+                                    bg-green-100 text-green-800
+                                {% endif %}">
+                                {{ ticket.is_used|yesno:"Used,Active" }}
+                            </span>
+                            <span class="text-sm text-gray-500">
+                                {{ ticket.ticket_id|slice:":8" }}...
+                            </span>
+                        </div>
+                        
+                        <!-- QR Code Preview -->
+                        <div class="mt-4 text-center">
+                            {% if ticket.qr_code %}
+                                <img src="{{ ticket.qr_code.url }}" 
+                                     alt="QR Code" 
+                                     class="mx-auto w-32 h-32 border border-gray-300 rounded">
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="mt-6 flex gap-2">
+                            <a href="{% url 'booking:book-event' ticket.event.id %}" 
+                               class="flex-1 bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700 transition text-sm">
+                                View Ticket
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-12">
+                <div class="text-gray-400 text-6xl mb-4">🎫</div>
+                <h3 class="text-xl font-semibold text-gray-600">No tickets yet</h3>
+                <p class="text-gray-500 mt-2">Book your first event to get started!</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

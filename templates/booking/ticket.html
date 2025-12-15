@@ -1,0 +1,115 @@
+{% extends "core/base.html" %}
+
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-8 mt-20" x-data="{ showQR: true }">
+    <div class="max-w-2xl mx-auto px-4">
+        <!-- message -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mb-4 p-4 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-800{% elif message.tags == 'error' %}bg-red-100 text-red-800{% else %}bg-blue-100 text-blue-800{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <!-- Ticket Card -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-blue-100">
+            <!-- Ticket Header -->
+            <div class="bg-blue-500 text-white p-6">
+                <h1 class="text-2xl font-bold text-center">Event Ticket</h1>
+                <p class="text-center text-blue-100 mt-2">Present this ticket at the event</p>
+            </div>
+            
+            <!-- Ticket Body -->
+            <div class="p-6">
+                <!-- Event Info -->
+                <div class="mb-6">
+                    <h2 class="text-xl font-bold text-gray-800">{{ ticket.event.title }}</h2>
+                    <p class="text-gray-600 mt-2">{{ ticket.event.description }}</p>
+                    
+                    <div class="mt-4 grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-500">Date & Time</p>
+                            <p class="font-semibold">{{ ticket.event.date|date }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Location</p>
+                            <p class="font-semibold">{{ ticket.event.location }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Ticket Cost</p>
+                            <p class="font-semibold">GH₵{{ ticket.event.price }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Attendee Info -->
+                <div class="border-t border-b py-4 mb-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class='wrap-break-word'>
+                            <p class="text-sm text-gray-500">Attendee</p>
+                            <p class="font-semibold">{{ ticket.attendee.get_full_name|default:ticket.attendee.username }}</p>
+                            <p class="font-normal text-sm mt-2 ">{{ticket.attendee.email}}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Ticket ID</p>
+                            <p class="font-semibold text-sm">{{ ticket.ticket_id }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- QR Code Section -->
+                <div class="text-center">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold">QR Code</h3>
+                        <button @click="showQR = !showQR" 
+                                class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                            <span x-text="showQR ? 'Hide QR' : 'Show QR'"></span>
+                        </button>
+                    </div>
+                    
+                    <div x-show="showQR" x-transition>
+                        {% if ticket.qr_code %}
+                            <img src="{{ ticket.qr_code.url }}" 
+                                 alt="QR Code" 
+                                 class="mx-auto w-48 h-48 border-2 border-gray-300 rounded-lg">
+                        {% else %}
+                            <div class="text-red-500">QR Code not generated</div>
+                        {% endif %}
+                        
+                        <p class="text-xs text-gray-500 mt-2">
+                            Scan this QR code at the event entrance
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ticket Footer -->
+            <div class="bg-gray-50 px-6 py-4 border-t">
+                <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-500">
+                        Booked on {{ ticket.purchased_at|date:"M j, Y" }}
+                    </span>
+                    <span class="px-3 py-1 rounded-full text-xs font-medium"
+                          :class="ticket.is_used ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'">
+                        {{ ticket.is_used|yesno:"Used,Active" }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="mt-6 flex gap-4 justify-center">
+            <button onclick="window.print()" 
+                    class="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition">
+                Print Ticket
+            </button>
+            <a href="{% url 'booking:my-tickets'%}" 
+               class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                My Tickets
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

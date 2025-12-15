@@ -1,189 +1,236 @@
-<header class='fixed top-0 left-0 z-50 
-              w-full bg-[#233d4d]
-              shadow-md flex justify-between 
-              items-center  
-              px-4 
-              md:px-12
-              h-12
-              md:h-20
-              transition-all duration-300
-              '
-              :class="{'md:h-20': ! scrollFromTop, 'md:h-12': scrollFromTop}"
-              >
-  <!--logo-->
-  <a href="/" class='hover:scale-104 duration-300' >
-    <span 
-      class='h-4 
-      text-[#fe7f2d] 
-      text-2xl
-      font-bold
-      md:text-2xl
-      transition-all duration-300
-      '
-      :class="{'md:text-2xl': ! scrollFromTop, 'md:text-lg': scrollFromTop}"
-      >
-      EventTribe
-    </span>
 
-  </a>
+<nav class="fixed z-20 top-0 w-full bg-white border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
 
-  <nav>
-    <!--hamburger-->
-    <button class="md:hidden" @click="navbarOpen = ! navbarOpen">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8 text-white">
-        <path fill-rule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
-      </svg>
+    <!-- Left Logo -->
+    <div class="flex  items-center gap-2">
+      <!--
+        <img src="/static/images/logo.png" alt="Logo" class="w-8 h-8">
+      -->
+      <a href="/">
 
-    </button>
+        <img class='h-8 w-8 hover:scale-106 transition duration-300 cursor-pointer' src="https://img.icons8.com/arcade/64/ticket.png" alt="ticket"/>
+      </a>
+    </div>
 
-    <div class='fixed top-0 left-10 
-        w-full 
-        min-h-screen
-        md:h-20 
-        space-y-4 
-        bg-[#233d4d] p-4
-        transition-all duration-300
-        transform
-        translate-x-full
-        md:relative md:space-y-0 md:space-x-6 md:p-0
-        md:min-h-0 md:left-0
-        md:translate-x-0
-        md:flex md:items-center
-        md:top-0
-        '
-        
+    <!-- Center (optional text or empty for spacing) -->
+    <div class="flex-1 flex justify-center">
+      <a href="">
+
+        <button class="px-5 py-2 bg-gray-100 hover:bg-gray-200 rounded-full 
+                       flex items-center gap-2 transition shadow-sm">
+          <img class='w-6 h-6 bg-teal-200 object-cover rounded-full' src="https://img.icons8.com/cute-clipart/64/patrick-star.png" alt="patrick-star"/>
+          <span class="font-semibold text-gray-700">Your page</span>
+        </button>
+      </a>
+    </div>
+
+    <!-- Right Icons -->
+    <div class="flex justify-center items-center gap-5 text-gray-700">
+
+      <!-- Notification -->
+      <button class="hover:text-black transition">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" 
+             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+             class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M14.857 17.243c-.652 1.174-1.913 1.757-3.214 1.757-1.302 0-2.563-.583-3.214-1.757M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9z" />
+        </svg>
+      </button>
+
+      <!-- Home -->
+      <a href="{% url 'index-page' %}" class="hover:text-black transition">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+          <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
+          <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+        </svg> 
+      </a>
+
+      <!-- Hamburger Menu -->
+      <button class="hover:text-black transition cursor-pointer " @click="navbarOpen = ! navbarOpen">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" 
+             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+             class="w-7 h-7">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      <!-- Panel for Hamburger-->
+       <div class="
+                fixed top-0 right-0 left-10 md:left-3/4
+                z-30
+                w-full min-h-screen
+                bg-white
+                shadow-2xl
+                translate-x-full
+                transform
+                transition-all duration-300
+        "
         :class="{
           'translate-x-0': navbarOpen,
           'translate-x-full': ! navbarOpen,
-          'md:h-20': ! scrollFromTop,
-          'md:h-12': scrollFromTop,
-        }">
-      
-      <!--close mobile navbar button-->
-      <button
-        class='absolute z-10 top-8 left-70 md:hidden'
-        @click="navbarOpen = false"
-      > 
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8 text-semibold text-white">
-          <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-        </svg>
-
-      </button>
-      
-      <h1 class="text-2xl text-[#fe7f2d] font-bold -mt-1 px-3 md:hidden">EventTribe</h1>
-      
-      
-      <ul class="md:flex  md:items-center gap-3 space-y-3 md:space-y-0">
-
-        <li class='text-white hover:text-orange-500'><a href="">Browse Events</a></li>
-        <li class='text-white'><a href="">Create Event</a></li>
-        <li class='text-white'><a href="">About Us</a></li>
-      </ul>
-    
-      <!--profile  dropdown-->
-      <div
-        x-data="{
-          open: false,
-          toggle(){
-            this.open = this.open ? this.close() : true
-          },
-          close(){
-            this.open = false;
-          }
-
+          
         }"
-        @keyframe.escape.prevent.stop="close()"
-        class="relative"
-      >
-
-        <!--button-->
-        <button
-          @click="toggle()"
-          type='button'
-          class=' 
-              flex items-center gap-2
-              w-35
-              text-white 
-              font-semibold
-              py-1.5 px-3 
-              hover:scale-104
-              transition-all
-              hover:text-[#fe7f2d]
-              focus:text-[#fe7f2d]
-              duration-300
-               '
-        >
-        <img width="64" height="64" src="https://img.icons8.com/cute-clipart/64/patrick-star.png" alt="patrick-star"
-        class="w-8 h-8 rounded-full bg-amber-500 object-cover"
-        />
-        {% if request.user.is_authenticated %}
-        {{request.user}}
-        {% else %}
-        Guest
-        {% endif %}
-
         
-
+       >
+        <!--close mobile navbar button-->
+        <button
+          class='absolute z-30 top-5 left-70 md:left-90 '
+          @click="navbarOpen = false"
+        > 
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8 font-bold text-black">
+            <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+          </svg>
 
         </button>
-        
-        <!--panel-->
-        <div
-          x-show="open"
-          @click.outside = "close()"
-          style="display:none;"
-          class="absolute right-0 bg-[#233d4d] rounded-sm mt-2 h-50 w-50 py-2"
-        >
-          <!--panel content-->
-          <div class="space-y-4">
 
-            <a href="">
-              <div class='w-full text-white hover:bg-[#fe7f2d] hover:text-black p-2 '>
-                Profile
-              </div>
-            </a>
-            {% if request.user.is_authenticated%}
+       
+         <!-- Panel Content -->
+          <div class="mt-16 px-4 space-y-6 max-w-80 md:max-w-100 ">
+
             
-            <a href="{% url 'account_logout'%}">
-              <div class=' block w-full text-white hover:bg-[#fe7f2d] hover:text-black p-2 '>
-                  Sign Out
-                </div>
-            </a>
+            <!-- Main Nav Items -->
+           <nav class="space-y-2">
+               <!-- Home -->
+               <a href="/" class="flex items-center gap-3 px-3 py-2 font-semibold rounded-full bg-gray-100 hover:bg-gray-200  transition">
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
+                    <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+                  </svg>  
 
-              {% else %}
-            <a href="{% url 'account_login'%}">
-              <div class=' block w-full text-white hover:bg-[#fe7f2d] hover:text-black p-2 '>
-                  Signin
-                </div>
-            </a>
+                   <span class="text-gray-700 text-lg font-semibold">Home</span>
+               </a>
 
-            <a href="{% url 'account_signup'%}">
-              <div class=' block w-full text-white hover:bg-[#fe7f2d] hover:text-black p-2 '>
-                  Signup
-                </div>
-            </a>
+               <!-- Event creator dashboard-->
+               {% if request.user.is_authenticated %}
+                  {% for group in request.user.groups.all  %}
+                      {% if group.name == "organizers" %}
+                      <a href="{% url 'organizers:creator-dashboard'%}" class="flex items-center gap-3 px-3 py-2 font-semibold rounded-full hover:bg-gray-100 transition">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                      <path fill-rule="evenodd" d="M3 6a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3V6ZM3 15.75a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-2.25Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3v-2.25Z" clip-rule="evenodd" />
+                    </svg>
 
+
+                          <span class="text-gray-700 text-lg">Dashboard</span>
+                      </a>
+                      {% endif %}
+                  {% endfor %} 
+                   
+               {% endif %}
+
+               <!-- Your Page -->
+              {% if request.user.is_authenticated %}
+  
+                <a href="{% url 'user-profile'%}" class="flex items-center gap-3 px-3 py-2 font-semibold italic rounded-full hover:bg-gray-100 transition">
+                    <img class='w-8 h-8 bg-teal-200 object-cover rounded-full' src="https://img.icons8.com/cute-clipart/64/patrick-star.png" alt="patrick-star"/>
+                    <span class="text-gray-700 text-lg">{{request.user.username}}'s page</span>
+                </a>
+                {% else %}
+                <a href="#" class="flex items-center gap-3 px-3 py-2 font-semibold italic rounded-full hover:bg-gray-100 transition">
+                    <img class='w-8 h-8 bg-teal-200 object-cover rounded-full' src="https://img.icons8.com/cute-clipart/64/patrick-star.png" alt="patrick-star"/>
+                    <span class="text-gray-700 text-lg">Guest</span>
+                </a>
+
+              {% endif %}
+              <!-- Browse all Events -->
+              <a href="{% url 'browse-event'%}" class="flex items-center gap-3 px-3 py-2 font-semibold rounded-full hover:bg-gray-100 transition">
+                  <img class="size-6" src="https://img.icons8.com/ios-glyphs/30/browser-window.png" alt="browser-window"/>
+
+                  <span class="text-gray-700 text-lg">Browse events</span>
+              </a>
+              <!-- Create Events -->
+               {% if perms.core.add_event %}
+                <a href="{% url 'organizers:create-event'%}" class="flex items-center gap-3 px-3 py-2 font-semibold rounded-full hover:bg-gray-100 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                      <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+                    </svg>
+
+                    <span class="text-gray-700 text-lg">Create event</span>
+                </a>
+               {% endif %}
+              <!-- My Tickets-->
+               <a href="{% url 'booking:my-tickets'%}" class="flex items-center gap-3 px-3 py-2 font-semibold rounded-full hover:bg-gray-100 transition">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path fill-rule="evenodd" d="M1.5 6.375c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v3.026a.75.75 0 0 1-.375.65 2.249 2.249 0 0 0 0 3.898.75.75 0 0 1 .375.65v3.026c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 0 1 1.5 17.625v-3.026a.75.75 0 0 1 .374-.65 2.249 2.249 0 0 0 0-3.898.75.75 0 0 1-.374-.65V6.375Zm15-1.125a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0V6a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0v.75a.75.75 0 0 0 1.5 0v-.75Zm-.75 3a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0v-.75a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0V18a.75.75 0 0 0 1.5 0v-.75ZM6 12a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H6.75A.75.75 0 0 1 6 12Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clip-rule="evenodd" />
+                  </svg>
+
+                  <span class="text-gray-700 text-lg">My Tickets</span>
+              </a>
+
+              <!-- Settings -->
+              <a href="#" class="flex items-center gap-3 px-3 py-2 font-semibold rounded-full hover:bg-gray-100 transition">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path d="M17.004 10.407c.138.435-.216.842-.672.842h-3.465a.75.75 0 0 1-.65-.375l-1.732-3c-.229-.396-.053-.907.393-1.004a5.252 5.252 0 0 1 6.126 3.537ZM8.12 8.464c.307-.338.838-.235 1.066.16l1.732 3a.75.75 0 0 1 0 .75l-1.732 3c-.229.397-.76.5-1.067.161A5.23 5.23 0 0 1 6.75 12a5.23 5.23 0 0 1 1.37-3.536ZM10.878 17.13c-.447-.098-.623-.608-.394-1.004l1.733-3.002a.75.75 0 0 1 .65-.375h3.465c.457 0 .81.407.672.842a5.252 5.252 0 0 1-6.126 3.539Z" />
+                    <path fill-rule="evenodd" d="M21 12.75a.75.75 0 1 0 0-1.5h-.783a8.22 8.22 0 0 0-.237-1.357l.734-.267a.75.75 0 1 0-.513-1.41l-.735.268a8.24 8.24 0 0 0-.689-1.192l.6-.503a.75.75 0 1 0-.964-1.149l-.6.504a8.3 8.3 0 0 0-1.054-.885l.391-.678a.75.75 0 1 0-1.299-.75l-.39.676a8.188 8.188 0 0 0-1.295-.47l.136-.77a.75.75 0 0 0-1.477-.26l-.136.77a8.36 8.36 0 0 0-1.377 0l-.136-.77a.75.75 0 1 0-1.477.26l.136.77c-.448.121-.88.28-1.294.47l-.39-.676a.75.75 0 0 0-1.3.75l.392.678a8.29 8.29 0 0 0-1.054.885l-.6-.504a.75.75 0 1 0-.965 1.149l.6.503a8.243 8.243 0 0 0-.689 1.192L3.8 8.216a.75.75 0 1 0-.513 1.41l.735.267a8.222 8.222 0 0 0-.238 1.356h-.783a.75.75 0 0 0 0 1.5h.783c.042.464.122.917.238 1.356l-.735.268a.75.75 0 0 0 .513 1.41l.735-.268c.197.417.428.816.69 1.191l-.6.504a.75.75 0 0 0 .963 1.15l.601-.505c.326.323.679.62 1.054.885l-.392.68a.75.75 0 0 0 1.3.75l.39-.679c.414.192.847.35 1.294.471l-.136.77a.75.75 0 0 0 1.477.261l.137-.772a8.332 8.332 0 0 0 1.376 0l.136.772a.75.75 0 1 0 1.477-.26l-.136-.771a8.19 8.19 0 0 0 1.294-.47l.391.677a.75.75 0 0 0 1.3-.75l-.393-.679a8.29 8.29 0 0 0 1.054-.885l.601.504a.75.75 0 0 0 .964-1.15l-.6-.503c.261-.375.492-.774.69-1.191l.735.267a.75.75 0 1 0 .512-1.41l-.734-.267c.115-.439.195-.892.237-1.356h.784Zm-2.657-3.06a6.744 6.744 0 0 0-1.19-2.053 6.784 6.784 0 0 0-1.82-1.51A6.705 6.705 0 0 0 12 5.25a6.8 6.8 0 0 0-1.225.11 6.7 6.7 0 0 0-2.15.793 6.784 6.784 0 0 0-2.952 3.489.76.76 0 0 1-.036.098A6.74 6.74 0 0 0 5.251 12a6.74 6.74 0 0 0 3.366 5.842l.009.005a6.704 6.704 0 0 0 2.18.798l.022.003a6.792 6.792 0 0 0 2.368-.004 6.704 6.704 0 0 0 2.205-.811 6.785 6.785 0 0 0 1.762-1.484l.009-.01.009-.01a6.743 6.743 0 0 0 1.18-2.066c.253-.707.39-1.469.39-2.263a6.74 6.74 0 0 0-.408-2.309Z" clip-rule="evenodd" />
+                  </svg>
+
+                  <span class="text-gray-700 text-lg">Settings</span>
+              </a>
+           </nav>
+
+           <!--divider-->
+           <hr class="border-gray-300">
+
+            <!-- Account Navigation Section -->
+          <p class="text-sm text-gray-500 font-medium">Account Navigation</p>
+
+          <!-- Account Navigation -->
+           <nav class='space-y-2'>
+            {% if request.user.is_authenticated %}
+            <!-- Logout -->
+             <a href="{% url 'account_logout'%}" class='flex items-center gap-3 px-3 py-2 font-semibold text-red-500 rounded-full bg-red-50 hover:bg-gray-200 transition-all duration-300'>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                <path fill-rule="evenodd" d="M7.5 3.75A1.5 1.5 0 0 0 6 5.25v13.5a1.5 1.5 0 0 0 1.5 1.5h6a1.5 1.5 0 0 0 1.5-1.5V15a.75.75 0 0 1 1.5 0v3.75a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V5.25a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V9A.75.75 0 0 1 15 9V5.25a1.5 1.5 0 0 0-1.5-1.5h-6Zm5.03 4.72a.75.75 0 0 1 0 1.06l-1.72 1.72h10.94a.75.75 0 0 1 0 1.5H10.81l1.72 1.72a.75.75 0 1 1-1.06 1.06l-3-3a.75.75 0 0 1 0-1.06l3-3a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
+              </svg>
+
+              <span class='text-lg'>Sign Out</span>
+
+             </a>
+             {% else %}
+             <a href="{% url 'account_login'%}" class='flex items-center gap-3 px-3 py-2 font-semibold text-blue-500 rounded-full bg-blue-50 hover:bg-gray-200 transition-all duration-300'>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                <path fill-rule="evenodd" d="M7.5 3.75A1.5 1.5 0 0 0 6 5.25v13.5a1.5 1.5 0 0 0 1.5 1.5h6a1.5 1.5 0 0 0 1.5-1.5V15a.75.75 0 0 1 1.5 0v3.75a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V5.25a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V9A.75.75 0 0 1 15 9V5.25a1.5 1.5 0 0 0-1.5-1.5h-6Zm10.72 4.72a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 1 1-1.06-1.06l1.72-1.72H9a.75.75 0 0 1 0-1.5h10.94l-1.72-1.72a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+              </svg>
+
+              <span>Sign In</span>
+
+
+             </a>
+             <a href="{% url 'account_signup'%}" class='flex items-center gap-3 px-3 py-2 font-semibold  rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-300'>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                <path fill-rule="evenodd" d="M7.5 3.75A1.5 1.5 0 0 0 6 5.25v13.5a1.5 1.5 0 0 0 1.5 1.5h6a1.5 1.5 0 0 0 1.5-1.5V15a.75.75 0 0 1 1.5 0v3.75a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V5.25a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V9A.75.75 0 0 1 15 9V5.25a1.5 1.5 0 0 0-1.5-1.5h-6Zm10.72 4.72a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 1 1-1.06-1.06l1.72-1.72H9a.75.75 0 0 1 0-1.5h10.94l-1.72-1.72a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+              </svg>
+
+              <span>Sign up</span>
+
+
+             </a>
+            
             {% endif %}
 
+           </nav>
+
+           <!-- divivder -->
+            <hr class='border-gray-300'>
+
+            <!-- Become a creator -->
+            <a href="{% url 'organizers:register-creator'%}">
+
+              <button class="w-full py-3 rounded-full bg-gray-200 font-semibold text-gray-800 hover:bg-gray-300 transition shadow-sm">
+                  Become a creator
+              </button>
+            </a>
+
           </div>
-        </div>
 
-      </div>
 
-      {% comment %} <div class="md border-t py-4 border-gray-100  md:border-0  flex justify-center items-center gap-1">
-        {% if request.user.is_authenticated %}
-          <h1 class='text-white font-semibold md:px-2'>{{request.user.username}}</h1>
-          <a href="{% url 'account_logout'%}" class='text-blue-500 underline hover:scale-104 duration-300'>logout</a>
+         </div>
 
-        {% else %}
-          <a href="{% url 'account_login'%}" class='text-blue-500 underline hover:scale-104 duration-300'>login</a>  
-          <a href="{% url 'account_signup'%}" class='text-blue-500 underline hover:scale-104 duration-300'>signup</a>  
-        {% endif %}
-        
+       </div>
 
-      </div> {% endcomment %}
     </div>
-    
-  </nav>
 
-</header>
+  </div>
+</nav>
+  

@@ -1,0 +1,44 @@
+{% extends "core/base.html" %}
+{% block content %}
+
+<div class="max-w-3xl mx-auto mt-24 px-4 py-10 bg-white shadow-lg rounded-xl">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center capitalize">
+        Become A creator
+    </h1>
+    <form action="" method="post" class="space-y-2">
+        {% csrf_token %}
+
+        <!-- Full Name-->
+        <div>
+            <label class="block text-gray-700 font-semibold mb-1">Full Name</label>
+            {{form.full_name}}
+        </div>
+
+        <!-- Email-->
+         <div>
+            <label class="block text-gray-700 font-semibold mb-1">Email</label>
+            {{form.email}}
+         </div>
+
+        <!-- MoMo Number-->
+         <div>
+            <label class="block text-gray-700 font-semibold mb-1">MoMo Number (Any)</label>
+            {{form.email}}
+         </div>
+
+         <button type="submit"
+         class="btn btn-primary mt-2 text-white w-full rounded-md hover:scale-103 transition-all  duration-300">
+            Submit
+         </button>
+    </form>
+
+   
+
+</div>
+
+<div class="h-56">
+
+</div>
+{% endblock content %}
+
+

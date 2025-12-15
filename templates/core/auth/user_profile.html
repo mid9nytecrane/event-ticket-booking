@@ -1,0 +1,197 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="min-h-screen bg-gray-100 mt-15">
+
+    <!-- Cover Section -->
+    <div class="relative max-w-5xl mx-auto">
+        <!--
+            <div class="w-full h-64 object-cover rounded-b-2xl bg-gray-300">
+                
+            </div>
+        -->
+        <img src="{% static "images/cover.JPG" %}"
+        alt="Cover"
+        class="w-full h-70 object-cover rounded-b-2xl">
+
+        <!-- Cover actions -->
+        <div class="absolute top-4 right-4 flex items-center gap-2">
+            <button class="px-4 py-2 bg-white text-gray-700 rounded-lg shadow hover:bg-gray-100 text-sm font-medium flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path d="M12 9a3.75 3.75 0 1 0 0 7.5A3.75 3.75 0 0 0 12 9Z" />
+                    <path fill-rule="evenodd" d="M9.344 3.071a49.52 49.52 0 0 1 5.312 0c.967.052 1.83.585 2.332 1.39l.821 1.317c.24.383.645.643 1.11.71.386.054.77.113 1.152.177 1.432.239 2.429 1.493 2.429 2.909V18a3 3 0 0 1-3 3h-15a3 3 0 0 1-3-3V9.574c0-1.416.997-2.67 2.429-2.909.382-.064.766-.123 1.151-.178a1.56 1.56 0 0 0 1.11-.71l.822-1.315a2.942 2.942 0 0 1 2.332-1.39ZM6.75 12.75a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Zm12-1.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+                </svg>
+
+                Cover
+            </button>
+
+            <button class="p-2 bg-white rounded-lg shadow hover:bg-gray-100">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 3a1.5 1.5 0 011.49 1.34l.51 6a1.5 1.5 0 01-1.49 1.66H9a1.5 1.5 0 01-1.49-1.66l.51-6A1.5 1.5 0 0110 3zM9 15a1 1 0 102 0 1 1 0 00-2 0z" />
+                </svg>
+            </button>
+
+            <button class="p-2 bg-white rounded-lg shadow hover:bg-gray-100">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zm6-2a2 2 0 100 4 2 2 0 000-4zm6 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Profile Header -->
+    <div class="max-w-5xl mx-auto px-4 mt-6">
+        <div class="flex items-start justify-between">
+
+            <!-- Profile info -->
+            <div class="flex items-center gap-5 md:justify-between w-full">
+                <div class='flex items-center gap-5'>
+
+                    <!-- Profile Image -->
+                     <!--
+                        <img src="{{ user.profile.avatar.url }}"
+                                class="w-28 h-28 rounded-full border-4 border-white shadow -mt-16 bg-white object-cover">
+                    -->
+                    <img  class="w-26 h-26 md:w-28 md:h-28 rounded-full border-4 border-white shadow -mt-6 md:-mt-4 bg-white object-cover"
+                        src="https://img.icons8.com/cute-clipart/64/patrick-star.png" alt="patrick-star"/>
+                    <div>
+                        <h1 class="text-2xl font-semibold text-gray-800">{{ user.username }}</h1>
+                        <p class="text-gray-500 text-sm">Event Enthusiast</p>
+                    </div>
+                </div>
+
+                 <!-- Settings -->
+                <button class="p-3 bg-white rounded-full shadow hover:bg-gray-100">
+                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.827 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.827-3.31 2.37-2.37.966.59 2.198.163 2.573-1.065z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Tabs Section -->
+        <div class='mt-6'
+        x-data="{
+            tabSelected: 1,
+            tabId: $id('tabs'),
+            tabButtonClicked(tabButton){
+                this.tabSelected = tabButton.id.replace(this.tabId + '-', '');
+                this.tabRepositionMarker(tabButton);
+            },
+            tabRepositionMarker(tabButton){
+                this.$refs.tabMarker.style.width=tabButton.offsetWidth + 'px';
+                this.$refs.tabMarker.style.height=tabButton.offsetHeight + 'px';
+                this.$refs.tabMarker.style.left=tabButton.offsetLeft + 'px';
+            },
+            tabContentActive(tabContent){
+                return this.tabSelected == tabContent.id.replace(this.tabId + '-content-', '');
+            },
+            tabButtonActive(tabContent){
+                const tabId = tabContent.id.split('-').slice(-1);
+                return this.tabSelected == tabId;
+            }
+        }"
+        
+        x-init="tabRepositionMarker($refs.tabButtons.firstElementChild);" class="relative w-full max-w-sm">
+
+            <!-- Tabs -->
+            <div x-ref="tabButtons" class="relative inline-grid  items-center justify-center w-full h-10 grid-cols-3 p-1 text-gray-500 bg-white border border-gray-100 rounded-lg select-none">
+                <button :id="$id(tabId)" @click="tabButtonClicked($el);" type="button" :class="{ 'bg-gray-100 text-gray-700' : tabButtonActive($el) }" class="relative z-10 inline-flex items-center justify-center w-full h-8 px-3 text-sm font-medium transition-all rounded-md cursor-pointer whitespace-nowrap">Personal Info</button>
+                <button :id="$id(tabId)" @click="tabButtonClicked($el);" type="button" :class="{ 'bg-gray-100 text-gray-700' : tabButtonActive($el) }" class="relative z-10 inline-flex items-center justify-center w-full h-8 px-3 text-sm font-medium transition-all rounded-md cursor-pointer whitespace-nowrap">Tab2</button>
+                <button :id="$id(tabId)" @click="tabButtonClicked($el);" type="button" :class="{ 'bg-gray-100 text-gray-700' : tabButtonActive($el) }" class="relative z-10 inline-flex items-center justify-center w-full h-8 px-3 text-sm font-medium transition-all rounded-md cursor-pointer whitespace-nowrap">Tab3</button>
+                <div x-ref="tabMarker" class="absolute left-0 z-5 w-1/2 h-full duration-300 ease-out" x-cloak><div class="w-full h-full bg-gray-100 rounded-md shadow-sm"></div></div>
+            </div>
+
+            <!-- Content -->
+            <div class="relative flex items-center justify-center w-full p-5 mt-2 text-normal text-gray-400 border rounded-md content border-gray-200/70 bg-white">
+                
+                <div :id="$id(tabId + '-content')" x-show="tabContentActive($el)" class="relative space-y-3  w-full ">
+                    
+                    <br>
+                    {% if userprofile %}
+                    {% for user in userprofile %}
+                    
+                        <div id="personal_info" class='space-y-2'>
+
+                            <!-- Email -->
+                            <div class='block'>
+                                <div class='flex items-center gap-2'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                                        <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
+                                        <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
+                                    </svg>
+
+                                    <h1 class='capitalize font-semibold text-normal text-gray-800'>Email</h1>
+                                </div>
+                                
+                                <input class="w-70 md:w-80 rounded-lg border border-gray-300" 
+                                type="text" value="{{user.email}}" readonly>
+
+                            </div>
+
+                            <!-- phone-->
+                            <div class='block'>
+                                <div class='flex items-center gap-2'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                                        <path fill-rule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z" clip-rule="evenodd" />
+                                    </svg>
+                                    <h1 class='capitalize font-semibold text-normal text-gray-800'>phone</h1>
+
+                                </div>
+                                <input class="w-70 md:w-80 rounded-lg border border-gray-300" 
+                                type="text" value="{{user.phone}}" readonly>
+
+                            </div>
+                            
+                            <!-- City or Town-->
+                            <div class='block'>
+                                <div class='flex items-center gap-2'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                                    <path fill-rule="evenodd" d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd" />
+                                    </svg>
+
+                                    <h1 class='capitalize font-semibold text-normal text-gray-800'>city/Town</h1>
+                                    
+                                </div>
+                                <input class="w-70 md:w-80 rounded-lg border border-gray-300" 
+                                type="text" value="{{user.town}}" readonly>
+
+                            </div> 
+
+                            <!-- Update profile button -->
+                            {% comment %} <button type="button" class="text-white bg-blue-500 box-border border border-transparent hover:bg-blue-400 hover:scale-103 transition duration-300  focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-full text-sm px-4 py-2.5 focus:outline-none">
+                                Update Changes
+                            </button> {% endcomment %}
+                            <!-- You can open the modal using ID.showModal() method -->
+                            <button class="btn btn-primary text-white box-border rounded-md hover:scale-103 transition duration-300" 
+                            onclick="profile_modal.showModal()">Update Changes</button>
+
+                            {% include "core/auth/partials/update_profile_modal.html" %} 
+                            
+                                
+                                
+                                
+                        </div>
+                                
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div :id="$id(tabId + '-content')" x-show="tabContentActive($el)" class="relative" x-cloak>
+                    And, this is the content for Tab2
+                </div>
+
+                <div :id="$id(tabId + '-content')" x-show="tabContentActive($el)" class="relative" x-cloak>
+                    Finally, this is the content for Tab3
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+

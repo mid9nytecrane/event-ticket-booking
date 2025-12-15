@@ -1,7 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from django.core.files import File
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 import uuid 
+import qrcode
+from io import BytesIO
 
 # Create your models here.
 
@@ -20,6 +26,7 @@ class EventCategory(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         super(EventCategory, self).save()
+
 
 class Event(models.Model):
     EVENT_TAG = {
@@ -41,7 +48,7 @@ class Event(models.Model):
     banner = models.ImageField(upload_to='event_banners/')
     price = models.DecimalField(max_digits=8, decimal_places=2)
     total_tickets = models.PositiveIntegerField()
-    available_tickets = models.PositiveIntegerField()
+    purchased_tickets = models.PositiveIntegerField(blank=True, default=0)
     created_at = models.DateField(auto_now_add=True)
 
     def __str__(self):
@@ -57,13 +64,39 @@ class Event(models.Model):
 
         super(Event, self).save()
 
+   
+
+
+
 
 class Ticket(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tickets')
+    attendee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tickets')
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='tickets')
     ticket_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     purchased_at = models.DateField(auto_now_add=True)
     qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
+    is_used = models.BooleanField(default=False)
+
 
     def __str__(self) -> str:
-        return f"{self.event.title} - {self.user.username}"
+        return f"{self.event.title} - {self.attendee.username}"
+
+
+
+class Organizer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='organizer')
+    full_name = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    momo_numb = models.CharField(max_length=13)
+    creator = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return f"Organizer - {self.full_name}({self.user})"
+
+
+
+
+
+    
+  

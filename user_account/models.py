@@ -10,7 +10,7 @@ class UserProfile(models.Model):
         related_name='profile'
         
     )
-
+    email = models.EmailField(null=True, blank=True)
     phone = models.CharField(
         max_length=10,
         blank=True,

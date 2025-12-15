@@ -1,0 +1,31 @@
+<dialog id="profile_modal" class="modal">
+    <div class="modal-box">
+        <h1 class='text-lg font-semibold capitalize leading-0 mb-3 text-gray-800'>Update you profile</h1>
+        <form 
+            hx-post="{% url 'update-profile'%}"
+            hx-target="#personal_info"
+            
+            class='mb-3'>
+            {% csrf_token %}
+            
+            {{form}}
+          
+            
+            
+            <div class='mt-2 py-2'>
+                <button 
+                    
+                    type="submit" class='btn btn-primary text-white rounded-md '>
+                    Save Update
+                </button>
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                    </svg>
+
+                </button>
+            </div>
+        </form>
+
+    </div>
+</dialog>

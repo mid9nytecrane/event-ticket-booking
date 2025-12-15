@@ -1,5 +1,5 @@
 from django import forms 
-
+from .models import UserProfile
 
 class CustomSignUpForm(forms.Form):
     first_name = forms.CharField(
@@ -32,3 +32,21 @@ class CustomSignUpForm(forms.Form):
         # user.phone = self.cleaned_data.get('phone', '')
         # user.phone = self.cleaned_data.get('town', '')
         user.save()
+
+
+#profile update 
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = "__all__"
+        exclude=["user"]
+
+
+    def __init__(self,*args, **kwargs):
+        super().__init__(*args,**kwargs)
+
+        for field in self.fields.values():
+            field.widget.attrs.update({
+                'class': 'rounded-lg py-2 px-3 w-full'
+            })
+            

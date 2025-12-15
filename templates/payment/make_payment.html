@@ -1,0 +1,83 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 to-slate-100 px-4">
+
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 md:p-8 text-center space-y-6">
+
+    <!-- Icon -->
+    <div class="flex justify-center">
+      <div class="h-14 w-14 flex items-center justify-center rounded-full bg-blue-100 text-blue-600">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 6v12m6-6H6" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <div>
+      <h1 class="text-2xl md:text-3xl font-bold text-gray-900 capitalize">
+        Make Payment
+      </h1>
+      <p class="text-gray-500 text-sm mt-2">
+        Complete your payment securely to reserve your ticket
+      </p>
+    </div>
+
+    <!-- Payment Button -->
+    <button
+      type="button"
+      onclick="payWithPaystack()"
+      class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-0.5"
+    >
+      Pay Now
+    </button>
+
+    <!-- Secure Info -->
+    <p class="text-xs text-gray-400">
+      Secured by Paystack • Safe & Encrypted
+    </p>
+
+  </div>
+</div>
+
+
+
+<script>
+    function payWithPaystack(){
+        let currency = "GHS";
+        let plan = "";
+        let ref = "{{payment.reference}}";
+        let amount = {{payment.amount_value}}
+        let pubKey = "{{paystack_pub_key}}";
+        let obj = {
+            key: pubKey,
+            email:"{{payment.email}}",
+            amount:amount,
+            reference:ref, 
+            callback: function(response){
+                window.location.href="{% url 'payment:verify-payment' payment.reference %}";
+            },
+            onclose: function(){
+                alert("payment window closed");
+            }
+        }
+
+        if (Boolean(currency)){
+            obj.currency = currency.toUpperCase();
+        }
+
+        if (Boolean(plan)){
+            obj.plan = plan;
+        }
+
+        var handler = PaystackPop.setup(obj);
+        handler.openIframe();
+    }
+</script>
+
+<script src="https://js.paystack.co/v2/inline.js"></script>
+
+{% endblock content %}
+

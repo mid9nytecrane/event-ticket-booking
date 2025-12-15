@@ -1,0 +1,117 @@
+{% extends "core/base.html" %}
+{% block content %}
+
+<div class="max-w-3xl mx-auto mt-24 px-4 py-10 bg-white shadow-lg rounded-xl">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+        Create a New Event
+    </h1>
+
+    <form 
+        x-data="{ preview: null }"
+        method="post" 
+        enctype="multipart/form-data"
+        class="space-y-6"
+    >
+        {% csrf_token %}
+
+
+        <!-- Title -->
+        <div>
+            <label class="block text-gray-700 font-semibold mb-1">Event Title</label>
+            {{form.title}}
+        </div>
+
+        <!--Event Category-->
+        <div>
+            <label class="block text-gray-700 font-semibold mb-1">Event Category</label>
+            {{form.category}}
+        </div>
+
+
+        <!-- Date -->
+        <div>
+            <label class="block text-gray-700 font-semibold mb-1">Event Date</label>
+            {{form.date}}
+        </div>
+
+        <!-- Location -->
+        <div>
+            <label class="block text-gray-700 font-semibold mb-1">Location</label>
+            {{form.location}}
+        </div>
+
+        <!-- Organizer-->
+        <div>
+            <label class="block text-gray-700 font-semibold mb-1">Organizer</label>
+            {{form.organizer}}
+        </div>
+
+        <!-- Category -->
+        <div>
+            <label class="block text-gray-700 font-semibold mb-1">Category</label>
+            {{form.event_tag}}
+        </div>
+
+        <!-- Price -->
+        <div>
+            <label class="block text-gray-700 font-semibold mb-1">Price (GHS)</label>
+            {{form.price}}
+        </div>
+
+        <!-- total tickets -->
+        <div>
+            <label class="block text-gray-700 font-semibold mb-1">Total Tickets</label>
+            {{form.total_tickets}}
+        </div>
+
+        <!-- Description -->
+        <div>
+            <label class="block text-gray-700 font-semibold mb-1">Description</label>
+            {{form.description}}
+        </div>
+
+        <!-- Banner Upload with Preview -->
+        <div>
+            <label class="block text-gray-700 font-semibold">Event Banner</label>
+
+            <input 
+                type="file"
+                name="banner"
+                @change="preview = URL.createObjectURL($event.target.files[0])"
+                class="mt-2 block text-gray-700 border border-gray-300 rounded-lg w-full"
+            >
+
+            <template x-if="preview">
+                <img 
+                    :src="preview" 
+                    class="mt-3 w-full h-56 object-cover rounded-lg border border-gray-300 shadow"
+                >
+            </template>
+        </div> 
+
+        {% comment %} <div>
+            {{form.banner}}
+        </div> {% endcomment %}
+
+        <!-- Submit Button -->
+        <button 
+            type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg text-lg shadow-md transition"
+        >
+            Submit Event
+        </button>
+
+    </form>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    flatpickr(".datepicker", {
+        dateFormat: "Y-m-d",
+        minDate: "today",
+    });
+});
+</script>
+
+{% endblock content %}
