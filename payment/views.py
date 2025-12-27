@@ -27,6 +27,9 @@ def user_validation(request,event_id):
     if request.method == "POST":
         form = PaymentForm(request.POST)
         if form.is_valid():
+            if event.purchased_tickets >= event.total_tickets:
+                messages.error(request, "Sorry, ticket is sold out")
+                return redirect('event-detail', pk=event.id)
             payment = form.save(commit=False)
             payment.user = request.user 
             payment.event = event
@@ -68,20 +71,49 @@ def verify_payment(request, reference):
     # print(f"current purchased tickets for {event} is: {current_purchased_tickets}")
     
     if verified:
-        new_purchased_tickets = current_purchased_tickets + 1
-        new_total_tickets = current_total_tickets - 1
-        
-        Event.objects.filter(
-            pk=event_id, purchased_tickets=current_purchased_tickets, total_tickets=current_total_tickets
-            ).update(purchased_tickets=new_purchased_tickets, total_tickets=new_total_tickets)
-        
-        messages.success(request, "validation successful")
+        if current_purchased_tickets <= current_total_tickets:
+            new_purchased_tickets = current_purchased_tickets + 1
+            #new_total_tickets = current_total_tickets - 1
+
+            Event.objects.filter(
+                pk=event_id, purchased_tickets=current_purchased_tickets
+                ).update(purchased_tickets=new_purchased_tickets)
+            
+            messages.success(request, "validation successful")
 
     else:
         messages.error(request, "validation failed")
 
     return redirect("booking:book-event", event_id=event_id)
 
+
+
+# free booking or getting free tickets
+@login_required
+def free_event_user_validation(request,event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    exist_ticket = Ticket.objects.filter(event=event, attendee=request.user).first()
+    if exist_ticket:
+        return render(request, 'booking/event_booked_already.html', {"exist_ticket":exist_ticket})
+    form = FreeEventRegisterForm(request.POST)
+    if request.method == "POST":
+        if form.is_valid():
+            if event.purchased_tickets >= event.total_tickets:
+                messages.error(request, "Sorry, tickets are sold out")
+                return redirect("event-detail", pk=event.id)
+            form_instance = form.save(commit=False)
+            form_instance.user = request.user
+            form_instance.event = event
+            form_instance.save()
+            return redirect("booking:book-event", event_id=event.id)
+      
+    else:   
+        form = FreeEventRegisterForm()
+        print("invalid data input")
+    return render(request, 'payment/free_event_user_validation.html', {
+        'form':form,
+        'event':event,
+    })
 
 
 

@@ -1,0 +1,188 @@
+{% extends "core/base.html" %}
+{% block content %}
+
+{% comment %} <div x-data="{ mode: 'qr' }" class="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-10">
+  <div class="bg-white shadow-xl border border-gray-100 rounded-2xl p-8 w-full max-w-2xl">
+
+    <h2 class="text-2xl font-bold text-gray-900 text-center mb-1">
+      Ticket Verification
+    </h2>
+    <p class="text-gray-500 text-center mb-6">Scan QR or verify manually</p>
+
+    <!-- Toggle Buttons -->
+    <div class="flex justify-center mb-6 gap-3">
+      <button 
+        @click="mode='qr'"
+        :class="mode === 'qr' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-800'"
+        class="px-5 py-2 rounded-xl font-semibold shadow-sm transition">
+        QR Scanner
+      </button>
+
+      <button 
+        @click="mode='manual'"
+        :class="mode === 'manual' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-800'"
+        class="px-5 py-2 rounded-xl font-semibold shadow-sm transition">
+        Manual Entry
+      </button>
+    </div>
+
+    <!-- Result Box -->
+    <div id="resultBox" class="hidden mb-4 p-4 rounded-xl border"></div>
+
+    <!-- QR Scanner -->
+    <div x-show="mode === 'qr'" class="space-y-4">
+      <div id="qr-reader" class="rounded-xl overflow-hidden border"></div>
+
+      <p class="text-center text-sm text-gray-400">
+        Position QR inside the frame
+      </p>
+    </div>
+
+    <!-- Manual Input -->
+    <div x-show="mode === 'manual'" class="space-y-4">
+      <form 
+        id="verifyForm"
+        hx-get="{% url 'booking:verify-ticket'%}"
+        hx-trigger="submit"
+        hx-target="#resultBox"
+        hx-swap="innerHTML"
+        class="space-y-4">
+
+        <label class="block">
+          <span class="text-sm text-gray-700 font-medium">Ticket ID</span>
+          <input 
+            type="text"
+            name="ticket_id"
+            placeholder="Enter ticket number"
+            class="mt-1 w-full px-4 py-3 rounded-xl border border-gray-300 
+            focus:ring-2 focus:ring-blue-500 outline-none"
+            required>
+        </label>
+
+        <button 
+          type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-xl shadow-md transition">
+          Verify Ticket
+        </button>
+      </form>
+      <div id="resultBox" class="mt-4"></div>
+    </div>
+
+  </div>
+</div> {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+<div x-data="{ mode: 'qr' }" class='min-h-screen flex flex-col justify-center items-center bg-gray-50 px-4 py-10'>
+    <div class="w-full max-w-lg mb-6 relative">
+
+        <a href="{% url 'organizers:creator-dashboard'%}" 
+            class="inline-flex items-center gap-2 mb-2  bg-gray-100 w-20 px-2 py-1 shadow-lg rounded-full hover:bg-gray-200">
+    
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-4.28 9.22a.75.75 0 0 0 0 1.06l3 3a.75.75 0 1 0 1.06-1.06l-1.72-1.72h5.69a.75.75 0 0 0 0-1.5h-5.69l1.72-1.72a.75.75 0 0 0-1.06-1.06l-3 3Z" clip-rule="evenodd" />
+            </svg>
+    
+            back
+        </a>
+    </div>
+
+    <div class="bg-white shadow-xl border border-gray-100 rounded-2xl p-8 w-full max-w-lg relative">
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-900">Verify Ticket</h2>
+            <p class="text-gray-500 text-sm">Enter ticket ID to verify attendee</p>
+        </div>
+
+        <!-- Toggle Buttons -->
+        <div class="flex justify-center mb-6 gap-3">
+            <button 
+                @click="mode='qr'"
+                :class="mode === 'qr' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-800'"
+                class="px-5 py-2 rounded-xl font-semibold shadow-sm transition">
+                QR Scanner
+            </button>
+
+            <button 
+                @click="mode='manual'"
+                :class="mode === 'manual' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-800'"
+                class="px-5 py-2 rounded-xl font-semibold shadow-sm transition">
+                Manual Entry
+            </button>
+        </div>
+
+        <!-- Success / Error Message Placeholder -->
+        <div id="resultBox" class="hidden mb-4 p-4 rounded-lg border"></div>
+
+        <!-- QR Scanner -->
+        <div x-show="mode === 'qr'" class="space-y-4">
+            <div id="qr-reader" class="rounded-xl overflow-hidden border"></div>
+
+            <p class="text-center text-sm text-gray-400">
+                Position QR inside the frame
+            </p>
+        </div>
+
+        <div x-show="mode === 'manual'" class="space-y-4">
+            <form 
+                id="verify_form"
+                hx-get="{% url 'booking:verify-ticket'%}" 
+                hx-trigger="submit"
+                hx-target="#verify-result" 
+                hx-indicator="#loading"
+                hx-swap="innerHTML"
+                hx:on:after-request="if(event.detail.success) this.reset()"
+
+                class="space-y-3">
+
+            <label class="block">
+                <span class="text-sm text-gray-700 font-medium">Ticket ID</span>
+                <input 
+                    type="text" 
+                    name="ticket_id"
+                    id="ticketInput"
+                    placeholder="Enter Ticket Code"
+                    class="mt-1 w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                    required>
+            </label>
+
+            <button 
+                type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-xl shadow-md transition transform hover:scale-[1.02]">
+                Verify Ticket
+            </button>
+
+            </form>
+        </div>
+        <!-- Footer Note -->
+        <p class="text-center text-xs text-gray-400 mt-4">
+            Only valid tickets for your events will be accepted.
+        </p>
+
+        <div id="loading" class="hidden text-gray-500 mt-2">Checking ticket...</div>
+        <!-- Message card container -->
+        <div id="verify-result" class="mt-4">
+            <div id="messageCard" class="hidden">
+                <!-- Message will be populated here by JavaScript -->
+            </div>
+        </div>
+
+        <div id="verify-result" class="mt-4"></div> 
+   
+
+    </div>
+    
+</div>
+
+
+
+{% endblock content %}
+
+

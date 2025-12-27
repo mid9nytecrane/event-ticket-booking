@@ -1,4 +1,4 @@
-<div id='event-list' class='relative container   mx-auto pb-4'>
+<div id='event-list' class='relative container px-4  mx-auto pb-4'>
 
     {% include "core/partials/spinner.html" %}
     
@@ -28,34 +28,62 @@
 
         <!-- Card Content -->
         <div class="flex flex-col justify-between grow p-4 md:p-5">
+            <!-- Like and Share Button-->
+            {% comment %} <div class="flex items-center justify-between mt-4">
+                <!-- Like Button-->
+                <button 
+                    x-data="{ liked: false, count: {{ event.likes|default:0 }} }"
+                    @click="liked = !liked; liked ? count++ : count--"
+                    class="flex items-center gap-1.5 text-gray-600 hover:text-red-600 transition">
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" 
+                        :class="liked ? 'fill-red-600 text-red-600' : 'text-gray-500'"
+                        class="w-6 h-6 transition"
+                        viewBox="0 0 24 24">
+                    <path 
+                        stroke="currentColor" stroke-width="1.5"
+                        d="M11.645 20.91l-.007-.003-.022-.012a21.6 21.6 0 01-1.162-.682 
+                        19.7 19.7 0 01-2.716-2.013C5.32
+                        15.18 3 12.243 3 8.75A5.75 5.75 0 0114.53 4.78c.268.378.488.787.657
+                        1.217.17-.43.39-.84.658-1.218A5.75 5.75
+                        0 0121 8.75c0 3.493-2.32 6.43-4.736
+                        8.453a19.7 19.7 0 01-2.716 2.013 
+                        21.6 21.6 0 01-1.162.682l-.022.012-.007.004-.003.001a.75.75 
+                        0 01-.682 0l-.003-.002z"/>
+                    </svg>
+
+                    <span class="text-sm" x-text="count"></span>
+                </button>
+            </div> {% endcomment %}
             <div>
-            <p class='flex items-center gap-1 mb-2'>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
-                <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd" />
-                </svg>
 
-                <span>{{event.category}}</span>
-            </p>
-            <h3 class="text-lg md:text-xl font-semibold text-gray-900 capitalize mb-1 group-hover:text-amber-600 transition">
-                {{ event.title }}
-            </h3>
-            <p class="text-gray-500 text-sm mb-3 truncate">
-                {{ event.description }}
-            </p>
-            <p class="flex items-center gap-1 text-gray-500 text-sm mb-3 truncate">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="size-5">
-                <path fill-rule="evenodd" d="M18 2.993a.75.75 0 0 0-1.5 0v1.5h-9V2.994a.75.75 0 1 0-1.5 0v1.497h-.752a3 3 0 0 0-3 3v11.252a3 3 0 0 0 3 3h13.5a3 3 0 0 0 3-3V7.492a3 3 0 0 0-3-3H18V2.993Z" clip-rule="evenodd" />
-                </svg>
-                {{ event.date }}
-            </p>
-            <p class="flex items-center gap-1 text-gray-500 text-sm mb-3 truncate">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
-                <path fill-rule="evenodd" d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd" />
-                </svg>
+                <p class='flex items-center gap-1 mb-2'>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                    <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd" />
+                    </svg>
 
-                {{ event.location }}
-            </p>
-        </div>
+                    <span>{{event.category}}</span>
+                </p>
+                <h3 class="text-lg md:text-xl font-semibold truncate text-gray-900 capitalize mb-1 group-hover:text-amber-600 transition">
+                    {{ event.title }}
+                </h3>
+                <p class="text-gray-500 text-sm mb-3 truncate">
+                    {{ event.description }}
+                </p>
+                <p class="flex items-center gap-1 text-gray-500 text-sm mb-3 truncate">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="size-5">
+                    <path fill-rule="evenodd" d="M18 2.993a.75.75 0 0 0-1.5 0v1.5h-9V2.994a.75.75 0 1 0-1.5 0v1.497h-.752a3 3 0 0 0-3 3v11.252a3 3 0 0 0 3 3h13.5a3 3 0 0 0 3-3V7.492a3 3 0 0 0-3-3H18V2.993Z" clip-rule="evenodd" />
+                    </svg>
+                    {{ event.date }}
+                </p>
+                <p class="flex items-center gap-1 text-gray-500 text-sm mb-3 truncate">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                    <path fill-rule="evenodd" d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd" />
+                    </svg>
+
+                    {{ event.location }}
+                </p>
+            </div>
 
             <div class="flex justify-between items-center mt-auto">
             <span class="text-amber-600 font-bold text-lg">GH₵ {{ event.price }}</span>
@@ -65,7 +93,7 @@
             </a>
             </div>
         </div>
-        </div>
+    </div>
 
             {% endfor %}
     {% else %}

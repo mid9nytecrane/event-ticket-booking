@@ -1,0 +1,622 @@
+{% extends "core/base.html" %}
+{% block content %}
+
+<!-- Main Content -->
+    <div x-data="{ 
+            showMomoModal: false,
+            selectedPlan: 'standard',
+            faqOpen: null,
+            formStep: 1,
+            momoNumber: ''
+        }" 
+        class="min-h-screen">
+        
+        <!-- Hero Section -->
+        <section class="bg-blue-600 text-white pt-16 pb-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                        Turn Your Events Into Revenue
+                    </h1>
+                    <p class="text-xl text-purple-100 mb-8 max-w-3xl mx-auto">
+                        Host events on EventHub, earn 95% of ticket sales, and get paid directly to your mobile money account within 24 hours after your event.
+                    </p>
+                    <button @click="showMomoModal = true; formStep = 1"
+                            class="bg-white text-purple-600 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-gray-100 transition duration-300 shadow-lg">
+                        <i class="fas fa-wallet mr-2"></i> Register as Event Creator
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
+                    How Event Creation Works
+                </h2>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="w-20 h-20 mx-auto rounded-full bg-purple-100 flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-10">
+                            <path d="M12.75 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM8.25 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9.75 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM10.5 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12.75 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM14.25 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" />
+                            <path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z" clip-rule="evenodd" />
+                            </svg>
+
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Create Your Event</h3>
+                        <p class="text-gray-600">Set up your event with details, ticket types, pricing, and dates in minutes.</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-20 h-20 mx-auto rounded-full bg-purple-100 flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-10">
+                            <path fill-rule="evenodd" d="M1.5 6.375c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v3.026a.75.75 0 0 1-.375.65 2.249 2.249 0 0 0 0 3.898.75.75 0 0 1 .375.65v3.026c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 0 1 1.5 17.625v-3.026a.75.75 0 0 1 .374-.65 2.249 2.249 0 0 0 0-3.898.75.75 0 0 1-.374-.65V6.375Zm15-1.125a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0V6a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0v.75a.75.75 0 0 0 1.5 0v-.75Zm-.75 3a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0v-.75a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0V18a.75.75 0 0 0 1.5 0v-.75ZM6 12a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H6.75A.75.75 0 0 1 6 12Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clip-rule="evenodd" />
+                            </svg>
+
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Sell Tickets</h3>
+                        <p class="text-gray-600">Promote your event and sell tickets through our secure platform.</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-20 h-20 mx-auto rounded-full bg-purple-100 flex items-center justify-center mb-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-10">
+                            <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
+                            <path fill-rule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clip-rule="evenodd" />
+                            </svg>
+
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Get Paid</h3>
+                        <p class="text-gray-600">Receive 95% of ticket sales to your mobile money within 24 hours after event.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Revenue Breakdown -->
+        <section class="py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
+                    Transparent Revenue Sharing
+                </h2>
+                
+                <div class="bg-white rounded-2xl shadow-xl p-8 max-w-4xl mx-auto">
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">You Earn 95% of Every Ticket</h3>
+                            <p class="text-gray-600 mb-6">
+                                We believe event creators should keep the majority of their earnings. That's why we only take a small 5% platform fee.
+                            </p>
+                            
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center p-4 bg-green-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-gray-900">Your Earnings</p>
+                                        <p class="text-sm text-gray-600">95% of ticket price</p>
+                                    </div>
+                                    <span class="text-2xl font-bold text-green-600">95%</span>
+                                </div>
+                                
+                                <div class="flex justify-between items-center p-4 bg-blue-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-gray-900">Platform Fee</p>
+                                        <p class="text-sm text-gray-600">Covers payment processing & support</p>
+                                    </div>
+                                    <span class="text-2xl font-bold text-blue-600">5%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-900 text-white rounded-xl p-8">
+                            <h4 class="text-xl font-bold mb-6 text-center">Example Payout</h4>
+                            <div class="space-y-6">
+                                <div class="text-center">
+                                    <p class="text-gray-300 mb-2">100 tickets sold at</p>
+                                    <p class="text-4xl font-bold">₵50 <span class="text-lg text-gray-300">each</span></p>
+                                </div>
+                                
+                                <div class="space-y-3">
+                                    <div class="flex justify-between">
+                                        <span>Total Revenue</span>
+                                        <span class="font-semibold">₵5,000</span>
+                                    </div>
+                                    <div class="flex justify-between text-gray-300">
+                                        <span>Platform Fee (5%)</span>
+                                        <span>- ₵250</span>
+                                    </div>
+                                    <div class="border-t border-gray-700 pt-3 flex justify-between text-lg font-bold">
+                                        <span>Your Payment</span>
+                                        <span class="text-green-400">₵4,750</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center text-sm text-gray-300">
+                                    <i class="fas fa-clock mr-1"></i>
+                                    Sent to your mobile money within 24 hours after event ends
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mobile Money Guarantee -->
+        <section class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-linear-to-r from-purple-600 to-blue-600 rounded-2xl p-8 md:p-12 text-white">
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h2 class="text-3xl font-bold mb-6">
+                                <i class="fas fa-shield-alt mr-3"></i>
+                                24-Hour Payment Guarantee
+                            </h2>
+                            <p class="text-xl mb-6 text-purple-100">
+                                We guarantee your earnings will be sent to your registered mobile money number within 24 hours after your event concludes.
+                            </p>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-300 mt-1 mr-3"></i>
+                                    <div>
+                                        <p class="font-semibold">Compensation Policy</p>
+                                        <p class="text-purple-100">If payment is delayed beyond 24 hours, you'll receive an additional 5% compensation on your total payout.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <i class="fas fa-mobile-alt mt-1 mr-3"></i>
+                                    <div>
+                                        <p class="font-semibold">Mobile Money Support</p>
+                                        <p class="text-purple-100">We support MTN Mobile Money, Vodafone Cash, and AirtelTigo Money.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                            <h3 class="text-2xl font-bold mb-6 text-center">Payment Timeline</h3>
+                            <div class="space-y-6">
+                                <div class="timeline-step flex items-center justify-between">
+                                    <div class="text-center">
+                                        <div class="w-12 h-12 bg-white text-purple-600 rounded-full flex items-center justify-center font-bold mx-auto mb-2">
+                                            1
+                                        </div>
+                                        <p class="font-medium">Event Ends</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="w-12 h-12 bg-white text-purple-600 rounded-full flex items-center justify-center font-bold mx-auto mb-2">
+                                            2
+                                        </div>
+                                        <p class="font-medium">24-Hour Window</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="w-12 h-12 bg-white text-purple-600 rounded-full flex items-center justify-center font-bold mx-auto mb-2">
+                                            3
+                                        </div>
+                                        <p class="font-medium">Payment Sent</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-yellow-500/20 border border-yellow-500/30 rounded-lg p-4">
+                                    <div class="flex">
+                                        <i class="fas fa-exclamation-triangle text-yellow-300 mt-1 mr-3"></i>
+                                        <div>
+                                            <p class="font-semibold">Guaranteed Compensation</p>
+                                            <p class="text-sm">If we miss the 24-hour deadline, you get an extra 5% on your total payout automatically.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
+                    Why Choose EventTribe?
+                </h2>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-xl p-6 shadow-md">
+                        <div class="feature-icon w-12 h-12 rounded-lg flex items-center justify-center text-white mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3c0-2.9-2.35-5.25-5.25-5.25Zm3.75 8.25v-3a3.75 3.75 0 1 0-7.5 0v3h7.5Z" clip-rule="evenodd" />
+                            </svg>
+
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Secure Payments</h3>
+                        <p class="text-gray-600">Bank-level security for all transactions with encrypted mobile money transfers.</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 shadow-md">
+                        <div class="feature-icon w-12 h-12 rounded-lg flex items-center justify-center text-white mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            <path fill-rule="evenodd" d="M15.22 6.268a.75.75 0 0 1 .968-.431l5.942 2.28a.75.75 0 0 1 .431.97l-2.28 5.94a.75.75 0 1 1-1.4-.537l1.63-4.251-1.086.484a11.2 11.2 0 0 0-5.45 5.173.75.75 0 0 1-1.199.19L9 12.312l-6.22 6.22a.75.75 0 0 1-1.06-1.061l6.75-6.75a.75.75 0 0 1 1.06 0l3.606 3.606a12.695 12.695 0 0 1 5.68-4.974l1.086-.483-4.251-1.632a.75.75 0 0 1-.432-.97Z" clip-rule="evenodd" />
+                            </svg>
+
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Real-Time Analytics</h3>
+                        <p class="text-gray-600">Track ticket sales, attendance, and revenue in real-time dashboard.</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 shadow-md">
+                        <div class="feature-icon w-12 h-12 rounded-lg flex items-center justify-center text-white mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            <path fill-rule="evenodd" d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 15.117A6.745 6.745 0 0 1 12 12a6.745 6.745 0 0 1 6.709 7.498.75.75 0 0 1-.372.568A12.696 12.696 0 0 1 12 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 0 1-.372-.568 6.787 6.787 0 0 1 1.019-4.38Z" clip-rule="evenodd" />
+                            <path d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z" />
+                            </svg>
+
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Dedicated Support</h3>
+                        <p class="text-gray-600">24/7 customer support to help you manage your events successfully.</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 shadow-md">
+                        <div class="feature-icon w-12 h-12 rounded-lg flex items-center justify-center text-white mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            <path fill-rule="evenodd" d="M3 4.875C3 3.839 3.84 3 4.875 3h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 0 1 3 9.375v-4.5ZM4.875 4.5a.375.375 0 0 0-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 0 0 .375-.375v-4.5a.375.375 0 0 0-.375-.375h-4.5Zm7.875.375c0-1.036.84-1.875 1.875-1.875h4.5C20.16 3 21 3.84 21 4.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5a1.875 1.875 0 0 1-1.875-1.875v-4.5Zm1.875-.375a.375.375 0 0 0-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 0 0 .375-.375v-4.5a.375.375 0 0 0-.375-.375h-4.5ZM6 6.75A.75.75 0 0 1 6.75 6h.75a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75h-.75A.75.75 0 0 1 6 7.5v-.75Zm9.75 0A.75.75 0 0 1 16.5 6h.75a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75ZM3 14.625c0-1.036.84-1.875 1.875-1.875h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.035-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 0 1 3 19.125v-4.5Zm1.875-.375a.375.375 0 0 0-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 0 0 .375-.375v-4.5a.375.375 0 0 0-.375-.375h-4.5Zm7.875-.75a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75Zm6 0a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75ZM6 16.5a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75Zm9.75 0a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75Zm-3 3a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75Zm6 0a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75Z" clip-rule="evenodd" />
+                            </svg>
+
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">QR Check-in System</h3>
+                        <p class="text-gray-600">Digital ticket verification with QR codes for seamless event entry.</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 shadow-md">
+                        <div class="feature-icon w-12 h-12 rounded-lg flex items-center justify-center text-white mb-4">
+                            <i class="fas fa-bullhorn text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Marketing Tools</h3>
+                        <p class="text-gray-600">Promote your events with built-in marketing and social media tools.</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 shadow-md">
+                        <div class="feature-icon w-12 h-12 rounded-lg flex items-center justify-center text-white mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM9.763 9.51a2.25 2.25 0 0 1 3.828-1.351.75.75 0 0 0 1.06-1.06 3.75 3.75 0 0 0-6.38 2.252c-.033.307 0 .595.032.822l.154 1.077H8.25a.75.75 0 0 0 0 1.5h.421l.138.964a3.75 3.75 0 0 1-.358 2.208l-.122.242a.75.75 0 0 0 .908 1.047l1.539-.512a1.5 1.5 0 0 1 .948 0l.655.218a3 3 0 0 0 2.29-.163l.666-.333a.75.75 0 1 0-.67-1.342l-.667.333a1.5 1.5 0 0 1-1.145.082l-.654-.218a3 3 0 0 0-1.898 0l-.06.02a5.25 5.25 0 0 0 .053-1.794l-.108-.752H12a.75.75 0 0 0 0-1.5H9.972l-.184-1.29a1.863 1.863 0 0 1-.025-.45Z" clip-rule="evenodd" />
+                            </svg>
+
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Automatic Payouts</h3>
+                        <p class="text-gray-600">Get paid automatically to your mobile money after each successful event.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="py-16 bg-white">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
+                    Frequently Asked Questions
+                </h2>
+                
+                <div class="space-y-4">
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button @click="faqOpen = faqOpen === 1 ? null : 1"
+                                class="w-full px-6 py-4 text-left bg-gray-50 hover:bg-gray-100 flex justify-between items-center">
+                            <span class="font-semibold text-gray-900">When will I receive my payments?</span>
+                            <i :class="faqOpen === 1 ? 'fa-chevron-up' : 'fa-chevron-down'" class="fas text-gray-500"></i>
+                        </button>
+                        <div x-show="faqOpen === 1" x-collapse class="px-6 py-4 bg-white border-t border-gray-200">
+                            <p class="text-gray-600">Payments are processed and sent to your registered mobile money number within 24 hours after your event concludes. If we miss this deadline, you'll receive an additional 5% compensation automatically added to your payout.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button @click="faqOpen = faqOpen === 2 ? null : 2"
+                                class="w-full px-6 py-4 text-left bg-gray-50 hover:bg-gray-100 flex justify-between items-center">
+                            <span class="font-semibold text-gray-900">What mobile money providers do you support?</span>
+                            <i :class="faqOpen === 2 ? 'fa-chevron-up' : 'fa-chevron-down'" class="fas text-gray-500"></i>
+                        </button>
+                        <div x-show="faqOpen === 2" x-collapse class="px-6 py-4 bg-white border-t border-gray-200">
+                            <p class="text-gray-600">We currently support MTN Mobile Money, Vodafone Cash, and AirtelTigo Money. You'll need to provide a valid mobile money number during registration that matches one of these providers.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button @click="faqOpen = faqOpen === 3 ? null : 3"
+                                class="w-full px-6 py-4 text-left bg-gray-50 hover:bg-gray-100 flex justify-between items-center">
+                            <span class="font-semibold text-gray-900">Are there any hidden fees?</span>
+                            <i :class="faqOpen === 3 ? 'fa-chevron-up' : 'fa-chevron-down'" class="fas text-gray-500"></i>
+                        </button>
+                        <div x-show="faqOpen === 3" x-collapse class="px-6 py-4 bg-white border-t border-gray-200">
+                            <p class="text-gray-600">No hidden fees. We charge a flat 5% platform fee on ticket sales. This covers payment processing, customer support, and platform maintenance. You keep 95% of all ticket revenue.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button @click="faqOpen = faqOpen === 4 ? null : 4"
+                                class="w-full px-6 py-4 text-left bg-gray-50 hover:bg-gray-100 flex justify-between items-center">
+                            <span class="font-semibold text-gray-900">How do I verify my mobile money number?</span>
+                            <i :class="faqOpen === 4 ? 'fa-chevron-up' : 'fa-chevron-down'" class="fas text-gray-500"></i>
+                        </button>
+                        <div x-show="faqOpen === 4" x-collapse class="px-6 py-4 bg-white border-t border-gray-200">
+                            <p class="text-gray-600">After registration, we'll send a small test transaction (less than ₵1) to your mobile money number. You'll need to confirm the exact amount received to verify your account. This ensures payments are sent to the correct number.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-16 gradient-bg">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold text-white mb-6">
+                    Ready to Start Creating Events?
+                </h2>
+                <p class="text-xl text-purple-100 mb-8">
+                    Join thousands of event creators who trust EventHub to handle their ticketing and payments.
+                </p>
+                <button @click="showMomoModal = true; formStep = 1"
+                        class="bg-white text-purple-600 px-10 py-4 rounded-xl text-lg font-semibold hover:bg-gray-100 transition duration-300 shadow-lg">
+                    <i class="fas fa-user-plus mr-2"></i> Register Now
+                </button>
+                <p class="text-purple-200 mt-4">
+                    No upfront costs. You only pay when you sell tickets.
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-4 gap-8">
+                    <div>
+                        <div class="flex items-center mb-6">
+                            <i class="fas fa-calendar-alt text-2xl text-purple-400 mr-2"></i>
+                            <span class="text-xl font-bold">EventHub</span>
+                        </div>
+                        <p class="text-gray-400">Empowering event creators with seamless ticketing and guaranteed payouts.</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-lg mb-6">For Creators</h4>
+                        <ul class="space-y-3 text-gray-400">
+                            <li><a href="#" class="hover:text-white">How It Works</a></li>
+                            <li><a href="#" class="hover:text-white">Pricing</a></li>
+                            <li><a href="#" class="hover:text-white">Creator Resources</a></li>
+                            <li><a href="#" class="hover:text-white">Success Stories</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-lg mb-6">Support</h4>
+                        <ul class="space-y-3 text-gray-400">
+                            <li><a href="#" class="hover:text-white">Help Center</a></li>
+                            <li><a href="#" class="hover:text-white">Contact Support</a></li>
+                            <li><a href="#" class="hover:text-white">Payment FAQ</a></li>
+                            <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-lg mb-6">Contact</h4>
+                        <div class="space-y-3 text-gray-400">
+                            <p class="flex items-center">
+                                <i class="fas fa-envelope mr-3"></i>
+                                support@eventhub.com
+                            </p>
+                            <p class="flex items-center">
+                                <i class="fas fa-phone mr-3"></i>
+                                0302 123 4567
+                            </p>
+                            <p class="flex items-center">
+                                <i class="fas fa-map-marker-alt mr-3"></i>
+                                Accra, Ghana
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                    <p>&copy; 2024 EventHub. All rights reserved. Your payments are guaranteed.</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Mobile Money Registration Modal -->
+         <form action="" method="post">
+        <div x-show="showMomoModal" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             x-cloak
+             class="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50"
+             @click.self="showMomoModal = false">
+            
+            <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+                <!-- Step 1: Mobile Money Info -->
+                <div x-show="formStep === 1" class="p-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold text-gray-900">Register as Event Creator</h3>
+                        <button @click="showMomoModal = false" class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold mr-3">
+                                1
+                            </div>
+                            <h4 class="text-lg font-semibold">Mobile Money Details</h4>
+                        </div>
+                        
+                        <p class="text-gray-600 mb-6">
+                            Provide your mobile money number for receiving payments. We'll send a verification transaction to confirm.
+                        </p>
+                        
+                            {% csrf_token %}
+                            <div class="space-y-4">
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Mobile Money Number
+                                    </label>
+                                    
+                                    {{form.momo_numb}}
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Full Name for Money Number
+                                    </label>
+                                    
+                                    {{form.full_name}}
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Email
+                                    </label>
+                                    
+                                    {{form.email}}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <button @click="showMomoModal = false"
+                                    class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">
+                                Cancel
+                            </button>
+                            <button @click="formStep = 2"
+                                    :disabled="!momoNumber"
+                                    :class="!momoNumber ? 'bg-gray-300 cursor-not-allowed' : 'bg-purple-600 hover:bg-purple-700'"
+                                    class="px-6 py-3 text-white rounded-lg" type="button">
+                                Continue
+                            </button>
+                        </div>
+                    </div>
+                    
+                    
+                    <!-- Step 2: Terms and Conditions -->
+                    <div x-show="formStep === 2" class="p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold mr-3">
+                                2
+                            </div>
+                            <h4 class="text-lg font-semibold">Terms & Conditions</h4>
+                        </div>
+                        
+                        <div class="bg-gray-50 rounded-lg p-4 mb-6 max-h-60 overflow-y-auto">
+                            <h5 class="font-semibold mb-3">Important Payment Terms:</h5>
+                            <ul class="space-y-3 text-sm text-gray-600">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>You will receive 95% of all ticket sales revenue</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Payments are processed within 24 hours after your event ends</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>If payment is delayed beyond 24 hours, you receive an additional 5% compensation</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Platform fee of 5% applies to all ticket sales</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>You must verify your mobile money number with a test transaction</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                    <span>Refunds processed through the platform may affect final payout</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="flex items-start mb-6">
+                            <input type="checkbox" id="terms" class="mt-1 mr-3">
+                            <label for="terms" class="text-sm text-gray-600">
+                                I agree to the terms and conditions and understand the 24-hour payment guarantee with compensation for delays.
+                            </label>
+                        </div>
+                        
+                        <div class="flex justify-between">
+                            <button @click="formStep = 1"
+                                    class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50", type="button">
+                                Back
+                            </button>
+                            <button @click="formStep = 3"
+                                    class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700" type="button">
+                                Accept & Continue
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Success -->
+                    <div x-show="formStep === 3" class="p-8 text-center">
+                        <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Registration Submitted!</h3>
+                        
+                        <p class="text-gray-600 mb-6">
+                            We've received your registration as an event creator. You'll receive a verification transaction on your mobile money number 
+                            <span class="font-semibold" x-text="momoNumber"></span> within the next few minutes.
+                        </p>
+                        
+                        <div class="bg-purple-50 rounded-lg p-4 mb-6">
+                            <p class="text-sm text-purple-700">
+                                <i class="fas fa-info-circle mr-2"></i>
+                                Check your mobile money for a test transaction (less than ₵1) and confirm the exact amount to verify your account.
+                            </p>
+                        </div>
+                        
+                        <button type="submit" @click="showMomoModal = false; formStep = 1; momoNumber = ''"
+                                class="w-full py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+                            Done
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Initialize Alpine.js data
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('registration', () => ({
+                showMomoModal: false,
+                selectedProvider: 'mtn',
+                formStep: 1,
+                momoNumber: '',
+                faqOpen: null,
+                
+                init() {
+                    // Any initialization code
+                }
+            }));
+        });
+    </script>
+
+     <style>
+        body { font-family: Poppins; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .pricing-card { transition: all 0.3s ease; }
+        .pricing-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .timeline-step { position: relative; }
+        .timeline-step:not(:last-child):after { content: ''; position: absolute; top: 50%; right: -24px; width: 24px; height: 2px; background: #e5e7eb; }
+        .feature-icon { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .faq-answer { transition: all 0.3s ease; }
+    </style>
+
+
+{% endblock content %}
+
+
+

@@ -17,6 +17,15 @@
       </a>
     </div>
 
+    <!-- message -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class=" absolute top-24  left-1/2 transform -translate-x-1/2  z-10 mb-4 p-4 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-800{% elif message.tags == 'error' %}bg-red-100 text-red-800{% else %}bg-blue-100 text-blue-800{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
     <!-- Event Image -->
     <div class="relative md:w-1/2 h-60 md:h-auto group">
       <img src="{{ event.banner.url }}" alt="{{ event.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
@@ -83,7 +92,7 @@
         <p class="text-2xl font-bold text-amber-600 mb-4">GH₵ {{ event.price }}</p>
 
         {% if event.event_tag == 'free' %}
-        <a href="{% url 'booking:book-event' event.id%}">
+        <a href="{% url 'payment:validate-user' event.id%}">
 
           <button type="button" class="w-full py-3 md:py-4 bg-blue-700 hover:bg-blue-500 text-white font-semibold rounded-lg shadow transition-all duration-300">
             Register Your Ticket

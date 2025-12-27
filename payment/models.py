@@ -11,11 +11,13 @@ class FreeEventRegisterInfo(models.Model):
     email = models.EmailField()
     contact = models.CharField(max_length=12 , null=True)
     full_name = models.CharField(max_length=100)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
     created_at = models.DateField(auto_now_add=True)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, related_name="events")
 
     def __str__(self) -> str:
         return f"{self.full_name}({self.user}) ticket for {self.event}"
+    
+    
         
 
 class Payment(models.Model):

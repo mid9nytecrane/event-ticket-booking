@@ -1,14 +1,30 @@
 from django.contrib.auth.models import User
-from core.models import Ticket
+from core.models import Ticket, Event
 from user_account.models import UserProfile
 from user_account.forms import CustomSignUpForm
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.files import File 
-
+from django.utils import timezone
+from django.core.mail import send_mail
 import qrcode 
 from io import BytesIO
 
+
+
+#sending user a welcome message through email after signing up 
+@receiver(post_save,sender=User, dispatch_uid="send_welcome_email")
+def send_welcome_email(sender,instance,created,**Kwargs):
+
+    """send a welcome message"""
+    if created:
+        send_mail(
+            'Welcome to EventTribe',
+            'Thanks for signing up with us',
+            'sheriffsakara112@gmail.com',
+            [instance.email],
+            fail_silently=False,
+        )
 
 #creating user profile
 @receiver(post_save, sender=User, dispatch_uid="create_user_profile")
@@ -24,6 +40,10 @@ def create_user_profile(sender,created,instance, **kwargs):
         print("\nUser profile not created !!")    
 
 
+
+        
+
+
 @receiver(post_save,sender=Ticket, dispatch_uid='generate_qr_code')
 def generate_qr_code(sender, instance, created, **kwargs):
     print('\nsignal fired !!!')
@@ -36,11 +56,9 @@ def generate_qr_code(sender, instance, created, **kwargs):
         )
 
         #qr code data
-        qr_data = f"""
-               TicketId: {instance.ticket_id}
-                Event: {instance.event.title}
-                Attendee: {instance.attendee.username}
-            """
+        qr_data = f"{instance.ticket_id}"
+               
+        
         
         qr.add_data(qr_data)
         qr.make(fit=True)

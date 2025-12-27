@@ -2,12 +2,14 @@ from django.shortcuts import render,get_object_or_404
 from .models import Event, EventCategory, Ticket
 from django.core.paginator import Paginator
 from django.db.models import Q
-
+from django.utils import timezone
 import time
 # Create your views here.
 
 def index(request):
-    events = Event.objects.all().order_by('-created_at')[:8]
+    events = Event.objects.filter(
+        date__gte=timezone.now().date()
+    ).order_by('created_at')[:8]
     event_categories = EventCategory.objects.all()
 
     paginator = Paginator(events, 2)
@@ -25,7 +27,9 @@ def index(request):
 
 
 def browse_events(request):
-    events = Event.objects.all().order_by('-created_at')
+    events = Event.objects.filter(
+        date__gte=timezone.now().date()
+    ).order_by('-created_at')
 
     context = {
         'events':events
@@ -51,14 +55,22 @@ def event_details(request,pk):
 def search_event(request):
     time.sleep(1)
     query = request.GET.get('search', '').strip()
+    today = timezone.now().date()
     if query:
+
         events = Event.objects.filter(
+            (
             Q(title__icontains=query) | 
             Q(location__icontains=query) |
             Q(event_tag__icontains=query)
+
+            ) & Q(date__gte=today)
+          
         )
     else:
-        events = Event.objects.all().order_by('-created_at')
+        events = Event.objects.filter(
+            date__gte=timezone.now().date()
+        ).order_by('-created_at')
         
     context = {
         'events':events,
@@ -71,7 +83,9 @@ def search_event(request):
 def list_of_events_by_category(request, slug):
     time.sleep(1)
     event_category = get_object_or_404(EventCategory, slug=slug)
-    events = Event.objects.filter(category=event_category)
+    events = Event.objects.filter(
+        category=event_category 
+        )
     context = {
         'event_category':event_category,
         'events':events
