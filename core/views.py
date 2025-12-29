@@ -1,8 +1,10 @@
-from django.shortcuts import render,get_object_or_404
-from .models import Event, EventCategory, Ticket
+from django.shortcuts import render,get_object_or_404,redirect
+from django.http import HttpResponse
+from .models import Event, EventCategory, Ticket,LikedEvent
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.utils import timezone
+from django.contrib import messages
 import time
 # Create your views here.
 
@@ -50,6 +52,22 @@ def event_details(request,pk):
     return render(request, 'core/events_details.html',context)
     
 
+# like event
+def event_like(request, event_id):
+    if request.user.is_authenticated:
+        event = get_object_or_404(Event, pk=event_id)
+        #liked_events = LikedEvent.objects.all()
+        if event.likes.filter(pk=request.user.id):
+            event.likes.remove(request.user)
+        else:
+            event.likes.add(request.user)
+        return render(request, 'core/partials/like_events.html', {'event':event})
+        #return HttpResponse(event.likes.count())
+        
+    else:
+        messages.info(request, "you are not logged in".title())
+        return redirect('/')
+   
 
 #search for events
 def search_event(request):
@@ -83,8 +101,10 @@ def search_event(request):
 def list_of_events_by_category(request, slug):
     time.sleep(1)
     event_category = get_object_or_404(EventCategory, slug=slug)
+    current_date = timezone.now().date()
     events = Event.objects.filter(
-        category=event_category 
+        category=event_category,
+         date__gte=current_date,
         )
     context = {
         'event_category':event_category,

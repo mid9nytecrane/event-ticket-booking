@@ -5,6 +5,7 @@ from django.core.files import File
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+
 import uuid 
 import qrcode
 from io import BytesIO
@@ -40,7 +41,7 @@ class Event(models.Model):
                                  related_name='events', null=True)
     event_tag = models.CharField(max_length=10, null=True, choices=EVENT_TAG, default="")
     organizer = models.CharField(max_length=255, null=True)
-    #organizer = models.ForeignKey(User, )
+    likes = models.ManyToManyField(User, related_name="likes", through="LikedEvent")
     title = models.CharField(max_length=255)
     slug = models.CharField(max_length=100)
     description = models.TextField(max_length=255 , blank=True)
@@ -50,7 +51,8 @@ class Event(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2)
     total_tickets = models.PositiveIntegerField()
     purchased_tickets = models.PositiveIntegerField(blank=True, default=0)
-    created_at = models.DateField(auto_now_add=True)
+    is_paid = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
     
 
     def __str__(self):
@@ -66,6 +68,11 @@ class Event(models.Model):
         return self.total_tickets - self.purchased_tickets
     
 
+    #number of likes count
+    def number_of_likes(self):
+        self.likes.count()
+    
+
     def register_free_tickets(self):
         if not self.is_free:
             return False 
@@ -78,7 +85,7 @@ class Event(models.Model):
         return True 
     
 
-
+    
 
     
     @property
@@ -123,7 +130,14 @@ class Event(models.Model):
         super(Event, self).save()
 
    
+#through table for events liked
+class LikedEvent(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.user.username} : {self.event.title}"
 
 
 
@@ -146,7 +160,7 @@ class Organizer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='organizer')
     full_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
-    momo_numb = models.CharField(max_length=13)
+    momo_numb = models.CharField(max_length=13, null=True)
     creator = models.BooleanField(default=False)
 
 

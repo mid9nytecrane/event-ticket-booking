@@ -6,6 +6,7 @@ from django.contrib.auth.models import User, Group, Permission
 from django.contrib import messages
 from core.models import Event,Ticket,Organizer
 import datetime
+from django.utils import timezone
 # Create your views here.
 
 @login_required
@@ -60,7 +61,7 @@ def become_a_creator(request):
 
             return redirect("organizers:success-page")
         else:
-            HttpResponse('form is invalid')
+            messages.error(request, "form contains invalid data, check and enter valid data inputs")
 
     else:
         form = CreatorRegisterForm()
@@ -85,12 +86,12 @@ def creator_dashboard(request):
     if request.user.groups.filter(name="organizers"):
         events = Event.objects.filter(user=request.user)
         tickets = Ticket.objects.filter(is_used=True)
-
+        current_date = timezone.now()
         # for event in events:
         #     print(f"{event} id: {event.id}")
             
         #     revenue = event.price * event.purchased_tickets
-        total_revenue = sum(event.revenue for event in events)
+        total_revenue = sum(event.revenue for event in events if not event.is_paid)
         total_tickets_sold = sum(event.total_purchased_tickets for event in events)
 
         active_events_count = sum(1 for event in events if event.is_active)
@@ -98,6 +99,8 @@ def creator_dashboard(request):
 
         upcoming_events_count = sum(1 for event in events if event.is_upcoming)
         upcoming_events_list = [event for event in events if event.is_upcoming]
+
+        
 
         print(f"\nActive Events: {active_events_count}")
         print(f"active event: {active_event_list}")
@@ -112,6 +115,7 @@ def creator_dashboard(request):
             'active_events_count':active_events_count,
             'upcoming_events_count':upcoming_events_count,
             'tickets':tickets,
+            'current_date':current_date,
             
         }
         return render(request, "organizers/dashboard.html", context)
@@ -148,6 +152,7 @@ def delete_event(request, event_id):
 #@require_http_methods(["POST"])
 def edit_event(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
+    first_buy = event.total_purchased_tickets >= 1
     form = CreateEventForm(request.POST, request.FILES, instance=event)
     if request.method == 'POST':
         if form.is_valid():
@@ -161,7 +166,11 @@ def edit_event(request, event_id):
 
     else:
         form = CreateEventForm(instance=event)
-        return render(request, 'organizers/edit_event.html', {'form':form})
+        return render(request, 'organizers/edit_event.html', {
+            'form':form,
+            'event':event,
+            'first_buy':first_buy,
+            })
 
 
 #checking-in attendees i.e this scanning and manually entery ticket data

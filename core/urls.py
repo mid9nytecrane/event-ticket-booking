@@ -11,6 +11,7 @@ urlpatterns = [
     path('event_details/<int:pk>/', views.event_details, name='event-detail'),
     path('search_event/',views.search_event, name='search-event'),
     path('event_category/<slug:slug>/',views.list_of_events_by_category, name='category-events'),
+    path('event_like/<int:event_id>/', views.event_like, name="event-like"),
 
     path('profile-page/', user_profile, name='user-profile'),
     path('profile-update/', update_profile, name='update-profile'),

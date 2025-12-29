@@ -1,10 +1,120 @@
 {% extends "core/base.html" %}
 
 {% block content %}
-<section class='mt-16 bg-slate-50 py-6'>
+<section class='mt-16 bg-slate-50 py-6 min-h-screen'>
     {% include "core/partials/searchbox.html" %}
 
-    {% include "core/partials/events_section.html" %}
+    <div id='event-list' class='relative container px-3 sm:px-4 mx-auto pb-6'>
+
+    {% include "core/partials/spinner.html" %}
+
+    {% if events %}
+
+    <!-- Responsive Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 
+                gap-3 sm:gap-4 md:gap-6 py-4">
+
+        {% for event in events %}
+        <!-- Event Card -->
+        
+        <div class="group bg-white rounded-xl shadow-sm hover:shadow-xl 
+                    transition-all duration-300 overflow-hidden flex flex-col">
+            <a href="{% url 'event-detail' event.id %}">
+
+                <!-- Image -->
+                <div class="relative h-32 sm:h-40 md:h-52 overflow-hidden">
+                    <img src="{{ event.banner.url }}" alt="{{ event.title }}"
+                    class="w-full h-full object-cover transition-transform duration-500 
+                           group-hover:scale-110">
+    
+                    <span class="absolute top-2 left-2 text-[10px] sm:text-xs font-semibold 
+                        px-2.5 py-1 rounded-full shadow 
+                        {% if event.event_tag == 'free' %}
+                            bg-green-500/90 text-white
+                        {% else %}
+                            bg-amber-500/90 text-white
+                        {% endif %}">
+                        {{ event.event_tag|title }}
+                    </span>
+                </div>
+    
+                <!-- Content -->
+                <div class="flex flex-col justify-between grow p-3 sm:p-4">
+                    <!-- category tag and like button -->
+                    <div class='flex items-center justify-between'>
+                        <p class="flex items-center gap-1 text-xs sm:text-sm text-amber-600  mb-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                            <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd" />
+                            </svg>
+                            {{ event.category }}
+                        </p>
+                        <div class="flex items-center gap-1 sm:gap-2 md:gap-4">
+                            {% include "core/partials/like_events.html" %}
+                            <a href="#" class="hover:scale-105 transition-all duration-300 ">
+    
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 sm:size-5 md:size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
+                                </svg>
+                            </a>
+    
+                        </div>
+    
+                    </div>
+    
+                    <h3 class="text-sm sm:text-base font-semibold truncate text-gray-900 capitalize">
+                        {{ event.title }}
+                    </h3>
+    
+                    <p class="text-gray-500 text-xs sm:text-sm truncate mb-2">
+                        {{ event.description }}
+                    </p>
+    
+                    <p class="flex items-center gap-1 text-gray-500 text-xs truncate">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="size-4">
+                        <path fill-rule="evenodd" d="M18 2.993a.75.75 0 0 0-1.5 0v1.5h-9V2.994a.75.75 0 1 0-1.5 0v1.497h-.752a3 3 0 0 0-3 3v11.252a3 3 0 0 0 3 3h13.5a3 3 0 0 0 3-3V7.492a3 3 0 0 0-3-3H18V2.993Z" clip-rule="evenodd" />
+                        </svg>
+                        {{ event.date }}
+                    </p>
+    
+                    <p class="flex items-center gap-1 text-gray-500 text-xs truncate mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                        <path fill-rule="evenodd" d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd" />
+                        </svg>
+                        {{ event.location }}
+                    </p>
+    
+                    <!-- Price + Link -->
+                    <div class="flex justify-between items-center mt-auto">
+                        <span class="text-amber-600 font-bold text-sm sm:text-lg">
+                            GH₵ {{ event.price }}
+                        </span>
+    
+                        <a href="{% url 'event-detail' event.id %}"
+                           class="text-xs sm:text-sm font-medium text-blue-700 hover:text-blue-500">
+                            View →
+                        </a>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <div role="alert" class="alert alert-info mt-4 mb-6 mx-1 md:mx-0">
+        <svg class="h-6 w-6 stroke-current">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12..." />
+        </svg>
+        <span class='text-white text-lg font-semibold'>
+            Your search matches no event
+        </span>
+    </div>
+    {% endif %}
+</div>
+
+
 </section>
 
 {% endblock content %}

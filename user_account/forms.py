@@ -1,5 +1,7 @@
 from django import forms 
 from .models import UserProfile
+from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.widgets import PhoneNumberPrefixWidget,RegionalPhoneNumberWidget
 
 class CustomSignUpForm(forms.Form):
     first_name = forms.CharField(
@@ -11,9 +13,10 @@ class CustomSignUpForm(forms.Form):
         widget=forms.TextInput(attrs={'placeholder': 'Last Name'})
     )
 
-    phone = forms.CharField(
-        max_length=100,
-        widget=forms.TextInput(attrs={'placeholder': 'e.g 024XXXXXXX'})
+    phone = PhoneNumberField(
+        widget=RegionalPhoneNumberWidget(region='GH', attrs={
+            'placeholder': 'e.g +23324xxxxxx'
+        })
     )
 
     town = forms.CharField(

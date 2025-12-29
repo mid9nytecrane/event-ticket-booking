@@ -28,6 +28,14 @@
 
             <form method="POST" class="space-y-5">
                 {% csrf_token %}
+                <!-- message -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="mb-4 p-4 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-800{% elif message.tags == 'error' %}bg-red-100 text-red-800{% else %}bg-blue-100 text-blue-800{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
                 <h3 class="text-2xl font-bold text-gray-900">Register as Event Creator</h3>
                 
                 <!-- Container for all steps - REMOVED absolute positioning -->
@@ -53,13 +61,19 @@
                             </div>
                             <p class="text-gray-500 mb-3 text-sm">
                                 Provide your payout & identity details to receive event earnings. <br>
-                                Provide your mobile money number for receiving payments. We'll send a verification transaction to confirm.
+                                Provide your mobile money number for receiving payments. <br> Add country code(+233) to the number,
+                                e.g +233244123456
                             </p>
                             
                             <div>
                                 <label class="text-sm text-gray-700 font-medium">Mobile Money Number</label>
                                 <div class="mt-1">
                                     {{ form.momo_numb }}
+                                    {% for field in form %}
+                                        {% if field.errors %}
+                                            <p class='text-red-500 text-sm mt-1 '>{{field.errors.0}}</p>
+                                        {% endif %}
+                                    {% endfor %}
                                 </div>
                             </div>
 
@@ -67,6 +81,11 @@
                                 <label class="text-sm text-gray-700 font-medium">Name of Money Number</label>
                                 <div class="mt-1">
                                     {{ form.full_name }}
+                                    {% for field in form %}
+                                        {% if field.errors %}
+                                            <p class='text-red-500 text-sm mt-1 '>{{field.errors.0}}</p>
+                                        {% endif %}
+                                    {% endfor %}
                                 </div>
                             </div>
 
@@ -74,6 +93,11 @@
                                 <label class="text-sm text-gray-700 font-medium">Email</label>
                                 <div class="mt-1">
                                     {{ form.email }}
+                                    {% for field in form %}
+                                        {% if field.errors %}
+                                            <p class='text-red-500 text-sm mt-1 '>{{field.errors.0}}</p>
+                                        {% endif %}
+                                    {% endfor %}
                                 </div>
                             </div>
 

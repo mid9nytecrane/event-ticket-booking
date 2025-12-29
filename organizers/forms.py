@@ -1,7 +1,8 @@
 from django import forms 
 from core.models import Event 
 from core.models import Organizer
-
+from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.widgets import RegionalPhoneNumberWidget
 
 
 class CreateEventForm(forms.ModelForm):
@@ -19,6 +20,9 @@ class CreateEventForm(forms.ModelForm):
             field.widget.attrs.update({
                 'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:border-blue-500 focus:ring-blue-500'
             })
+
+
+       
 
         self.fields['description'].widget.attrs.update({
             'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg  focus:ring-2 focus:border-blue-500 focus:ring-blue-500 h-32'
@@ -40,7 +44,12 @@ class CreatorRegisterForm(forms.ModelForm):
         fields = "__all__"
         exclude = ["user", "creator"]
 
-
+    momo_numb = PhoneNumberField(
+        widget=RegionalPhoneNumberWidget(region='GH', attrs={
+            'class':'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none',
+            'placeholder': 'e.g +233244123456',
+        })
+    )
     
     
     def __init__(self, *args, **Kwargs):
@@ -52,11 +61,11 @@ class CreatorRegisterForm(forms.ModelForm):
         #     })
 
         
-        self.fields['momo_numb'].widget.attrs.update({
-            'class':'bg-blue-200 w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none',
-            'placeholder': 'e.g 0244 123 456',
+        # self.fields['momo_numb'].widget.attrs.update({
+        #     'class':'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none',
+        #     'placeholder': 'e.g 0244 123 456',
             
-        })
+        # })
 
         self.fields['email'].widget.attrs.update({
             'class':'w-full px-4 py-3 text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none',

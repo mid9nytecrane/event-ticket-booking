@@ -28,6 +28,11 @@
         <div>
             <label class="block text-gray-700 font-semibold mb-1">Event Title</label>
             {{form.title}}
+            {% for field in form %}
+                {% if field.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{field.errors.0}}</p>
+                {% endif %}
+            {% endfor %}
         </div>
 
         <!--Event Category-->
@@ -47,12 +52,22 @@
         <div>
             <label class="block text-gray-700 font-semibold mb-1">Location</label>
             {{form.location}}
+            {% for field in form %}
+                {% if field.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{field.errors.0}}</p>
+                {% endif %}
+            {% endfor %}
         </div>
 
         <!-- Organizer-->
         <div>
             <label class="block text-gray-700 font-semibold mb-1">Organizer</label>
             {{form.organizer}}
+            {% for field in form %}
+                {% if field.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{field.errors}}</p>
+                {% endif %}
+            {% endfor %}
         </div>
 
         <!-- Category -->
