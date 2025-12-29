@@ -19,7 +19,8 @@ from django.urls import path,include
 from user_account.views import CustomSignupView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    path('boss_lightyear/', admin.site.urls),
     path('accounts/signup/',CustomSignupView.as_view(), name="account_signup"),
     path('accounts/', include('allauth.urls')),
     
