@@ -10,6 +10,8 @@ import uuid
 import qrcode
 from io import BytesIO
 
+from decimal import Decimal
+
 # Create your models here.
 
 
@@ -112,7 +114,9 @@ class Event(models.Model):
     def revenue(self):
         if self.purchased_tickets is None or self.price is None:
             return 0
-        return self.purchased_tickets * self.price
+        total = self.purchased_tickets * self.price
+        revenue = Decimal('0.95') * total 
+        return revenue
     
     @property
     def revenue_formatted(self):
