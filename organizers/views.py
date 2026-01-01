@@ -13,12 +13,15 @@ from django.utils import timezone
 #@permission_required('core.add_event')
 #@require_http_methods(["POST"])
 def create_event(request):
+    
     if request.user.has_perm('core.add_event'):
+        organizer = Organizer.objects.get(user=request.user)
         form = CreateEventForm(request.POST, request.FILES)
         if request.method == "POST":
             if form.is_valid():
                 form_instance = form.save(commit=False)
-                form_instance.user = request.user 
+                form_instance.user = request.user
+                form_instance.organizer = organizer
                 form_instance.save()
 
                 return redirect('organizers:creator-dashboard')

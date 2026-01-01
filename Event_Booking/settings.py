@@ -30,7 +30,8 @@ DEBUG = config("DEBUG", cast=bool)
 
 if DEBUG == False:
     ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
-
+else:
+    ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -140,6 +141,7 @@ DATABASES = {
 
 if DEBUG == False:
     DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

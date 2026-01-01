@@ -8,8 +8,8 @@ from phonenumber_field.widgets import RegionalPhoneNumberWidget
 class CreateEventForm(forms.ModelForm):
     class Meta:
         model = Event 
-        fields = ('category', 'event_tag', 'title', 'description', 'location', 'date', 'banner', 'organizer','price', 'total_tickets')
-        exclude = ('available_tickets', 'user')
+        fields = ('category', 'event_tag', 'title', 'description', 'location', 'date', 'banner','price', 'total_tickets')
+        exclude = ('available_tickets', 'user','oranizer')
 
     
    

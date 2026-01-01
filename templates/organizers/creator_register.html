@@ -379,10 +379,20 @@
         <p class="text-xl text-purple-100 mb-8">
             Join thousands of event creators who trust EventHub to handle their ticketing and payments.
         </p>
-        <button @click="showMomoModal = true; formStep = 1"
-                class="bg-white text-purple-600 px-10 py-4 rounded-xl text-lg font-semibold hover:bg-gray-100 transition duration-300 shadow-lg">
-            <i class="fas fa-user-plus mr-2"></i> Register Now
-        </button>
+        {% if request.user|has_group:"organizers" %}
+            <button type='button'
+                    @click="already_creator.showModal()"
+                    class="bg-white text-purple-600 px-10 py-4 rounded-xl text-lg font-semibold hover:bg-gray-100 transition duration-300 shadow-lg">
+                <i class="fas fa-user-plus mr-2"></i> Register Now
+            </button>
+            
+        {% else %}
+            <button type='button'
+                    @click="registration_form.showModal()"
+                    class="bg-white text-purple-600 px-10 py-4 rounded-xl text-lg font-semibold hover:bg-gray-100 transition duration-300 shadow-lg">
+                <i class="fas fa-user-plus mr-2"></i> Register Now
+            </button>
+        {% endif %}
         <p class="text-purple-200 mt-4">
             No upfront costs. You only pay when you sell tickets.
         </p>

@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse
-from .models import Event, EventCategory, Ticket,LikedEvent
+from .models import Event, EventCategory, Ticket,LikedEvent,Organizer
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.utils import timezone
@@ -47,8 +47,9 @@ def event_details(request,pk):
     # exist_ticket = Ticket.objects.filter(event=event, attendee=request.user).first()
     # if exist_ticket:
     #     return render(request, 'booking/event_booked_already.html', {"exist_ticket":exist_ticket})
-    
-    context = {'event':event, }
+    #organizer = get_object_or_404(Organizer, user=event.user)
+    organizer = event.organizer
+    context = {'event':event, 'organizer':organizer}
     return render(request, 'core/events_details.html',context)
     
 
