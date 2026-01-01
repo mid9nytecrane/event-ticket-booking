@@ -33,7 +33,7 @@ if DEBUG:
     ALLOWED_HOSTS = ['*']
 # else:
 #     ALLOWED_HOSTS = ['*','eventtribe-cv8c.onrender.com']
-#     CSRF_TRUSTED_ORIGINS = ['https://eventtribe-cv8c.onrender.com', 'http://localhost:8000']
+CSRF_TRUSTED_ORIGINS = ['https://eventtribe-cv8c.onrender.com', 'http://localhost:8000']
 
 
 
