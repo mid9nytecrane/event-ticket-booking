@@ -28,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool)
 
-if DEBUG == False:
+if DEBUG:
     ALLOWED_HOSTS = ['*']
 # else:
 #     ALLOWED_HOSTS = ['*','eventtribe-cv8c.onrender.com']
