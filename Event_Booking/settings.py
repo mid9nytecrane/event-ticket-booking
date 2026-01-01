@@ -29,8 +29,8 @@ SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", cast=bool)
 
 if DEBUG:
-    ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
-    #ALLOWED_HOSTS = ['*']
+    #ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
+    ALLOWED_HOSTS = ['*']
 # else:
 #     ALLOWED_HOSTS = ['*','eventtribe-cv8c.onrender.com']
 #     CSRF_TRUSTED_ORIGINS = ['https://eventtribe-cv8c.onrender.com', 'http://localhost:8000']
@@ -143,7 +143,7 @@ DATABASES = {
     }
 }
 
-if DEBUG == False:
+if DEBUG:
     DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
 
 
