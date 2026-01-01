@@ -31,19 +31,6 @@ class EventCategory(models.Model):
         super(EventCategory, self).save()
 
 
-
-class Organizer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='organizer')
-    full_name = models.CharField(max_length=255)
-    email = models.CharField(max_length=255)
-    momo_numb = models.CharField(max_length=13, null=True)
-    creator = models.BooleanField(default=False)
-
-
-    def __str__(self):
-        return f"Organizer - {self.full_name}({self.user})"
-
-
 class Event(models.Model):
     EVENT_TAG = {
         'paid': 'Paid',
@@ -55,7 +42,7 @@ class Event(models.Model):
                                  on_delete=models.CASCADE, 
                                  related_name='events', null=True)
     event_tag = models.CharField(max_length=10, null=True, choices=EVENT_TAG, default="")
-    organizer = models.ForeignKey(Organizer, on_delete=models.CASCADE, related_name='events', null=True)
+    organizer = models.CharField(max_length=255, null=True)
     likes = models.ManyToManyField(User, related_name="likes", through="LikedEvent")
     title = models.CharField(max_length=255)
     slug = models.CharField(max_length=100)
@@ -173,6 +160,16 @@ class Ticket(models.Model):
 
 
 
+class Organizer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='organizer')
+    full_name = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    momo_numb = models.CharField(max_length=13, null=True)
+    creator = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return f"Organizer - {self.full_name}({self.user})"
 
 
 
