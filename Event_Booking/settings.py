@@ -31,6 +31,7 @@ DEBUG = config("DEBUG", cast=bool)
 if DEBUG == False:
     ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
 
+CSRF_TRUSTED_ORIGINS = ['https://eventtribe-cv8c.onrender.com']
 
 
 # Application definition
