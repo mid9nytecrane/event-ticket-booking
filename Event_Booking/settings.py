@@ -31,7 +31,7 @@ DEBUG = False
 if DEBUG == True:
     ALLOWED_HOSTS = ['*']
 else:
-    ALLOWED_HOSTS = ['reventtribe-cv8c.onrender.com']
+    ALLOWED_HOSTS = ['eventtribe-cv8c.onrender.com']
 
 #ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
 
