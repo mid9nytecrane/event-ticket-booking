@@ -26,20 +26,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG",default=False, cast=bool)
+DEBUG = config("DEBUG", cast=bool)
 
+ALLOWED_HOSTS = ['reventtribe-cv8c.onrender.com']
+ALLOWED_HOSTS = ['*']
 
+#ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
 
-if DEBUG:
-    ALLOWED_HOSTS =['localhost', '127.0.0.1']
-else:
-    ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
-
-# Make sure we have at least one host
-if not ALLOWED_HOSTS:
-    ALLOWED_HOSTS = ['*']
-# ALLOW_HOSTS = ["eventtribe-cv8c.onrender.com"]
-# ALLOW_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = ['https://eventtribe-cv8c.onrender.com', 'http://localhost:8000']
 
