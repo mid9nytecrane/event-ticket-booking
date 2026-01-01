@@ -28,12 +28,12 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool)
 
-if DEBUG == True:
+if DEBUG == False:
     ALLOWED_HOSTS = ['*']
-else:
-    ALLOWED_HOSTS = ['*','eventtribe-cv8c.onrender.com']
-    #ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
-    CSRF_TRUSTED_ORIGINS = ['https://eventtribe-cv8c.onrender.com', 'http://localhost:8000']
+# else:
+#     ALLOWED_HOSTS = ['*','eventtribe-cv8c.onrender.com']
+#     #ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
+#     CSRF_TRUSTED_ORIGINS = ['https://eventtribe-cv8c.onrender.com', 'http://localhost:8000']
 
 
 
