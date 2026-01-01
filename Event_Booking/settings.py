@@ -33,7 +33,7 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
 if DEBUG:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 else:
-    ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=bool).split(",")
+    ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
 
 
 if not ALLOWED_HOSTS:
