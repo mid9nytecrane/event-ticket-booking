@@ -30,8 +30,7 @@ DEBUG = config("DEBUG", cast=bool)
 
 if DEBUG == False:
     ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
-else:
-    ALLOWED_HOSTS = ["*"]
+
 
 
 # Application definition
