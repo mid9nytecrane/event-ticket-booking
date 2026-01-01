@@ -32,10 +32,10 @@ if DEBUG == True:
     ALLOWED_HOSTS = ['*']
 else:
     ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
-    #ALLOWED_HOSTS = ['eventtribe-cv8c.onrender.com']
+    CSRF_TRUSTED_ORIGINS = ['https://eventtribe-cv8c.onrender.com', 'http://localhost:8000']
+#ALLOWED_HOSTS = ['eventtribe-cv8c.onrender.com']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://eventtribe-cv8c.onrender.com', 'http://localhost:8000']
 
 
 # Application definition
