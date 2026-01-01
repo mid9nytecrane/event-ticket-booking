@@ -30,12 +30,16 @@ DEBUG = config("DEBUG", cast=bool)
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
 
-# if DEBUG:
-#     #ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
-#     ALLOWED_HOSTS = ['*']
-# # else:
-# #     ALLOWED_HOSTS = ['*','eventtribe-cv8c.onrender.com']
-# CSRF_TRUSTED_ORIGINS = ['https://eventtribe-cv8c.onrender.com', 'http://localhost:8000']
+if DEBUG:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+else:
+    ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="", cast=bool).split(",")
+
+
+if not ALLOWED_HOSTS:
+    ALLOWED_HOSTS = ['*']
+
+CSRF_TRUSTED_ORIGINS = ['https://eventtribe-cv8c.onrender.com', 'http://localhost:8000']
 
 
 
@@ -145,8 +149,11 @@ DATABASES = {
     }
 }
 
-if DEBUG:
-    DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
+if not DEBUG:
+    DATABASE_URL = config('DATABASE_URL', default=None)
+    if DATABASE_URL:
+        DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+    #DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
 
 
 # Password validation
@@ -219,7 +226,9 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-if DEBUG == False:
+if DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+else:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = "smtp.gmail.com"
@@ -228,8 +237,6 @@ if DEBUG == False:
     EMAIL_HOST_USER = config('EMAIL_ADDRESS')
     EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
     DEFAULT_FROM_MAIL = config('EMAIL_DEFAULT_SENDER')
-else:
-    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_LOGIN_METHODS = ["email", "username"]
