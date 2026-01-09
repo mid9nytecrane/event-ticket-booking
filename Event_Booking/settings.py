@@ -229,7 +229,7 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-if  DEBUG:
+if not DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 else:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -239,12 +239,12 @@ else:
     EMAIL_USE_TLS = True
     EMAIL_HOST_USER = config('EMAIL_ADDRESS')
     EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
-    DEFAULT_FROM_MAIL = f"EventTribe <{config('EMAIL_ADDRESS')}>"
+    DEFAULT_FROM_MAIL = f"EventTribe {config('EMAIL_ADDRESS')}"
     ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
 
 # ACCOUNT_EMAIL_REQUIRED = True
 #ACCOUNT_SIGNUP_FIELDS = ['email*','username*', 'password1*','password2*']
-ACCOUNT_EMAIL_VERIFICATION = "optional"
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_LOGIN_METHODS = ["email", "username"]
 ACCOUNT_SIGNUP_FORM_CLASS = "user_account.forms.CustomSignUpForm"
 
