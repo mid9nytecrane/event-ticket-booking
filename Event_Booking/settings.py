@@ -31,7 +31,7 @@ DEBUG = config("DEBUG", cast=bool)
 ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
 
 if DEBUG:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1','eventtribe-cv8c.onrender.com']
 else:
     ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
 
