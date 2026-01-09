@@ -52,10 +52,12 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
     'whitenoise.runserver_nostatic',
 
     #django apps
+    'master_admin',
     'core',
     'user_account',
     'payment',
@@ -76,6 +78,7 @@ INSTALLED_APPS = [
     
     
 ]
+
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
@@ -226,7 +229,7 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-if DEBUG:
+if not DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 else:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -236,10 +239,15 @@ else:
     EMAIL_USE_TLS = True
     EMAIL_HOST_USER = config('EMAIL_ADDRESS')
     EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
-    DEFAULT_FROM_MAIL = config('EMAIL_DEFAULT_SENDER')
+    DEFAULT_FROM_MAIL = f"EventTribe <{config('EMAIL_ADDRESS')}>"
+    ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
 
+# ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_SIGNUP_FIELDS = ['email*','username*', 'password1*','password2*']
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_LOGIN_METHODS = ["email", "username"]
 ACCOUNT_SIGNUP_FORM_CLASS = "user_account.forms.CustomSignUpForm"
 
 SOCIALACCOUNT_LOGIN_ON_GET = True 
+SOCIALACCOUNT_EMAIL_REQUIRED =True
+SOCIALACCOUNT_QUERY_EMAIL = True

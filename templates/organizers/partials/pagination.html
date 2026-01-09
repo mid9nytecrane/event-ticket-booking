@@ -1,0 +1,76 @@
+{% if events_list %}
+<div class="px-6 py-4 border-t border-gray-100 bg-gray-50">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="text-sm text-gray-600">
+        Showing <span class="font-medium">{{events_list.number}}</span> to <span class="font-medium">{{ events_list.paginator.num_pages }}</span>
+    </div>
+    
+    <!-- Pagination -->
+    <div class="flex items-center space-x-2" 
+        hx-target="#event_list" 
+        hx-swap="outerHTML"
+        hx-include="#filter_form"
+        >
+        <!-- previous button or link-->
+        {% if not events_list.has_previous %}
+            <button hx-get="?page={{events_list.previous_next_page}}" class="p-2 text-gray-600 hover:bg-white hover:text-gray-900 rounded-lg transition-colors cursor-pointer " >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+        {% else %}
+            <button  class="p-2 text-gray-600 hover:bg-white hover:text-gray-900 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+        
+        {% endif %}
+        <!-- pagination number list-->
+            {% for num  in page_range %}
+                {% if num == events_list.number %}
+                    <button hx-get="?page={{forloop.counter}}" class="w-8 h-8 flex items-center justify-center text-sm font-medium \
+                    text-white bg-blue-600 border border-blue-200 rounded-lg cursor-pointer">
+                        {{num}}
+                    </button>
+                {% else %}
+                    <button hx-get="?page={{forloop.counter}}" class="w-8 h-8 flex items-center justify-center text-sm font-medium \
+                    text-blue-600 bg-white border border-blue-200 rounded-lg cursor-pointer">
+                        {{num}}
+                    </button>
+                
+                {% endif %}
+            {% endfor %}
+            
+
+        <!-- next button or link-->
+        {% if events_list.has_next %}
+            <button hx-get="?page={{events_list.next_page_number}}" class="p-2 text-gray-600 hover:bg-white hover:text-gray-900 rounded-lg transition-colors cursor-pointer">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        {% else %}
+            <a  class="p-2 text-gray-600 hover:bg-white hover:text-gray-900 rounded-lg transition-colors opacity-50 cursor-not-allowed">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </a>
+
+        {% endif %}
+    </div>
+    
+    <!-- Items per page -->
+    <div class="flex items-center space-x-2">
+        {% comment %} <span class="text-sm text-gray-600">Show:</span>
+        <select name="range" class="text-sm border border-gray-300 rounded-lg px-3 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            <option>10</option>
+            <option selected>25</option>
+            <option>50</option>
+            <option>100</option>
+        </select>
+        <span class="text-sm text-gray-600">per page</span> {% endcomment %}
+    </div>
+    </div>
+</div>
+{% endif %}

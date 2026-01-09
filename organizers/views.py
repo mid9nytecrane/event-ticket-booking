@@ -3,8 +3,10 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required,permission_required
 from .forms import CreateEventForm, CreatorRegisterForm
 from django.contrib.auth.models import User, Group, Permission
+from django.core.paginator import Paginator
 from django.contrib import messages
 from core.models import Event,Ticket,Organizer
+from django.db.models import Q
 import datetime
 from django.utils import timezone
 # Create your views here.
@@ -87,13 +89,46 @@ def success_page(request):
 @login_required
 def creator_dashboard(request):
     if request.user.groups.filter(name="organizers"):
-        events = Event.objects.filter(user=request.user)
+        events = Event.objects.filter(user=request.user).order_by('-created_at')
         tickets = Ticket.objects.filter(is_used=True)
         current_date = timezone.now()
+        #filter events
+        query = request.GET.get('filter', '')
+        if query:
+            query_events = events.filter(
+                Q(title__icontains=query) | 
+                Q(status__icontains=query) |
+                Q(payment_status__icontains=query)
+                
+            )
+        else:
+            query_events = events
+            
+        #pagination
+        paginator = Paginator(query_events, 3)
+        page_number = request.GET.get("page")
+        events_list = paginator.get_page(page_number)
+
+        nums = "a" * paginator.num_pages
         # for event in events:
         #     print(f"{event} id: {event.id}")
             
         #     revenue = event.price * event.purchased_tickets
+        for event in events:
+            if event.is_upcoming:
+                Event.objects.filter(pk=event.id).update(status="upcoming")
+            elif event.is_active:
+                Event.objects.filter(pk=event.id).update(status='active')
+            else:
+                Event.objects.filter(pk=event.id).update(status='past')
+        
+        for event in events:
+            if event.is_paid:
+                Event.objects.filter(pk=event.id).update(payment_status='paid')
+            else:
+                Event.objects.filter(pk=event.id).update(payment_status='pending')
+            
+            
         total_revenue = sum(event.revenue for event in events if not event.is_paid)
         total_tickets_sold = sum(event.total_purchased_tickets for event in events)
 
@@ -119,12 +154,33 @@ def creator_dashboard(request):
             'upcoming_events_count':upcoming_events_count,
             'tickets':tickets,
             'current_date':current_date,
+            'events_list': events_list,
+            'active_event_list': active_event_list,
+            'page_range':events_list.paginator.page_range,
             
         }
+        if "HX-Request" in request.headers:
+            return render(request, 'organizers/partials/event_table_body.html', context)
         return render(request, "organizers/dashboard.html", context)
     else:
         return HttpResponse("you are not authorized to view this page.")
 
+
+#filter events
+# def filter_events(request):
+#     query = request.GET.get('filter', '')
+#     if query:
+#         events_list  = Event.objects.filter(
+#             title__icontains=query
+            
+#         )
+#     else:
+#         events_list = Event.objects.all()
+
+#     context = {
+#         'events_list':events_list,
+#     }
+#     return render(request, 'organizers/partials/event_table_body.html', context)
 
 
 @login_required
@@ -198,5 +254,6 @@ def checked_in_list(request, event_id):
     }
 
     return render(request, 'organizers/check_in_list.html', context)
+
 
 

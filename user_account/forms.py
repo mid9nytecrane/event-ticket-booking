@@ -19,10 +19,14 @@ class CustomSignUpForm(forms.Form):
         })
     )
 
-    town = forms.CharField(
-        max_length=100,
-        widget=forms.TextInput(attrs={'placeholder': 'City/Town'})
-    )
+    # town = forms.CharField(
+    #     max_length=100,
+    #     widget=forms.TextInput(attrs={'placeholder': 'City/Town'})
+    # )
+
+    email = forms.CharField(widget=forms.EmailInput(attrs={
+        'placeholder':'example@gmail.com'
+    }))
     
 
 

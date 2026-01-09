@@ -1,0 +1,83 @@
+<h1 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+    <svg class="w-8 h-8 mr-3 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+    </svg>
+    Attendees Data Table
+    <span class="ml-3 px-3 py-1 text-sm font-semibold bg-indigo-100 text-indigo-800 rounded-full">
+        {{ attendees_list|length }} attendees{{ attendees_list|length|pluralize }}
+    </span>
+</h1>
+
+<div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden" id="#attendee_table">
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-linear-to-r from-gray-50 to-indigo-50">
+                <tr>
+                    <th scope="col" class="px-8 py-5 text-left text-xs font-bold text-gray-700 uppercase tracking-wider border-b border-gray-200">
+                        <div class="flex items-center">
+                            <span class="mr-2">#</span>
+                        </div>
+                    </th>
+                    <th scope="col" class="px-8 py-5 text-left text-xs font-bold text-gray-700 uppercase tracking-wider border-b border-gray-200">
+                        <div class="flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                            <span>Username</span>
+                        </div>
+                    </th>
+                    <th scope="col" class="px-8 py-5 text-left text-xs font-bold text-gray-700 uppercase tracking-wider border-b border-gray-200">
+                        <div class="flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            <span>Email</span>
+                        </div>
+                    </th>
+                    <th scope="col" class="px-8 py-5 text-left text-xs font-bold text-gray-700 uppercase tracking-wider border-b border-gray-200">
+                        <div class="flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                            <span>First Name</span>
+                        </div>
+                    </th>
+                    <th scope="col" class="px-8 py-5 text-left text-xs font-bold text-gray-700 uppercase tracking-wider border-b border-gray-200">
+                        <div class="flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                            <span>Last Name</span>
+                        </div>
+                    </th>
+                    <th scope="col" class="px-8 py-5 text-left text-xs font-bold text-gray-700 uppercase tracking-wider border-b border-gray-200">
+                        <div class="flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            <span>Date Joined</span>
+                        </div>
+                    </th>
+                    <th scope="col" class="px-8 py-5 text-left text-xs font-bold text-gray-700 uppercase tracking-wider border-b border-gray-200">
+                        <div class="flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Last Login</span>
+                        </div>
+                    </th>
+                    <th scope="col" class="px-8 py-5 text-right text-xs font-bold text-gray-700 uppercase tracking-wider border-b border-gray-200">
+                        <span>Actions</span>
+                    </th>
+                </tr>
+            </thead>
+
+            <!--table body-->
+            {% include "master_admin/partials/attendees_table_body.html" %}
+
+        </table>
+    </div>
+    
+    <!-- Pagination -->
+    {% include "master_admin/partials/pagination.html" %}
+</div>

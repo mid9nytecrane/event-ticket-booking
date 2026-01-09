@@ -1,0 +1,61 @@
+<!-- Pagination -->
+<div class="bg-linear-to-r from-gray-50 to-indigo-50 px-8 py-6 border-t border-gray-200">
+    {% if attendees_list %}
+        <div class="flex items-center justify-between">
+            <div class="text-sm text-gray-600">
+                Showing page <span class="font-bold text-gray-800">{{ attendees_list.number}}</span> of <span class="font-bold text-gray-800">{{ attendees_list.paginator.num_pages }}</span> organizers
+            </div>
+            <div class="flex space-x-3">
+                <!-- Previous Button-->
+                {% if attendees_list.has_previous %}
+                    <a 
+                        href="?page={{attendees_list.previous_next_number}}"
+                       
+                
+                    >
+                        <button class="inline-flex items-center px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-white hover:border-gray-400 hover:shadow-sm transition-all duration-200 ">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                            </svg>
+                            Previous
+                        </button>
+
+                    </a>
+                {% else %}
+                    <button class="inline-flex items-center px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-white hover:border-gray-400 hover:shadow-sm transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                        Previous
+                    </button>
+
+                
+                {% endif %}
+
+                <!-- Next Button-->
+                {% if attendees_list.has_next %}
+                    <a 
+                        href="?page={{attendees_list.next_page_number}}"
+                        
+                        
+                        >
+
+                        <button class="inline-flex items-center px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-white hover:border-gray-400 hover:shadow-sm transition-all duration-200 cursor-pointer">
+                            Next
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </a>
+                {% else %}
+                    <button class="inline-flex items-center px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-white hover:border-gray-400 hover:shadow-sm transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed", disabled>
+                        Next
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</div>

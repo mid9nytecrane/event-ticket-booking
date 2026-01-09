@@ -1,157 +1,224 @@
-<tbody class="divide-y" id="event_list">
-        
-    {% for event in events %}
-    
-    <!-- Event Row -->
-    <tr class="hover:bg-gray-50">
-    <td class="px-6 py-4 font-medium text-gray-900 flex flex-col justify-center  items-center gap-3 ">
-        <div>
 
-            <img class="rounded-md w-12 h-12 hover:scale-106 transtion-all duration-300"
-            src="{{event.banner.url}}" alt="{{event.title}}">
-        </div>
-
-            {{event.title}}
-    </td>
-    <td class="px-6 py-4 text-gray-600 text-center">
-        {{event.date}}
-    </td>
-    <td class="px-6 py-4 text-gray-600 text-center">
-        {{event.purchased_tickets}} / {{event.total_tickets}}
-    </td>
-    <td class="px-6 py-4 text-gray-900 font-semibold text-center">
-       {{event.revenue_formatted}}
+<tbody class="divide-y divide-gray-200" id="event_list">
+    {% if events_list %}
+        {% for event in events_list %}
         
-    </td>
-    <td class="px-6 py-4 text-gray-900 font-semibold text-center">
-        {% if event.is_active %}
-            <span class="bg-green-100 text-green-600 rounded-full text-sm font-normal px-2 py-1.5">active</span>
-        {% elif event.is_upcoming %}
-            <span class="bg-yellow-100 text-yellow-600 rounded-full text-sm font-normal px-2 py-1.5">upcoming</span>
-        {% else %}
-            <span class="bg-slate-100 text-slate-600 rounded-full text-sm font-normal px-2 py-1.5"><s>past</s></span>
-        {% endif %}
-        
-    </td>
+        <!-- Event Row -->
+        <tr class="hover:bg-gray-50 transition-colors duration-200">
+        <td class="px-6 py-4 ">
+            <!-- Event Image & Title-->
+            <div class="px-6 py-4">
+                <div class="flex items-center space-x-4">
+                    <div class="relative shrink-0">
+                        <img class="rounded-md w-12 h-12 hover:scale-106 transtion-all duration-300"
+                        src="{{event.banner.url}}" alt="{{event.title}}" loading='lazy'>
 
-    <td class="px-6 py-4 text-gray-900 font-semibold text-center">
-        {% if event.is_paid and event.is_past %}
-            
-            <span class="gap-1 bg-green-100 max-w-sm text-green-600 rounded-full text-sm font-normal px-3 py-1.5">
-                paid
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-gray-900">{{event.title|title}}</h3>
+                        {% if event.category %}
+                        <p class="text-sm hidden md:block text-gray-500 mt-0.5">{{event.category}}</p>
+                        {% endif %}
+                        
+                    </div>
+                </div>
+            </div>
+        </td>
+        
+        <!-- Date -->
+        <td class="px-6 py-4 text-gray-600 font-medium text-left">
+            {{event.date|date:"M d, Y"}}
+        </td>
+
+        <!-- Tickets Sold -->
+        <td class="px-6 py-4 text-gray-600 text-left">
+            <div class="space-y-1">
+                <div class="text-gray-900 font-medium">
+                    {{ event.purchased_tickets }} / {{ event.total_tickets }}
+                </div>
                 
-            </span>
+                <!-- Progress Bar -->
+                <div class="w-full bg-gray-200 rounded-full h-1.5">
+                    {% with percentage=event.purchased_tickets|floatformat:0|add:0 %}
+                        {% widthratio percentage event.total_tickets 100 as progress %}
+                        <div class="bg-blue-600 h-1.5 rounded-full transition-all duration-500 ease-out" 
+                            style="width: {{ progress|default:0 }}%">
+                        </div>
+                    {% endwith %}
+                </div>
+                
+                <!-- Percentage Display -->
+                <div class="text-xs text-gray-500">
+                    {% with percentage=event.purchased_tickets|floatformat:0|add:0 %}
+                        {% widthratio percentage event.total_tickets 100 as progress %}
+                        {{ progress|default:0|floatformat:0 }}% sold
+                    {% endwith %}
+                </div>
+            </div>
+        </td>
 
+        <!-- revenue -->
+        <td class="px-6 py-4 text-gray-900 font-semibold text-left">
+        {{event.revenue_formatted}}
             
-    
-        {% elif not event.is_paid and event.is_past%}
-            <span class="bg-slate-100 text-slate-600 rounded-full text-sm font-normal px-2 py-1.5">pending</s></span>
-        {% else %}
+        </td>
 
-        {% endif %}
-        
-    </td>
+        <!-- Event Status -->
+        <td class="px-6 py-4 text-gray-900 font-semibold text-left">
+            {% if event.is_active and event.status == 'active' %}
+                <span class="inline-flex items-center px-3 py-1 font-medium text-sm rounded-full bg-green-100 text-green-800">
+                    <span class="bg-green-500 w-2 h-2 rounded-full mr-1.5"></span>
+                    Active
 
-    <td class="px-6 py-4 flex justify-center items-center space-x-3">
-        
-        <!-- view action -->
-        <a 
-            href="{% url 'organizers:view-event' event.id%}" 
-            data-tooltip-target="tooltip-view-{{event.id}}" data-tooltip-placement="left"
-            class="text-blue-600 hover:underline
+                </span>
+            {% elif event.is_upcoming and event.status == 'upcoming' %}
+                <span class="inline-flex items-center px-3 py-1 font-medium text-sm rounded-full bg-yellow-100 text-yellow-800">
+                    <span class="bg-yellow-500 w-2 h-2 rounded-full mr-1.5"></span>
+                    Upcoming
+
+                </span>
+            {% else %}
+                <span class="inline-flex items-center px-3 py-1 font-medium text-sm rounded-full bg-gray-100 text-gray-800">
+                    <span class="bg-gray-500 w-2 h-2 rounded-full mr-1.5"></span>
+                    past
+                </span>
+            {% endif %}
             
-            ">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-            <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-            <path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z" clip-rule="evenodd" />
-            </svg>
+        </td>
 
-        </a>
-        <div id="tooltip-view-{{event.id}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-gray-700 transition-opacity duration-300 bg-amber-100 rounded-lg shadow-xs opacity-0 tooltip">
-            Event Details
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
-
-
-        <!-- edit action-->
-         {% if event.is_past %}
-            <a 
-            class="hover:scale-104 transistion-all duration-300 text-gray-400 cursor-not-allowed"
-            >
-
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
-                <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
+        <!-- Payment Status -->
+        <td class="px-6 py-4 text-gray-900 font-semibold text-left">
+            {% if event.payment_status == 'paid' and event.is_past %}
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                    <svg class="w-3 h-3 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                    Paid
+                </span>
+        
+            {% elif event.payment_status == 'pending' and event.is_past  %}
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                <svg class="w-3 h-3 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
                 </svg>
-            </a>
+                Pending
+            </span>
+            {% else %}
+            <span class="text-gray-400 text-sm">—</span>
 
-        {% else %}
+        
 
-        <a 
-            href="{% url 'organizers:edit-event' event.id%}"
-            data-tooltip-target="tooltip-update-{{event.id}}" data-tooltip-placement="left"
-            class="hover:scale-104 transistion-all duration-300"
-            >
+            {% endif %}
+            
+        </td>
 
-             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-             <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
-             <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
-             </svg>
-         </a>
-         <div id="tooltip-update-{{event.id}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-gray-700 transition-opacity duration-300 bg-amber-100 rounded-lg shadow-xs opacity-0 tooltip">
-            Update Event
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
-        {% endif %}
-       
-        <!-- list of attendees -->
-         <a href="{% url 'organizers:checked-in' event.id%}" 
-            data-tooltip-target="tooltip-list-{{event.id}}" data-tooltip-placement="left">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                <path fill-rule="evenodd" d="M7.502 6h7.128A3.375 3.375 0 0 1 18 9.375v9.375a3 3 0 0 0 3-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 0 0-.673-.05A3 3 0 0 0 15 1.5h-1.5a3 3 0 0 0-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6ZM13.5 3A1.5 1.5 0 0 0 12 4.5h4.5A1.5 1.5 0 0 0 15 3h-1.5Z" clip-rule="evenodd" />
-                <path fill-rule="evenodd" d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625V9.375ZM6 12a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V12Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 15a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V15Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 18a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V18Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
-            </svg>
-         </a>
-         <div id="tooltip-list-{{event.id}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-gray-700 transition-opacity duration-300 bg-amber-100 rounded-lg shadow-xs opacity-0 tooltip">
-            Attendees List
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
-         {% comment %} <div>
+        <!-- Action Buttons-->
+        <td class="px-6 py-4 ">
+            <div class="flex justify-center items-center space-x-3">
 
-             <button data-modal-target="checked-in-list-modal-{{event.id}}" data-modal-toggle="checked-in-list-modal-{{event.id}}">
-     
-                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                     <path fill-rule="evenodd" d="M7.502 6h7.128A3.375 3.375 0 0 1 18 9.375v9.375a3 3 0 0 0 3-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 0 0-.673-.05A3 3 0 0 0 15 1.5h-1.5a3 3 0 0 0-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6ZM13.5 3A1.5 1.5 0 0 0 12 4.5h4.5A1.5 1.5 0 0 0 15 3h-1.5Z" clip-rule="evenodd" />
-                     <path fill-rule="evenodd" d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625V9.375ZM6 12a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V12Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 15a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V15Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 18a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V18Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
-                 </svg>
-             </button>
-             <!-- list of attendees modal-->
-              {% include "organizers/partials/checked_in_list_modal.html" %}
-         </div> {% endcomment %}
-         
-
-
-
-            <!--delete action-->
-        <button 
-            data-modal-target="delete-event-modal-{{event.id}}" data-modal-toggle="delete-event-modal-{{event.id}}"
-            data-tooltip-target="tooltip-delete-{{event.id}}" data-tooltip-placement="left"
-            class="text-red-600 hover:scale-104 transition-all duration-300">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-            <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
-            </svg>
-
-        </button>
-         <div id="tooltip-delete-{{event.id}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-gray-700 transition-opacity duration-300 bg-amber-100 rounded-lg shadow-xs opacity-0 tooltip">
-            Delete Event
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
-
-            <!-- delete modal -->
-        {% include "organizers/partials/delete_event_modal.html" %}
-
-    </td>
+                <!-- view action -->
+                <a 
+                    href="{% url 'organizers:view-event' event.id%}" 
+                    data-tooltip-target="tooltip-view-{{event.id}}" data-tooltip-placement="left"
+                    class="text-blue-600 hover:underline
+                    
+                    ">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                    <path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z" clip-rule="evenodd" />
+                    </svg>
+        
+                </a>
+                <div id="tooltip-view-{{event.id}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-gray-700 transition-opacity duration-300 bg-amber-100 rounded-lg shadow-xs opacity-0 tooltip">
+                    Event Details
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+        
+        
+                <!-- edit action-->
+                {% if event.is_past %}
+                    <a 
+                    class="hover:scale-104 transistion-all duration-300 text-gray-400 cursor-not-allowed"
+                    >
+        
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                        <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
+                        <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
+                        </svg>
+                    </a>
+        
+                {% else %}
+        
+                <a 
+                    href="{% url 'organizers:edit-event' event.id%}"
+                    data-tooltip-target="tooltip-update-{{event.id}}" data-tooltip-placement="left"
+                    class="hover:scale-104 transistion-all duration-300"
+                    >
+        
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
+                    <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
+                    </svg>
+                </a>
+                <div id="tooltip-update-{{event.id}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-gray-700 transition-opacity duration-300 bg-amber-100 rounded-lg shadow-xs opacity-0 tooltip">
+                    Update Event
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+                {% endif %}
+            
+                <!-- list of attendees -->
+                <a href="{% url 'organizers:checked-in' event.id%}" 
+                    data-tooltip-target="tooltip-list-{{event.id}}" data-tooltip-placement="left">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                        <path fill-rule="evenodd" d="M7.502 6h7.128A3.375 3.375 0 0 1 18 9.375v9.375a3 3 0 0 0 3-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 0 0-.673-.05A3 3 0 0 0 15 1.5h-1.5a3 3 0 0 0-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6ZM13.5 3A1.5 1.5 0 0 0 12 4.5h4.5A1.5 1.5 0 0 0 15 3h-1.5Z" clip-rule="evenodd" />
+                        <path fill-rule="evenodd" d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625V9.375ZM6 12a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V12Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 15a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V15Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 18a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V18Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <div id="tooltip-list-{{event.id}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-gray-700 transition-opacity duration-300 bg-amber-100 rounded-lg shadow-xs opacity-0 tooltip">
+                    Attendees List
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+                {% comment %} <div>
+        
+                    <button data-modal-target="checked-in-list-modal-{{event.id}}" data-modal-toggle="checked-in-list-modal-{{event.id}}">
+            
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            <path fill-rule="evenodd" d="M7.502 6h7.128A3.375 3.375 0 0 1 18 9.375v9.375a3 3 0 0 0 3-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 0 0-.673-.05A3 3 0 0 0 15 1.5h-1.5a3 3 0 0 0-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6ZM13.5 3A1.5 1.5 0 0 0 12 4.5h4.5A1.5 1.5 0 0 0 15 3h-1.5Z" clip-rule="evenodd" />
+                            <path fill-rule="evenodd" d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625V9.375ZM6 12a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V12Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 15a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V15Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 18a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V18Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <!-- list of attendees modal-->
+                    {% include "organizers/partials/checked_in_list_modal.html" %}
+                </div> {% endcomment %}
+                
+        
+        
+        
+                <!--delete action-->
+                <button 
+                    data-modal-target="delete-event-modal-{{event.id}}" data-modal-toggle="delete-event-modal-{{event.id}}"
+                    data-tooltip-target="tooltip-delete-{{event.id}}" data-tooltip-placement="left"
+                    class="text-red-600 hover:scale-104 transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
+                    </svg>
+        
+                </button>
+                <div id="tooltip-delete-{{event.id}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-gray-700 transition-opacity duration-300 bg-amber-100 rounded-lg shadow-xs opacity-0 tooltip">
+                    Delete Event
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+        
+                    <!-- delete modal -->
+                {% include "organizers/partials/delete_event_modal.html" %}
+            </div>
+        
+        </td>
     </tr>
-    {% endfor %}  
+        {% endfor %}
+        
+        
+    {% endif %}   
+
 
 </tbody>

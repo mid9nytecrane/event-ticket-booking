@@ -1,0 +1,201 @@
+<!-- Chart Container -->
+<div style="width: 1000px;" class='h-auto mb-4 bg-white rounded-xl px-4 py-6 shadow-lg border border-gray-100 max-w-3xl'>
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h3 class="text-xl font-bold text-gray-800">Voting Distribution</h3>
+      <p class="text-gray-500 text-sm mt-1"># of Votes by Color Category</p>
+    </div>
+    <div class="flex items-center space-x-2">
+      <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-50 text-blue-700">
+        <span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+        Total: 44 votes
+      </span>
+    </div>
+  </div>
+  <canvas id="myChart"></canvas>
+  <div class="flex justify-center mt-6 space-x-8">
+    <div class="text-center">
+      <p class="text-2xl font-bold text-gray-800">19</p>
+      <p class="text-gray-500 text-sm">Highest (Blue)</p>
+    </div>
+    <div class="text-center">
+      <p class="text-2xl font-bold text-gray-800">12</p>
+      <p class="text-gray-500 text-sm">Average</p>
+    </div>
+    <div class="text-center">
+      <p class="text-2xl font-bold text-gray-800">3</p>
+      <p class="text-gray-500 text-sm">Lowest (Yellow/Orange)</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('myChart');
+
+  // Color palette
+  const colorPalette = {
+    red: 'rgba(239, 68, 68, 0.8)',
+    blue: 'rgba(59, 130, 246, 0.8)',
+    yellow: 'rgba(234, 179, 8, 0.8)',
+    green: 'rgba(34, 197, 94, 0.8)',
+    purple: 'rgba(168, 85, 247, 0.8)',
+    orange: 'rgba(249, 115, 22, 0.8)'
+  };
+
+  const borderColors = {
+    red: 'rgba(239, 68, 68, 1)',
+    blue: 'rgba(59, 130, 246, 1)',
+    yellow: 'rgba(234, 179, 8, 1)',
+    green: 'rgba(34, 197, 94, 1)',
+    purple: 'rgba(168, 85, 247, 1)',
+    orange: 'rgba(249, 115, 22, 1)'
+  };
+
+  const hoverColors = {
+    red: 'rgba(239, 68, 68, 1)',
+    blue: 'rgba(59, 130, 246, 1)',
+    yellow: 'rgba(234, 179, 8, 1)',
+    green: 'rgba(34, 197, 94, 1)',
+    purple: 'rgba(168, 85, 247, 1)',
+    orange: 'rgba(249, 115, 22, 1)'
+  };
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: [
+          colorPalette.red,
+          colorPalette.blue,
+          colorPalette.yellow,
+          colorPalette.green,
+          colorPalette.purple,
+          colorPalette.orange
+        ],
+        borderColor: [
+          borderColors.red,
+          borderColors.blue,
+          borderColors.yellow,
+          borderColors.green,
+          borderColors.purple,
+          borderColors.orange
+        ],
+        borderWidth: 2,
+        borderRadius: 6,
+        borderSkipped: false,
+        hoverBackgroundColor: [
+          hoverColors.red,
+          hoverColors.blue,
+          hoverColors.yellow,
+          hoverColors.green,
+          hoverColors.purple,
+          hoverColors.orange
+        ],
+        hoverBorderWidth: 3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      animation: {
+        duration: 1000,
+        easing: 'easeOutQuart'
+      },
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          enabled: true,
+          backgroundColor: 'rgba(255, 255, 255, 0.95)',
+          titleColor: '#1f2937',
+          bodyColor: '#4b5563',
+          borderColor: '#e5e7eb',
+          borderWidth: 1,
+          padding: 12,
+          boxPadding: 6,
+          usePointStyle: true,
+          callbacks: {
+            label: function(context) {
+              let label = context.dataset.label || '';
+              if (label) {
+                label += ': ';
+              }
+              label += context.parsed.y;
+              label += ' vote' + (context.parsed.y !== 1 ? 's' : '');
+              return label;
+            },
+            title: function(context) {
+              return context[0].label + ' Category';
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: 'rgba(229, 231, 235, 0.5)',
+            drawBorder: false
+          },
+          ticks: {
+            color: '#6b7280',
+            font: {
+              size: 12
+            },
+            callback: function(value) {
+              return value + (value === 1 ? ' vote' : ' votes');
+            }
+          },
+          title: {
+            display: true,
+            text: 'Number of Votes',
+            color: '#4b5563',
+            font: {
+              size: 13,
+              weight: 'bold'
+            },
+            padding: {top: 10, bottom: 20}
+          }
+        },
+        x: {
+          grid: {
+            display: false
+          },
+          ticks: {
+            color: '#6b7280',
+            font: {
+              size: 13,
+              weight: '600'
+            }
+          },
+          title: {
+            display: true,
+            text: 'Color Categories',
+            color: '#4b5563',
+            font: {
+              size: 13,
+              weight: 'bold'
+            },
+            padding: {top: 20, bottom: 10}
+          }
+        }
+      },
+      interaction: {
+        intersect: false,
+        mode: 'index'
+      },
+      elements: {
+        bar: {
+          backgroundColor: 'rgba(59, 130, 246, 0.1)',
+          borderColor: 'rgba(59, 130, 246, 1)',
+          borderWidth: 2
+        }
+      }
+    }
+  });
+</script>

@@ -37,6 +37,18 @@ class Event(models.Model):
         'free': 'Free'
     }
 
+    STATUS = {
+        'active':'Active',
+        'upcoming': 'Upcoming',
+        'past': 'Past',
+    }
+
+    PAYMENT_STATUS = {
+        'pending':'Pending',
+        'paid': 'Paid',
+    }
+        
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='events', null=True)
     category = models.ForeignKey(EventCategory, 
                                  on_delete=models.CASCADE, 
@@ -53,6 +65,8 @@ class Event(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2)
     total_tickets = models.PositiveIntegerField()
     purchased_tickets = models.PositiveIntegerField(blank=True, default=0)
+    status = models.CharField(max_length=10,null=True,choices=STATUS,default='')
+    payment_status = models.CharField(max_length=10, null=True, choices=PAYMENT_STATUS)
     is_paid = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     
@@ -125,13 +139,32 @@ class Event(models.Model):
     
     
     def save(self, *args, **kwargs):
+        # Generate slug if not present
         if not self.slug:
             self.slug = slugify(self.title)
-
+        
+        # Set price to 0 if event is free
         if self.event_tag == 'free':
-            self.price = 0.00
-
-        super(Event, self).save()
+            self.price = Decimal('0.00')
+        
+        # Get current date for comparison
+        current_date = timezone.now().date()
+        
+        # Determine and set status based on date comparison
+        if self.date == current_date:
+            self.status = 'active'
+        elif self.date > current_date:
+            self.status = 'upcoming'
+        else:  # self.date < current_date
+            self.status = 'past'
+        
+        # setting page field
+        if self.is_paid:
+            self.payment_status = 'paid'
+        else:
+            self.payment_status = 'pending'
+        
+        super().save(*args, **kwargs)
 
    
 #through table for events liked
