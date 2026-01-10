@@ -31,7 +31,7 @@ DEBUG = config("DEBUG", cast=bool)
 ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
 
 if DEBUG:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1','eventtribe-cv8c.onrender.com']
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1',]
 else:
     ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
 
@@ -126,6 +126,10 @@ SOCIALACCOUNT_PROVIDERS = {
             'client_id': config("OAUTH_GOOGLE_CLIENT_ID"),
             'secret': config("OAUTH_GOOGLE_CLIENT_SECRET"),
             'key': ''
+        },
+        'AUTH_PARAMS':{
+            'access_type':'online',
+            'prompt':'consent', # force google to re-prompt form email
         }
     }
 }
@@ -229,10 +233,9 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-if not DEBUG:
+if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 else:
-    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = "smtp.gmail.com"
     EMAIL_PORT = 587
@@ -243,9 +246,10 @@ else:
     ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
 
 # ACCOUNT_EMAIL_REQUIRED = True
-#ACCOUNT_SIGNUP_FIELDS = ['email*','username*', 'password1*','password2*']
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_SIGNUP_FIELDS = ['email*','username*', 'password1*','password2*']
+ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_LOGIN_METHODS = ["email", "username"]
+ACCOUNT_PREVENT_ENUMERATION = True
 ACCOUNT_SIGNUP_FORM_CLASS = "user_account.forms.CustomSignUpForm"
 
 SOCIALACCOUNT_LOGIN_ON_GET = True 

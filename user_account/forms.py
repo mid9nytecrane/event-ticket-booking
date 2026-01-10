@@ -4,14 +4,14 @@ from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget,RegionalPhoneNumberWidget
 
 class CustomSignUpForm(forms.Form):
-    # first_name = forms.CharField(
-    #     max_length=100,
-    #     widget=forms.TextInput(attrs={'placeholder': 'First Name'})
-    # )
-    # last_name = forms.CharField(
-    #     max_length=100,
-    #     widget=forms.TextInput(attrs={'placeholder': 'Last Name'})
-    # )
+    first_name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={'placeholder': 'First Name'})
+    )
+    last_name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={'placeholder': 'Last Name'})
+    )
 
     phone = PhoneNumberField(
         widget=RegionalPhoneNumberWidget(region='GH', attrs={
@@ -36,7 +36,7 @@ class CustomSignUpForm(forms.Form):
         """
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
-        # user.phone = self.cleaned_data.get('phone', '')
+        user.phone = self.cleaned_data.get('phone', '')
         # user.phone = self.cleaned_data.get('town', '')
         user.save()
 
