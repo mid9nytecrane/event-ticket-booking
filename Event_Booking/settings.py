@@ -238,13 +238,15 @@ if DEBUG:
 else:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-    EMAIL_HOST = "smtp.resend.com"
+    # EMAIL_HOST = "smtp.resend.com"
+    EMAIL_HOST = "smtp.gmail.com"
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
     EMAIL_HOST_USER = config("EMAIL_ADDRESS")
     EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
 
-    DEFAULT_FROM_EMAIL = "EventTribe <no-reply@eventtribe.com>"
+    #DEFAULT_FROM_EMAIL = "EventTribe <no-reply@eventtribe.com>"
+    DEFAULT_FROM_EMAIL = f"EventTrivbe <{config("EMAIL_HOST_USER")}>"
     ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
 
 
