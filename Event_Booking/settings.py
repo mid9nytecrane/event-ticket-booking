@@ -66,7 +66,7 @@ INSTALLED_APPS = [
   
 
     #django packages
-    'django_resend',
+ 
     'admin_honeypot',
     'cloudinary',
     'cloudinary_storage',
