@@ -248,7 +248,7 @@ else:
     EMAIL_HOST_USER = config("EMAIL_ADDRESS")
     EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
     #EFAULT_FROM_EMAIL = "EventTribe <no-reply@eventtribe.com>"
-    DEFAULT_FROM_EMAIL = f"EventTrivbe <{config("EMAIL_ADDRESS")}>"
+    DEFAULT_FROM_EMAIL = f"EventTrivbe <eventtribe32@gmail.com>"
     ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
 
 
