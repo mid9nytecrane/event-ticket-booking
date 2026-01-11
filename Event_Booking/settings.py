@@ -237,13 +237,16 @@ if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 else:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    EMAIL_HOST = "smtp.gmail.com"
+
+    EMAIL_HOST = "smtp.resend.com"
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
-    EMAIL_HOST_USER = config('EMAIL_ADDRESS')
-    EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
-    DEFAULT_FROM_MAIL = f"EventTribe {config('EMAIL_ADDRESS')}"
+    EMAIL_HOST_USER = "resend"
+    EMAIL_HOST_PASSWORD = config("RESEND_API_KEY")
+
+    DEFAULT_FROM_EMAIL = "EventTribe <no-reply@eventtribe.com>"
     ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
+
 
 # ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_SIGNUP_FIELDS = ['email*','username*', 'password1*','password2*']
