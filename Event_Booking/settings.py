@@ -157,7 +157,7 @@ DATABASES = {
     }
 }
 
-if not DEBUG:
+if DEBUG:
     DATABASE_URL = config('DATABASE_URL', default=None)
     if DATABASE_URL:
         DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
@@ -234,20 +234,16 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-if not DEBUG:
+if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 else:
-    # EMAIL_BACKEND = "django_resend.backends.ResendBackend"
-    # RESEND_API_KEY = config("RESEND_API_KEY")  # Get from resend.com
-    # RESEND_FROM_EMAIL = "onboarding@resend.dev"
+   
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    # EMAIL_HOST = "smtp.resend.com"
     EMAIL_HOST = "smtp.gmail.com"
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
     EMAIL_HOST_USER = config("EMAIL_ADDRESS")
     EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
-    #EFAULT_FROM_EMAIL = "EventTribe <no-reply@eventtribe.com>"
     DEFAULT_FROM_EMAIL = f"EventTrivbe <eventtribe32@gmail.com>"
     ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
 
