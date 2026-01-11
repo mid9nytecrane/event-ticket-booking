@@ -241,8 +241,8 @@ else:
     EMAIL_HOST = "smtp.resend.com"
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
-    EMAIL_HOST_USER = "resend"
-    EMAIL_HOST_PASSWORD = config("RESEND_API_KEY")
+    EMAIL_HOST_USER = config("EMAIL_ADDRESS")
+    EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
 
     DEFAULT_FROM_EMAIL = "EventTribe <no-reply@eventtribe.com>"
     ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
