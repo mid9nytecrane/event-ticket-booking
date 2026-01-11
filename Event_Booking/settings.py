@@ -31,7 +31,7 @@ DEBUG = config("DEBUG", cast=bool)
 ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
 
 if DEBUG:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1','eventtribe-cv8c.onrender.com']
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1',]
 else:
     ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
 
@@ -66,6 +66,7 @@ INSTALLED_APPS = [
   
 
     #django packages
+    'django_resend',
     'admin_honeypot',
     'cloudinary',
     'cloudinary_storage',
