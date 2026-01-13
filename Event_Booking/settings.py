@@ -249,14 +249,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 if config('ENVIRONMENT') == 'development':
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = 'smtp.gmail.com'  # or your SMTP server
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST = "smtp.resend.com"
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
-    EMAIL_HOST_USER = config('EMAIL_ADDRESS')
-    EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
-    DEFAULT_FROM_EMAIL = f"EventTribe <{config('EMAIL_ADDRESS')}>"
-    ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
+    EMAIL_HOST_USER = "resend"
+    EMAIL_HOST_PASSWORD = config("RESEND_API_KEY")
+    DEFAULT_FROM_EMAIL = "EventTribe <onboarding@resend.dev>"
+
+    # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    # EMAIL_HOST = 'smtp.gmail.com'  # or your SMTP server
+    # EMAIL_PORT = 587
+    # EMAIL_USE_TLS = True
+    # EMAIL_HOST_USER = config('EMAIL_ADDRESS')
+    # EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
+    # DEFAULT_FROM_EMAIL = f"EventTribe <{config('EMAIL_ADDRESS')}>"
+    # ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
 
 
 # ACCOUNT_EMAIL_REQUIRED = True
