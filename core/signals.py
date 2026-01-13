@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.core.mail import send_mail
 import qrcode 
 from io import BytesIO
+from .tasks import send_welcome_email_task
 
 
 
@@ -18,13 +19,7 @@ def send_welcome_email(sender,instance,created,**Kwargs):
 
     """send a welcome message"""
     if created:
-        send_mail(
-            'Welcome to EventTribe',
-            'Thanks for signing up with us',
-            'sheriffsakara112@gmail.com',
-            [instance.email],
-            fail_silently=False,
-        )
+        send_welcome_email_task.delay(instance.id)
 
 #creating user profile
 @receiver(post_save, sender=User, dispatch_uid="create_user_profile")

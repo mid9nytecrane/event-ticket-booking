@@ -249,14 +249,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 if config('ENVIRONMENT') == 'development':
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 else:
-   
-    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    EMAIL_HOST = "smtp.gmail.com"
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.gmail.com'  # or your SMTP server
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
-    EMAIL_HOST_USER = config("EMAIL_ADDRESS")
-    EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
-    DEFAULT_FROM_EMAIL = f"EventTrivbe <eventtribe32@gmail.com>"
+    EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+    EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+    DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@yourapp.com')
     ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
 
 
