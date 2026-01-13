@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import sys
 import dj_database_url
 import os
 from decouple import config
@@ -246,10 +247,21 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+def get_email_backend():
+    """Lazy load email backend to prevent connection attempts at import time"""
+    if 'runserver' in sys.argv or 'test' in sys.argv:
+        return 'django.core.mail.backends.console.EmailBackend'
+    elif 'gunicorn' in ' '.join(sys.argv):
+        # For production, use SMTP but with fail_silently
+        return 'django.core.mail.backends.smtp.EmailBackend'
+    else:
+        return 'django.core.mail.backends.smtp.EmailBackend'
+
+
 if config('ENVIRONMENT') == 'development':
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_BACKEND = get_email_backend()
     EMAIL_HOST = 'smtp.gmail.com'  # or your SMTP server
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
