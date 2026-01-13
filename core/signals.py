@@ -19,7 +19,13 @@ def send_welcome_email(sender,instance,created,**Kwargs):
 
     """send a welcome message"""
     if created:
-        send_welcome_email_task.delay(instance.id)
+        send_mail(
+            'Welcome to EventTribe',
+            'Thanks for signing up with us',
+            'sheriffsakara112@gmail.com',
+            [instance.email],
+            fail_silently=False,
+        )
 
 #creating user profile
 @receiver(post_save, sender=User, dispatch_uid="create_user_profile")

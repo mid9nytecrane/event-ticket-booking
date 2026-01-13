@@ -249,29 +249,29 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 if config('ENVIRONMENT') != 'development':
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 else:
-    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    EMAIL_HOST = "smtp.resend.com"
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.gmail.com'  # or your SMTP server
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
-    EMAIL_HOST_USER = "resend"
-    EMAIL_HOST_PASSWORD = config("RESEND_API_KEY")
-    DEFAULT_FROM_EMAIL = "EventTribe <onboarding@resend.dev>"
-
-    # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    # EMAIL_HOST = 'smtp.gmail.com'  # or your SMTP server
+    EMAIL_HOST_USER = config('EMAIL_ADDRESS')
+    EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
+    DEFAULT_FROM_EMAIL = f"EventTribe <{config('EMAIL_ADDRESS')}>"
+    ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
+    # EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    # EMAIL_HOST = "smtp.resend.com"
     # EMAIL_PORT = 587
     # EMAIL_USE_TLS = True
-    # EMAIL_HOST_USER = config('EMAIL_ADDRESS')
-    # EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
-    # DEFAULT_FROM_EMAIL = f"EventTribe <{config('EMAIL_ADDRESS')}>"
-    # ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
+    # EMAIL_HOST_USER = "resend"
+    # EMAIL_HOST_PASSWORD = config("RESEND_API_KEY")
+    # DEFAULT_FROM_EMAIL = "EventTribe <onboarding@resend.dev>"
+
 
 
 # ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_SIGNUP_FIELDS = ['email*','username*', 'password1*','password2*']
+#ACCOUNT_SIGNUP_FIELDS = ['email*','username*', 'password1*','password2*']
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_LOGIN_METHODS = ["email", "username"]
-ACCOUNT_PREVENT_ENUMERATION = True
+#ACCOUNT_PREVENT_ENUMERATION = True
 ACCOUNT_SIGNUP_FORM_CLASS = "user_account.forms.CustomSignUpForm"
 
 SOCIALACCOUNT_LOGIN_ON_GET = True 
