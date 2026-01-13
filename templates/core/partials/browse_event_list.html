@@ -1,16 +1,4 @@
-{% extends "core/base.html" %}
-
-{% block content %}
-<section class='mt-16 bg-slate-50 py-6 min-h-screen'>
-    {% comment %} {% include "core/partials/searchbox.html" %} {% endcomment %}
-     {% include "core/partials/browse_events_search.html" %}
-
-
-    {% include "core/partials/browse_event_list.html" %}
-
-     {% comment %} 
-
-    <div id='#event-list' class='relative container px-3 sm:px-4 mx-auto pb-6'>
+<div id='browse_event_list' class='relative container px-3 sm:px-4 mx-auto pb-6'>
 
     {% include "core/partials/spinner.html" %}
 
@@ -108,21 +96,16 @@
     </div>
 
     {% else %}
-    <div role="alert" class="alert alert-info mt-4 mb-6 mx-1 md:mx-0">
-        <svg class="h-6 w-6 stroke-current">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M13 16h-1v-4h-1m1-4h.01M21 12..." />
-        </svg>
-        <span class='text-white text-lg font-semibold'>
-            Your search matches no event
-        </span>
+   <div role="alert" class="text-center py-8 px-4">
+        <div class="inline-flex flex-col items-center max-w-sm">
+            <div class="mb-4 p-3 bg-blue-100 rounded-full">
+                <svg class="w-8 h-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">No events found</h3>
+            <p class="text-gray-600">Try searching with different keywords or browse all upcoming events.</p>
+        </div>
     </div>
     {% endif %}
-</div> {% endcomment %}
-
-
-</section>
-
-{% endblock content %}
-
-
+</div>

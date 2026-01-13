@@ -1,0 +1,52 @@
+<div class="max-w-3xl mx-auto px-4">
+    <div class="relative">
+        <label for="event-search" class="sr-only">Search events</label>
+        
+        <div class="relative flex items-center">
+            <!-- Search Icon -->
+            <div class="absolute left-4 z-10 pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5 text-gray-400">
+                    <path d="M8.25 10.875a2.625 2.625 0 1 1 5.25 0 2.625 2.625 0 0 1-5.25 0Z" />
+                    <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.125 4.5a4.125 4.125 0 1 0 2.338 7.524l2.007 2.006a.75.75 0 1 0 1.06-1.06l-2.006-2.007a4.125 4.125 0 0 0-3.399-6.463Z" clip-rule="evenodd" />
+                </svg>
+
+            </div>
+            
+            <!-- Loading Spinner -->
+            <div class="absolute  top-1/2 -translate-y-1/2" id="spinner">
+                {% include "core/partials/spinner.html" %}
+            </div>
+            <!-- Input Field -->
+            <input 
+                id="event-search"
+                type="search"
+                name="search"
+                class="w-full pl-12 pr-12 py-3.5 bg-white/95 backdrop-blur-sm 
+                       border border-gray-200 rounded-2xl shadow-sm
+                       focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none
+                       transition-all duration-200
+                       placeholder:text-gray-400 text-gray-700
+                       hover:border-gray-300 hover:shadow"
+                placeholder="Search events by title,location or event tags..."
+                hx-get="{% url 'browse-event-search' %}"
+                hx-trigger="keyup changed delay:500ms"
+                hx-target="#browse_event_list"
+                hx-include="this"
+                hx-indicator="#spinner"
+                hx-on::before-request="
+                    document.getElementById('browse_event_list').style.opacity = '0.4';
+                    document.getElementById('browse_event_list').style.transition = 'opacity 150ms ease-in-out';
+                "
+                hx-on::after-request="
+                    document.getElementById('browse_event_list').style.opacity = '1.0';
+                "
+                autocomplete="off"
+            />
+        </div>
+        
+        <!-- Optional: Search Hint -->
+        <p class="mt-2 text-xs text-gray-500 ml-4">
+            Press Enter or wait for automatic search
+        </p>
+    </div>
+</div>  

@@ -1,35 +1,52 @@
-<!--search bar-->
-<div class='w-80 mx-auto'>
-
-    <label class="input rounded-xl w-80 md:w-100 mt-4">
-        {% include "core/partials/spinner.html" %}
-      <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <g
-          stroke-linejoin="round"
-          stroke-linecap="round"
-          stroke-width="2.5"
-          fill="none"
-          stroke="currentColor"
-        >
-          <circle cx="11" cy="11" r="8"></circle>
-          <path d="m21 21-4.3-4.3"></path>
-        </g>
-      </svg>
-      <input type="search" 
-            class="grow border-0" 
-            placeholder="Search" 
-            name='search'
-            hx-get="{% url 'search-event'%}"
-            hx-trigger="keyup delay:1000ms"
-            hx-target="#event-list"
-            hx-include='this'
-            hx-indicator="#spinner"
-            hx-on::before-request="document.getElementById('event-list').style.opacity=0.4"
-            hx-on::after-request="document.getElementById('event-list').style.opacity=1.0"
+<!-- Search Bar -->
+<div class="max-w-md mx-auto px-4 py-4">
+    <div class="relative">
+        <div class="relative">
+            <!-- Search Icon -->
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5 text-gray-400">
+                    <path d="M8.25 10.875a2.625 2.625 0 1 1 5.25 0 2.625 2.625 0 0 1-5.25 0Z" />
+                    <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.125 4.5a4.125 4.125 0 1 0 2.338 7.524l2.007 2.006a.75.75 0 1 0 1.06-1.06l-2.006-2.007a4.125 4.125 0 0 0-3.399-6.463Z" clip-rule="evenodd" />
+                </svg>
+            </div>
             
+            <!-- Input Field -->
+            <input 
+                type="search"
+                name="search"
+                class="w-full pl-12 pr-12 py-3.5 bg-white 
+                       border border-gray-300 rounded-xl 
+                       focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none
+                       transition-all duration-200
+                       placeholder:text-gray-500 text-gray-900
+                       shadow-sm hover:shadow"
+                placeholder="Search events..."
+                hx-get="{% url 'search-event' %}"
+                hx-trigger="keyup changed delay:500ms"
+                hx-target="#event-list"
+                hx-include="this"
+                hx-indicator="#search-spinner"
+                hx-on::before-request="
+                    document.getElementById('event-list').style.opacity = '0.4';
+                    document.getElementById('event-list').style.transition = 'opacity 150ms ease-in-out';
+                "
+                hx-on::after-request="
+                    document.getElementById('event-list').style.opacity = '1.0';
+                "
+                autocomplete="off"
+            />
+            
+            <!-- Loading Spinner -->
+            <div class="absolute inset-y-0 -translate-y-1/2 pr-4 " id="search-spinner">
+                <div class="w-5 h-5">
+                    {% include "core/partials/spinner.html" %}
+                </div>
+            </div>
+        </div>
         
-      
-      />
-     
-    </label>
+        <!-- Search Hint (optional) -->
+        <p class="mt-2 text-xs text-gray-500 ml-1">
+            Type to search events...
+        </p>
+    </div>
 </div>

@@ -11,7 +11,7 @@ import time
 def index(request):
     events = Event.objects.filter(
         date__gte=timezone.now().date()
-    ).order_by('created_at')[:8]
+    ).order_by('-created_at')[:8]
     event_categories = EventCategory.objects.all()
 
     paginator = Paginator(events, 2)
@@ -30,14 +30,44 @@ def index(request):
 
 def browse_events(request):
     events = Event.objects.filter(
-        date__gte=timezone.now().date()
-    ).order_by('-created_at')
+            date__gte=timezone.now().date()
+        ).order_by('-created_at')
+    
+    
 
     context = {
-        'events':events
+        'events':events,
+        # 'events_query':events_query
     }
 
     return render(request, 'core/browse_events.html', context)
+    
+
+def browse_event_search(request):
+    time.sleep(0.5)
+    query = request.GET.get('search', '').strip()
+    today = timezone.now().date()
+    if query:
+
+        events = Event.objects.filter(
+            (
+            Q(title__icontains=query) | 
+            Q(location__icontains=query) |
+            Q(event_tag__icontains=query)
+
+            ) & Q(date__gte=today)
+            
+        )
+    else:
+        events = Event.objects.filter(
+            date__gte=timezone.now().date()
+        ).order_by('-created_at')
+        
+    context = {
+        'events':events,
+    }
+
+    return render(request, 'core/partials/browse_event_list.html', context)
     
 
 

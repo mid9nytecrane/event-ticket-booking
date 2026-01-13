@@ -1,32 +1,89 @@
-<div id='event_categories' class='relative container md:w-3/4 mx-auto py-6'>
-
-        
-        <h1 class="text-xl mx-2 md:text-3xl font-semibold text-left md:text-center mt-2 mb-2">Events Categories</h1>
-        {% if event_categories %}
-        <div class="flex gap-5 py-2 md:py-4 overflow-x-auto scrollbar-hide  lg:grid-cols-4 px-4 sm:px-0 scroll-smooth snap-x snap-mandatory">
-            <a href="" class='group shrink-0 md:w-45 w-20 text-center text-sm font-semibold md:text-normal text-white border bg-blue-500 shadow-lg cursor-pointer rounded-full p-2.5'
-            >
-                All
-            </a>
-            {% for event_category in  event_categories%}
-                <button  class='group shrink-0 md:w-45 w-30 text-center text-sm md:text-normal text-blue-700 border border-gray-500 bg-blue-500/20 shadow-md cursor-pointer rounded-full p-2.5 hover:scale-104 duration-300 hover:bg-blue-400 hover:text-white'
-                
-                hx-get="{% url 'category-events' event_category.slug%}"
-                hx-trigger="click delay:1000ms"
-                hx-target="#event-list"
-                hx-indicator="#spinner"
-                hx-on::before-request="document.getElementById('event-list').style.opacity=0.4"
-                hx-on::after-request="document.getElementById('event-list').style.opacity=1"
-                hx-on:click="document.getElementById('event-list').scrollIntoView({behavior: 'smooth'})"
-                >
-                    {{event_category.name}}
-                  
-                    
-                </button>
-                
-            {% endfor %}
-
-
-        </div>
-        {% endif %}
+<div id='event_categories' class='relative container md:w-3/4 mx-auto py-8 px-4'>
+    
+    <!-- Header -->
+    <div class="mb-6 md:mb-8">
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 text-center">
+            Events by Category
+        </h1>
+        <p class="text-gray-600 text-center mt-2 text-sm md:text-base">
+            Browse events that match your interests
+        </p>
     </div>
+
+    {% if event_categories %}
+    <!-- Categories Container with Mobile Scroll -->
+    <div class="relative">
+        <!-- Scroll Gradient Overlays for Mobile -->
+        <div class="absolute left-0 top-0 bottom-0 w-8 bg-linear-to-r from-white to-transparent z-10 pointer-events-none md:hidden"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-8 bg-linear-to-l from-white to-transparent z-10 pointer-events-none md:hidden"></div>
+        
+        <!-- Categories -->
+        <div class="flex gap-3 md:gap-4 py-2 overflow-x-auto scrollbar-hide 
+                    md:flex-wrap md:justify-center px-2 md:px-0
+                    snap-x snap-mandatory scroll-smooth">
+            
+            <!-- All Button -->
+            <a href="" 
+               class='group shrink-0 snap-start min-w-20 md:min-w-[100px]'>
+                <div class='text-center bg-blue-600 text-white border border-blue-700 
+                           shadow-lg cursor-pointer rounded-full px-4 py-2.5 md:px-5 md:py-3
+                           transition-all duration-200 hover:bg-blue-700 hover:shadow-xl
+                           active:scale-95'>
+                    <span class='text-sm font-semibold md:text-base'>All</span>
+                </div>
+            </a>
+            
+            <!-- Category Buttons -->
+            {% for event_category in event_categories %}
+                <button class='group shrink-0 snap-start min-w-[100px] md:min-w-[120px] 
+                              transition-all duration-200 active:scale-95'
+                        hx-get="{% url 'category-events' event_category.slug %}"
+                        hx-trigger="click"
+                        hx-target="#event-list"
+                        hx-indicator="#spinner"
+                        hx-on::before-request="
+                            document.getElementById('event-list').style.opacity = '0.4';
+                            document.getElementById('event-list').style.transition = 'opacity 200ms';
+                        "
+                        hx-on::after-request="
+                            document.getElementById('event-list').style.opacity = '1';
+                            document.getElementById('event-list').scrollIntoView({behavior: 'smooth', block: 'start'});
+                        ">
+                    
+                    <div class='text-center text-gray-800 border border-gray-300 
+                               bg-white shadow-sm cursor-pointer rounded-full px-4 py-2.5 md:px-5 md:py-3
+                               transition-all duration-200 
+                               hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700 hover:shadow-md
+                               group-active:scale-95'>
+                        <span class='text-sm font-medium md:text-base'>{{ event_category.name }}</span>
+                    </div>
+                </button>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Hidden Spinner -->
+<div id="spinner" class="h-6 w-6 opacity-0 transition-opacity duration-200 fixed top-4 right-4">
+    {% include "core/partials/spinner.html" %}
+</div>
+
+<style>
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera */
+}
+
+/* Smooth snapping */
+.snap-x {
+    scroll-snap-type: x mandatory;
+}
+.snap-start {
+    scroll-snap-align: start;
+}
+</style>

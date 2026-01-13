@@ -1,58 +1,70 @@
-<nav class="fixed lg:sticky inset-y-0 left-0 top-0 duration-300 transform lg:translate-x-0 z-10 w-80 lg:w-64 bg-gray-700 text-gray-100 min-h-screen p-3"
-    :class="{'translate-x-0': open, '-translate-x-full': !open}"
->
-    <div class='flex items-center justify-between p-4'>
-        <span class='font-bold text-shadow-purple-600 text-2xl sm:text-3xl'>EventTribe</span>
-        <button class="p-2 lg:hidden focus:outline-none focus:bg-gray-100 hover:text-gray-100"
-                @click="open = false"
-        >
+<!-- Sidebar -->
+        <div class="sidebar w-64 bg-white min-h-screen shadow-lg flex flex-col">
+            <div class="p-6 border-b dark:border-gray-700">
+                <h1 class="text-2xl font-bold text-primary-600 dark:text-primary-500">
+                    <a href="/">
 
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-7 font-bold">
-                <path fill-rule="evenodd" d="M10.72 11.47a.75.75 0 0 0 0 1.06l7.5 7.5a.75.75 0 1 0 1.06-1.06L12.31 12l6.97-6.97a.75.75 0 0 0-1.06-1.06l-7.5 7.5Z" clip-rule="evenodd" />
-                <path fill-rule="evenodd" d="M4.72 11.47a.75.75 0 0 0 0 1.06l7.5 7.5a.75.75 0 1 0 1.06-1.06L6.31 12l6.97-6.97a.75.75 0 0 0-1.06-1.06l-7.5 7.5Z" clip-rule="evenodd" />
-            </svg>
-        </button>
-
-    </div>
-    <hr class=''>
-    <ul class="mt-8 ">
-        <li class="space-y-4">
-            <a 
-                href="{% url 'master_admin:admin-dashboard'%}"
-                class="block px-4 py-2 font-semibold text-gray-100 focus:outline-none focus:bg-white focus:text-gray-600 hover:bg-white hover:text-gray-600 rounded-md">
-                <div class="flex items-center gap-2">
-
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                        <path fill-rule="evenodd" d="M3 6a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3V6ZM3 15.75a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-2.25Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3v-2.25Z" clip-rule="evenodd" />
-                    </svg>
-    
-                    Dashboard
+                        EventTribe
+                    </a>
+                </h1>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Event Booking Platform</p>
+            </div>
+            
+            <div class="flex-1 p-4">
+                <nav>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="{% url 'master_admin:admin-dashboard'%}" class="flex items-center p-3 rounded-lg bg-primary-50 text-primary-600  font-medium hover:bg-gray-100">
+                                <i class="fas fa-tachometer-alt w-6"></i>
+                                <span class="ml-3">Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'master_admin:user-management'%}" class="flex items-center p-3 rounded-lg hover:bg-gray-100">
+                                <i class="fas fa-users w-6"></i>
+                                <span class="ml-3">Manage Users</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'master_admin:events-mgt'%}" class="flex items-center p-3 rounded-lg hover:bg-gray-100 ">
+                                <i class="fas fa-calendar-alt w-6"></i>
+                                <span class="ml-3">Events</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#bookings" class="flex items-center p-3 rounded-lg hover:bg-gray-100 ">
+                                <i class="fas fa-ticket-alt w-6"></i>
+                                <span class="ml-3">Bookings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#analytics" class="flex items-center p-3 rounded-lg hover:bg-gray-100 ">
+                                <i class="fas fa-chart-line w-6"></i>
+                                <span class="ml-3">Analytics</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#settings" class="flex items-center p-3 rounded-lg hover:bg-gray-100 ">
+                                <i class="fas fa-cog w-6"></i>
+                                <span class="ml-3">Settings</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            
+            <div class="p-4 border-t dark:border-gray-700">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-white font-bold">
+                        SS
+                    </div>
+                    <div class="ml-3">
+                        <p class="font-medium">Admin User</p>
+                        <p class="text-sm text-gray-500">Super Admin</p>
+                    </div>
+                    <button id="theme-toggle" class="ml-auto p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <i class="fas fa-moon"></i>
+                    </button>
                 </div>
-            </a>
-            <a  href="{% url 'master_admin:user-management'%}"
-                class="block px-4 py-2 font-semibold text-gray-100 focus:outline-none focus:bg-white focus:text-gray-600  hover:bg-white hover:text-gray-600 rounded-md"> 
-                <div class='flex items-center gap-2'>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                        <path fill-rule="evenodd" d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 15.117A6.745 6.745 0 0 1 12 12a6.745 6.745 0 0 1 6.709 7.498.75.75 0 0 1-.372.568A12.696 12.696 0 0 1 12 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 0 1-.372-.568 6.787 6.787 0 0 1 1.019-4.38Z" clip-rule="evenodd" />
-                        <path d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z" />
-                    </svg>
-
-                    User Management
-
-                </div>
-            </a>
-            <a class="block px-4 py-2 font-semibold text-gray-100 hover:bg-white hover:text-gray-600 rounded-md" href="#"> 
-                <div class="flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                        <path fill-rule="evenodd" d="M2.25 13.5a8.25 8.25 0 0 1 8.25-8.25.75.75 0 0 1 .75.75v6.75H18a.75.75 0 0 1 .75.75 8.25 8.25 0 0 1-16.5 0Z" clip-rule="evenodd" />
-                        <path fill-rule="evenodd" d="M12.75 3a.75.75 0 0 1 .75-.75 8.25 8.25 0 0 1 8.25 8.25.75.75 0 0 1-.75.75h-7.5a.75.75 0 0 1-.75-.75V3Z" clip-rule="evenodd" />
-                    </svg>
-                    
-                    Analytics
-
-                </div>
-            </a>
-        </li>
-
-    </ul>
-</nav>
+            </div>
+        </div>

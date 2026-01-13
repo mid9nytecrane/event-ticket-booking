@@ -151,7 +151,7 @@ def creator_dashboard(request):
             'total_revenue':total_revenue,
             'total_tickets_sold':total_tickets_sold,
             'active_events_count':active_events_count,
-            'upcoming_events_count':upcoming_events_count,
+            'upcoming_events_count':upcoming_events_count,          
             'tickets':tickets,
             'current_date':current_date,
             'events_list': events_list,

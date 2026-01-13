@@ -1,0 +1,109 @@
+  <!-- Events Table -->
+<div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+    <!-- Header with stats -->
+    <div class="p-6 border-b border-gray-100 bg-linear-to-r from-gray-50 to-white">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900">Your Events</h2>
+                <p class="text-gray-500 mt-1">Manage and track all your events in one place</p>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="flex items-center space-x-4">
+                <div class="text-center px-4 py-2 bg-blue-50 rounded-lg">
+                <div class="text-2xl font-bold text-blue-700">{{ events|length }}</div>
+                <div class="text-xs text-blue-600 font-medium">Total Events</div>
+                </div>
+                <div class="hidden md:block text-center px-4 py-2 bg-green-50 rounded-lg">
+                <div class="text-2xl font-bold text-green-700">
+                    
+                    {{ active_event_list|length }}
+                
+                </div>
+                <div class="text-xs text-green-600 font-medium">Active</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Filters (optional) -->
+        <div class="flex flex-wrap items-center gap-3 mt-6">
+               
+           {% include "organizers/partials/filter_data.html" %}
+        {% comment %} <button class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+            All Events
+        </button>
+        <button class="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">
+            Active
+        </button>
+        <button class="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">
+            Upcoming
+        </button>
+        <button class="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors">
+            Past
+        </button> {% endcomment %}
+        </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="overflow-x-auto">
+        <table class="w-full">
+        <thead class="bg-gray-50">
+            <tr>
+            <th class="py-4 px-6 text-left">
+                <div class="flex items-center space-x-2">
+                <span class="font-semibold text-gray-700 uppercase tracking-wider text-xs">Event</span>
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                </svg>
+                </div>
+            </th>
+            <th class="py-4 px-6 text-left">
+                <span class="font-semibold text-gray-700 uppercase tracking-wider text-xs">Date & Time</span>
+            </th>
+            <th class="py-4 px-6 text-left">
+                <span class="font-semibold text-gray-700 uppercase tracking-wider text-xs">Tickets</span>
+            </th>
+            <th class="py-4 px-6 text-left">
+                <span class="font-semibold text-gray-700 uppercase tracking-wider text-xs">Revenue</span>
+            </th>
+            <th class="py-4 px-6 text-left">
+                <span class="font-semibold text-gray-700 uppercase tracking-wider text-xs">Status</span>
+            </th>
+            <th class="py-4 px-6 text-left">
+                <span class="font-semibold text-gray-700 uppercase tracking-wider text-xs">Payment</span>
+            </th>
+            <th class="py-4 px-6 text-center">
+                <span class="font-semibold text-gray-700 uppercase tracking-wider text-xs">Actions</span>
+            </th>
+            </tr>
+        </thead>
+        
+        <!-- Table Body -->
+        <tbody class="divide-y divide-gray-100">
+            {% include "organizers/partials/event_table_body.html" %}
+        </tbody>
+        </table>
+        
+        <!-- Empty State -->
+        {% if not events %}
+        <div class="py-16 text-center">
+        <div class="mx-auto w-24 h-24 text-gray-300 mb-4">
+            <svg class="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+        </div>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">No events yet</h3>
+        <p class="text-gray-500 mb-6 max-w-sm mx-auto">Create your first event to start selling tickets and managing attendees.</p>
+        <a href="{% url 'organizers:create-event' %}" class="inline-flex items-center px-5 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Create New Event
+        </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Footer with Pagination -->
+    {% include "organizers/partials/pagination.html" %} 
+</div>

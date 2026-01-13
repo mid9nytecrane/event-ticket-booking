@@ -28,18 +28,24 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool)
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
-
-if DEBUG:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'eventtribe-cv8c.onrender.com']
+if config("ENVIRONMENT") == 'development':
+    DEBUG = True
 else:
-    ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
+    DEBUG = False
+
+# ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'eventtribe.up.railway.app']
+
+# if DEBUG:
+#     ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'eventtribe-cv8c.onrender.com']
+# else:
+#     ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
 
 
-if not ALLOWED_HOSTS:
-    ALLOWED_HOSTS = ['*']
+# if not ALLOWED_HOSTS:
+#     ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['https://eventtribe-cv8c.onrender.com', 'http://localhost:8000']
+CSRF_TRUSTED_ORIGINS = ['https://eventtribe.up.railway.app']
 
 
 
@@ -157,10 +163,20 @@ DATABASES = {
     }
 }
 
-if DEBUG:
-    DATABASE_URL = config('DATABASE_URL', default=None)
-    if DATABASE_URL:
-        DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+if config("ENVIRONMENT") == "production":
+    DATABASES = {
+        'default':{
+            'ENGINE':'django.db.backends.postgresql',
+            'NAME': config("DATABASE_NAME"),
+            'USER': config("DATABASE_USER"),
+            'PASSWORD':config("DATABASE_PASSWORD"),
+            'HOST': config("DATABASE_HOST"),
+            'PORT': config("DATABASE_PORT")
+        }
+    }
+    # DATABASE_URL = config('DATABASE_URL', default=None)
+    # if DATABASE_URL:
+    #     DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
     #DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
 
 
@@ -234,7 +250,7 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-if DEBUG:
+if config('ENVIRONMENT') == 'development':
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 else:
    
