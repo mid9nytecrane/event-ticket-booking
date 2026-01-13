@@ -1,0 +1,1 @@
+web : gunicorn Event_Booking.wsgi
