@@ -96,10 +96,18 @@ def user_management(request):
 
 @login_required
 def events(request):
-    events = Event.objects.all()
+    events = Event.objects.all().order_by('-created_at')
+    pagination = Paginator(events,2)
+    page_number = request.GET.get('page')
+    all_event_list = pagination.get_page(page_number)
 
+    active_event_list = [event for event in events if event.is_active]
+    upcoming_event_list = [event for event in events if event.is_upcoming]
 
     context = {
         'events':events,
+        'all_event_list':all_event_list,
+        'active_event_list': active_event_list,
+        'upcoming_event_list': upcoming_event_list,
     }
     return render(request, 'master_admin/events.html', context)

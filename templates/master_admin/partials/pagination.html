@@ -1,15 +1,15 @@
 <!-- Pagination -->
 <div class="bg-linear-to-r from-gray-50 to-indigo-50 px-8 py-6 border-t border-gray-200">
-    {% if attendees_list %}
+    {% if all_event_list %}
         <div class="flex items-center justify-between">
             <div class="text-sm text-gray-600">
-                Showing page <span class="font-bold text-gray-800">{{ attendees_list.number}}</span> of <span class="font-bold text-gray-800">{{ attendees_list.paginator.num_pages }}</span> organizers
+                Showing page <span class="font-bold text-gray-800">{{ all_event_list.number}}</span> of <span class="font-bold text-gray-800">{{ all_event_list.paginator.num_pages }}</span> organizers
             </div>
             <div class="flex space-x-3">
                 <!-- Previous Button-->
-                {% if attendees_list.has_previous %}
+                {% if all_event_list.has_previous %}
                     <a 
-                        href="?page={{attendees_list.previous_next_number}}"
+                        href="?page={{all_event_list.previous_next_number}}"
                        
                 
                     >
@@ -33,9 +33,9 @@
                 {% endif %}
 
                 <!-- Next Button-->
-                {% if attendees_list.has_next %}
+                {% if all_event_list.has_next %}
                     <a 
-                        href="?page={{attendees_list.next_page_number}}"
+                        href="?page={{all_event_list.next_page_number}}"
                         
                         
                         >

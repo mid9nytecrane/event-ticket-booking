@@ -1,7 +1,7 @@
 
 <tbody class="divide-y divide-gray-200" id="event_list">
-    {% if eventst %}
-        {% for event in events %}
+    {% if all_event_list %}
+        {% for event in all_event_list %}
         
         <!-- Event Row -->
         <tr class="hover:bg-gray-50 transition-colors duration-200">
@@ -18,6 +18,9 @@
                         <h3 class="font-medium text-gray-900">{{event.title|title}}</h3>
                         {% if event.category %}
                         <p class="text-sm hidden md:block text-gray-500 mt-0.5">{{event.category}}</p>
+                        {% endif %}
+                        {% if event.user %}
+                        <p class="text-xs hidden md:block text-gray-500 mt-0.5">by: {{event.user}}</p>
                         {% endif %}
                         
                     </div>
