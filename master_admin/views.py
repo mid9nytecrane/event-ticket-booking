@@ -104,6 +104,20 @@ def events(request):
     active_event_list = [event for event in events if event.is_active]
     upcoming_event_list = [event for event in events if event.is_upcoming]
 
+    for event in events:
+        if event.is_upcoming:
+            Event.objects.filter(pk=event.id).update(status="upcoming")
+        elif event.is_active:
+            Event.objects.filter(pk=event.id).update(status='active')
+        else:
+            Event.objects.filter(pk=event.id).update(status='past')
+    
+    for event in events:
+        if event.is_paid:
+            Event.objects.filter(pk=event.id).update(payment_status='paid')
+        else:
+            Event.objects.filter(pk=event.id).update(payment_status='pending')
+
     context = {
         'events':events,
         'all_event_list':all_event_list,
