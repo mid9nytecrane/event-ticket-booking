@@ -174,10 +174,16 @@ if config("ENVIRONMENT") == "production":
             'PORT': config("DATABASE_PORT")
         }
     }
-    # DATABASE_URL = config('DATABASE_URL', default=None)
-    # if DATABASE_URL:
-    #     DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
-    #DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
+
+    # if config("ENVIRONMENT") == "production":
+    # DATABASES = {
+    #     "default": dj_database_url.parse(
+    #         config("DATABASE_URL"),
+    #         conn_max_age=600,
+    #         ssl_require=True,
+    #     )
+    # }
+
 
 
 # Password validation
