@@ -22,7 +22,7 @@ class CustomSignupView(SignupView):
         else:
             messages.success(
                 self.request,
-                f"Welcome {form.cleaned_data['first_name']} . Your account has been created."
+                f"Welcome {self.request.user.username} . Your account has been created."
             )
         
         return response

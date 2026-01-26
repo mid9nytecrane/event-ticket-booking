@@ -1,4 +1,4 @@
-
+{% load static %}
 <nav class="fixed z-20 top-0 w-full bg-white border-b border-gray-200">
 
   <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
@@ -9,11 +9,14 @@
         <img src="/static/images/logo.png" alt="Logo" class="w-8 h-8">
       -->
       <a href="/" class="inline-flex items-center gap-2.5 hover:bg-gray-50/80 rounded-lg p-2.5 transition-all duration-200 hover:scale-[1.02]">
-    <div class="p-1.5 bg-blue-100 rounded-lg">
-        <img class="h-5 w-5 text-blue-600" src="https://img.icons8.com/arcade/64/ticket.png" alt="ticket"/>
-    </div>
-    <h2 class="hidden lg:block text-lg font-bold text-gray-900">Event<span class="text-blue-600">Tribe</span></h2>
-</a>
+       <img src="{% static 'images/logo icon.svg' %}" 
+     alt="Company Logo" 
+     class="w-12 h-12 md:w-16 md:h-16 lg:w-8 lg:h-8 object-contain">
+        {% comment %} <div class="p-1.5 bg-blue-100 rounded-lg">
+            <img class="h-5 w-5 text-blue-600" src="https://img.icons8.com/arcade/64/ticket.png" alt="ticket"/>
+        </div>
+        <h2 class="hidden lg:block text-lg font-bold text-gray-900">Event<span class="text-blue-600">Tribe</span></h2>  {% endcomment %}
+      </a>
     </div>
 
     <!-- Center (optional text or empty for spacing) -->
@@ -233,7 +236,7 @@
             <!-- Become a creator -->
             <a href="{% url 'organizers:register-creator'  %}">
 
-              <button class="w-full py-3 rounded-full bg-gray-200 font-semibold text-gray-800 hover:bg-gray-300 transition shadow-sm">
+              <button class="w-full py-3 rounded-full bg-[#E4C584] font-semibold text-gray-800 hover:bg-gray-300 transition shadow-sm">
                   Become a creator
               </button>
             </a>

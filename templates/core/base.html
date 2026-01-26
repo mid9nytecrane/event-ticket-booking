@@ -1,9 +1,17 @@
+
 <!DOCTYPE html>
 <html lang="en" class='scroll-smooth duration-400'>
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Booking</title>
+
+    <!-- Tab Icon (Keep this small) -->
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/logo icon.svg' %}">
+
+    <!-- For Apple devices/High Res -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/logo icon.svg' %}">
 
     <!--tailwindcss cdn-->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -28,6 +36,11 @@
 
         body{
             font-family: Poppins;
+        }
+
+        .site-logo{
+            width: 200px;
+            height: auto;
         }
     </style>
 </head>

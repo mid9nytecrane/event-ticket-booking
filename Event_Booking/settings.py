@@ -272,7 +272,7 @@ else:
 
 
 # ACCOUNT_EMAIL_REQUIRED = True
-#ACCOUNT_SIGNUP_FIELDS = ['email*','username*', 'password1*','password2*']
+ACCOUNT_SIGNUP_FIELDS = ['email*','username*', 'password1*','password2*']
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_LOGIN_METHODS = ["email", "username"]
 #ACCOUNT_PREVENT_ENUMERATION = True

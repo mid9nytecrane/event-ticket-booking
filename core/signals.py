@@ -10,6 +10,7 @@ from django.core.mail import send_mail
 import qrcode 
 from io import BytesIO
 from .tasks import send_welcome_email_task
+from django.conf import settings 
 
 
 
@@ -22,7 +23,7 @@ def send_welcome_email(sender,instance,created,**Kwargs):
         send_mail(
             'Welcome to EventTribe',
             'Thanks for signing up with us',
-            'sheriffsakara112@gmail.com',
+            settings.DEFAULT_FROM_EMAIL,
             [instance.email],
             fail_silently=False,
         )
@@ -31,9 +32,11 @@ def send_welcome_email(sender,instance,created,**Kwargs):
 @receiver(post_save, sender=User, dispatch_uid="create_user_profile")
 def create_user_profile(sender,created,instance, **kwargs):
     if created:
+        
         UserProfile.objects.create(
             user=instance,
             email=instance.email,
+            
         )
 
         print(f"\n{instance.username}'s profile is created.")
