@@ -14,6 +14,8 @@ from django.conf import settings
 
 
 
+
+
 #sending user a welcome message through email after signing up 
 @receiver(post_save,sender=User, dispatch_uid="send_welcome_email")
 def send_welcome_email(sender,instance,created,**Kwargs):
@@ -51,7 +53,22 @@ def create_user_profile(sender,created,instance, **kwargs):
 @receiver(post_save,sender=Ticket, dispatch_uid='generate_qr_code')
 def generate_qr_code(sender, instance, created, **kwargs):
     print('\nsignal fired !!!')
-    if created or not instance.qr_code:
+    # LOCAL IMPORT: Move this inside the function to break circular imports
+    from payment.models import Payment 
+    
+    try:
+        payment= instance.payment 
+        if not payment:
+            print(f"Ticket {instance.ticket_id} has no payment linked yet.")
+            return 
+        payment_status = payment 
+    except AttributeError:
+        payment = Payment.objects.filter(user=instance.user).last()
+        payment_status = payment.verified if payment else False 
+
+
+
+    if created or payment_status and  not instance.qr_code:
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -76,6 +93,9 @@ def generate_qr_code(sender, instance, created, **kwargs):
         filename = f"qr_code_{instance.ticket_id}.png"
     
         instance.qr_code.save(filename, File(buffer),   save=False)
-        instance.save()
+        instance.save(update_fields=['qr_code'])
 
         print(f"✅ QRCode save for {instance.ticket_id}")
+    else:
+        if not payment_status:
+            print(f"❌ Payment not verified for {instance.ticket_id}. Skipping QR generation")

@@ -2,6 +2,7 @@ from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 from core.models import Event, Ticket
+from payment.models import Payment
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
@@ -12,7 +13,8 @@ import json
 @login_required
 def book_event(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
-
+    payment = Payment.objects.filter(user=request.user, verified=True).last()
+    
     exist_ticket = Ticket.objects.filter(event=event, attendee=request.user).first()
     success = event.register_free_tickets() #method from the core/models.py
 
@@ -21,11 +23,10 @@ def book_event(request, event_id):
         messages.info(request, "You already have a ticket for this event!")
     else:
         if success:
-            ticket = Ticket.objects.create(event=event, attendee=request.user)
+            ticket = Ticket.objects.create(event=event, attendee=request.user, payment=payment)
             messages.success(request, "Ticket booked successfully!")
         else:
-            ticket = Ticket.objects.create(event=event, attendee=request.user)
-            messages.success(request, "Ticket booked successfully!")
+            ticket = Ticket.objects.create(event=event, attendee=request.user, payment=payment)
         
 
     return render(request, 'booking/ticket.html', {'ticket': ticket})

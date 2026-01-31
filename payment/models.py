@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User 
 from payment.paystack import Paystack
-from core.models import Event
+#from core.models import Event
 import uuid
 # Create your models here.
 
@@ -12,7 +12,7 @@ class FreeEventRegisterInfo(models.Model):
     contact = models.CharField(max_length=12 , null=True)
     full_name = models.CharField(max_length=100)
     created_at = models.DateField(auto_now_add=True)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, related_name="events")
+    event = models.ForeignKey('core.Event', on_delete=models.CASCADE, null=True, related_name="events")
 
     def __str__(self) -> str:
         return f"{self.full_name}({self.user}) ticket for {self.event}"
@@ -22,7 +22,7 @@ class FreeEventRegisterInfo(models.Model):
 
 class Payment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE,null=True, related_name="event")
+    event = models.ForeignKey('core.Event', on_delete=models.CASCADE,null=True, related_name="event")
     amount = models.DecimalField(max_digits=10, blank=True, null=True, decimal_places=2)
     reference = models.CharField(max_length=200, null=True)
     email = models.EmailField()

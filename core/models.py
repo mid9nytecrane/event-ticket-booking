@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 
+#from payment.models import Payment
 import uuid 
 import qrcode
 from io import BytesIO
@@ -186,6 +187,7 @@ class Ticket(models.Model):
     qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
     is_used = models.BooleanField(default=False)
     checked_in_at = models.DateTimeField(null=True, blank=True)
+    payment = models.ForeignKey('payment.Payment', on_delete=models.CASCADE, null=True)
 
 
     def __str__(self) -> str:
