@@ -8,80 +8,72 @@
         {% for event in events %}
        
         <!-- Event Card -->
-            <div class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden  flex flex-col">
+        <div class="group relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col h-[480px]">
 
-            <!-- Card Image -->
-            <div class="relative h-52  overflow-hidden">
+            <!-- Card Image with Overlay -->
+            <div class="relative h-full overflow-hidden">
                 <img src="{{ event.banner.url }}" alt="{{ event.title }}"
-                class="w-full h-full object-cover rounded-t-2xl transform transition-transform duration-500 group-hover:scale-110">
-                <span class="absolute top-2 left-2 text-[10px] sm:text-xs font-semibold 
-                    px-2.5 py-1 rounded-full shadow 
-                    {% if event.event_tag == 'free' %}
-                        bg-green-500/90 text-white
-                    {% else %}
-                        bg-amber-500/90 text-white
-                    {% endif %}">
-                    {{ event.event_tag|title }}
-                </span>
+                class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110">
                 
-            </div>
-
-            <!-- Card Content -->
-            <div class="flex flex-col justify-between grow p-3 md:p-5">
-                <!-- category tag and like and share buttons-->
-                <div class="flex items-center justify-between">
-                    <p class='flex items-center text-sm text-amber-600 gap-1 mb-2'>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
-                        <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd" />
-                        </svg>
-        
-                        <span>{{event.category}}</span>
-                    </p>
+                <!-- Dark gradient overlay -->
+                <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/80"></div>
+                
+                <!-- Top badges -->
+                <div class="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
+                    <span class="text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm
+                        {% if event.event_tag == 'free' %}
+                            bg-green-500/90 text-white
+                        {% else %}
+                            bg-amber-500/90 text-white
+                        {% endif %}">
+                        {{ event.event_tag|title }}
+                    </span>
                     
-                    <div class="flex items-center gap-2 sm:gap-2 md:gap-4">
-                        {% include "core/partials/like_events.html" %}
-
+                    <!-- Action buttons -->
+                    <div class="flex items-center gap-2">
+                        <div class="bg-white/20 backdrop-blur-md rounded-full p-1.5">
+                            {% include "core/partials/like_events.html" %}
+                        </div>
                         <button 
                             @click="shareEvent('{{ event.title }}', '{{ event.description }}', '{{ request.scheme }}://{{ request.get_host }}{% url 'event-detail' event.id %}')"
-                            class="hover:scale-105 transition-all duration-300 text-gray-600 hover:text-blue-600"
+                            class="bg-white/20 backdrop-blur-md rounded-full p-1.5 hover:bg-white/30 transition-all duration-300 text-white"
                             title="Share event">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 sm:size-5 md:size-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
                             </svg>
                         </button>
-
                     </div>
-                    
-                    
-
                 </div>
-                <h3 class="text-normal font-semibold truncate text-gray-900 capitalize mb-1 group-hover:text-amber-600 transition">
-                    {{ event.title }}
-                </h3>
-                <p class="text-gray-500 text-sm mb-3 truncate">
-                    {{ event.description }}
-                </p>
-                <p class="flex items-center gap-1 text-gray-500 text-sm mb-1 truncate">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="size-5">
-                    <path fill-rule="evenodd" d="M18 2.993a.75.75 0 0 0-1.5 0v1.5h-9V2.994a.75.75 0 1 0-1.5 0v1.497h-.752a3 3 0 0 0-3 3v11.252a3 3 0 0 0 3 3h13.5a3 3 0 0 0 3-3V7.492a3 3 0 0 0-3-3H18V2.993Z" clip-rule="evenodd" />
-                    </svg>
-                    {{ event.date }}
-                </p>
-                <p class="flex items-center gap-1 text-gray-500 text-sm mb-2 truncate">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
-                    <path fill-rule="evenodd" d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd" />
-                    </svg>
 
-                    {{ event.location }}
-                </p>
-                
+                <!-- Content overlay at bottom -->
+                <div class="absolute bottom-0 left-0 right-0 p-5 text-white z-10">
+                    <!-- Title and Price -->
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-xl font-bold capitalize leading-tight flex-1 pr-2">
+                            {{ event.title }}
+                        </h3>
+                        <span class="text-xl font-bold text-amber-400 whitespace-nowrap">GH₵{{ event.price }}</span>
+                    </div>
 
-                <!-- price and view link-->
-                <div class="flex justify-between items-center mt-auto">
-                    <span class="text-amber-600 font-bold text-lg">GH₵ {{ event.price }}</span>
+                    <!-- Description -->
+                    <p class="text-white/90 text-sm mb-4 line-clamp-2">
+                        {{ event.description }}
+                    </p>
+
+                    <!-- Tags -->
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-xs px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/30">
+                            {{ event.category }}
+                        </span>
+                        <span class="text-xs px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/30">
+                            {{ event.date }}
+                        </span>
+                    </div>
+
+                    <!-- Reserve Button -->
                     <a href="{% url 'event-detail' event.id %}"
-                        class="text-sm font-medium text-blue-700 hover:text-blue-500 transition">
-                        View Details →
+                        class="block w-full py-3 text-center font-semibold rounded-full bg-white text-gray-900 hover:bg-gray-100 transition-all duration-300 shadow-lg">
+                        Reserve
                     </a>
                 </div>
             </div>

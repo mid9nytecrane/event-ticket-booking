@@ -77,8 +77,7 @@ def event_details(request,pk):
     # exist_ticket = Ticket.objects.filter(event=event, attendee=request.user).first()
     # if exist_ticket:
     #     return render(request, 'booking/event_booked_already.html', {"exist_ticket":exist_ticket})
-    #organizer = get_object_or_404(Organizer, user=event.user)
-    organizer = event.organizer
+    organizer = get_object_or_404(Organizer, user=event.user)
     context = {'event':event, 'organizer':organizer}
     return render(request, 'core/events_details.html',context)
     
