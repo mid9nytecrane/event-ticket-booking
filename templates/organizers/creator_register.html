@@ -6,21 +6,27 @@
     class="min-h-screen">
 
     <!-- Hero Section -->
-    <section class="bg-blue-600 text-white pt-16 pb-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white pt-16 pb-20 overflow-hidden">
+        <!-- Glassmorphic overlay pattern -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- message -->
             {% if messages %}
                 {% for message in messages %}
-                    <div class="mb-4 mt-2 p-4 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-800{% elif message.tags == 'error' %}bg-red-100 text-red-800{% else %}bg-blue-100 text-blue-800{% endif %}">
+                    <div class="mb-4 mt-2 p-4 rounded-xl backdrop-blur-md bg-white/20 border border-white/30 {% if message.tags == 'success' %}text-green-100{% elif message.tags == 'error' %}text-red-100{% else %}text-blue-100{% endif %}">
                         {{ message }}
                     </div>
                 {% endfor %}
             {% endif %}
             <div class="text-center">
-                <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 drop-shadow-lg">
                     Turn Your Events Into Revenue
                 </h1>
-                <p class="text-xl text-purple-100 mb-8 max-w-3xl mx-auto">
+                <p class="text-xl text-purple-100 mb-8 max-w-3xl mx-auto drop-shadow-md">
                     Host events on EventTribe, earn 95% of ticket sales, and get paid directly to your mobile money account within 24 hours after your event.
                 </p>
                 
@@ -29,16 +35,22 @@
                 
                     <button  type="button"
                             onclick="already_creator.showModal()"
-                            class="bg-white text-purple-600 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-gray-100 transition duration-300 shadow-lg">
+                            class="relative group">
+                        <div class="absolute inset-0 bg-white rounded-xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
+                        <span class="relative inline-block bg-white text-purple-600 px-8 py-4 rounded-xl text-lg font-semibold hover:scale-105 transition-all duration-300 shadow-2xl">
                             Register as Event Creator
+                        </span>
                     </button>
 
                 {% else %}
 
                     <button  type="button"
                             onclick="registration_form.showModal()"
-                            class="bg-white text-purple-600 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-gray-100 transition duration-300 shadow-lg">
+                            class="relative group">
+                        <div class="absolute inset-0 bg-white rounded-xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
+                        <span class="relative inline-block bg-white text-purple-600 px-8 py-4 rounded-xl text-lg font-semibold hover:scale-105 transition-all duration-300 shadow-2xl">
                             Register as Event Creator
+                        </span>
                     </button>
                 {% endif %}
                 
@@ -53,111 +65,126 @@
     </section>
 
 <!-- How It Works -->
-<section class="py-16 bg-white">
+<section class="py-16 bg-gradient-to-br from-gray-50 to-blue-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
             How Event Creation Works
         </h2>
         
         <div class="grid md:grid-cols-3 gap-8">
-            <div class="text-center">
-                <div class="w-20 h-20 mx-auto rounded-full bg-purple-100 flex items-center justify-center mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-10">
-                    <path d="M12.75 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM8.25 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9.75 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM10.5 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12.75 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM14.25 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" />
-                    <path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z" clip-rule="evenodd" />
-                    </svg>
-
+            <div class="relative group">
+                <div class="absolute inset-0 bg-gradient-to-br from-purple-400 to-blue-500 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
+                <div class="relative backdrop-blur-md bg-white/80 border border-white/40 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 text-center">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center mb-6 shadow-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-10 text-white">
+                        <path d="M12.75 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM8.25 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9.75 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM10.5 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12.75 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM14.25 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" />
+                        <path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Create Your Event</h3>
+                    <p class="text-gray-600">Set up your event with details, ticket types, pricing, and dates in minutes.</p>
                 </div>
-                <h3 class="text-xl font-semibold mb-3">Create Your Event</h3>
-                <p class="text-gray-600">Set up your event with details, ticket types, pricing, and dates in minutes.</p>
             </div>
             
-            <div class="text-center">
-                <div class="w-20 h-20 mx-auto rounded-full bg-purple-100 flex items-center justify-center mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-10">
-                    <path fill-rule="evenodd" d="M1.5 6.375c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v3.026a.75.75 0 0 1-.375.65 2.249 2.249 0 0 0 0 3.898.75.75 0 0 1 .375.65v3.026c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 0 1 1.5 17.625v-3.026a.75.75 0 0 1 .374-.65 2.249 2.249 0 0 0 0-3.898.75.75 0 0 1-.374-.65V6.375Zm15-1.125a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0V6a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0v.75a.75.75 0 0 0 1.5 0v-.75Zm-.75 3a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0v-.75a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0V18a.75.75 0 0 0 1.5 0v-.75ZM6 12a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H6.75A.75.75 0 0 1 6 12Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clip-rule="evenodd" />
-                    </svg>
-
+            <div class="relative group">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
+                <div class="relative backdrop-blur-md bg-white/80 border border-white/40 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 text-center">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-blue-400 to-cyan-600 flex items-center justify-center mb-6 shadow-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-10 text-white">
+                        <path fill-rule="evenodd" d="M1.5 6.375c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v3.026a.75.75 0 0 1-.375.65 2.249 2.249 0 0 0 0 3.898.75.75 0 0 1 .375.65v3.026c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 0 1 1.5 17.625v-3.026a.75.75 0 0 1 .374-.65 2.249 2.249 0 0 0 0-3.898.75.75 0 0 1-.374-.65V6.375Zm15-1.125a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0V6a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0v.75a.75.75 0 0 0 1.5 0v-.75Zm-.75 3a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0v-.75a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0V18a.75.75 0 0 0 1.5 0v-.75ZM6 12a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H6.75A.75.75 0 0 1 6 12Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Sell Tickets</h3>
+                    <p class="text-gray-600">Promote your event and sell tickets through our secure platform.</p>
                 </div>
-                <h3 class="text-xl font-semibold mb-3">Sell Tickets</h3>
-                <p class="text-gray-600">Promote your event and sell tickets through our secure platform.</p>
             </div>
             
-            <div class="text-center">
-                <div class="w-20 h-20 mx-auto rounded-full bg-purple-100 flex items-center justify-center mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-10">
-                    <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
-                    <path fill-rule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clip-rule="evenodd" />
-                    </svg>
-
+            <div class="relative group">
+                <div class="absolute inset-0 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
+                <div class="relative backdrop-blur-md bg-white/80 border border-white/40 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 text-center">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center mb-6 shadow-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-10 text-white">
+                        <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
+                        <path fill-rule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Get Paid</h3>
+                    <p class="text-gray-600">Receive 95% of ticket sales to your mobile money within 24 hours after event.</p>
                 </div>
-                <h3 class="text-xl font-semibold mb-3">Get Paid</h3>
-                <p class="text-gray-600">Receive 95% of ticket sales to your mobile money within 24 hours after event.</p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Revenue Breakdown -->
-<section class="py-16 bg-gray-50">
+<section class="py-16 bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
             Transparent Revenue Sharing
         </h2>
         
-        <div class="bg-white rounded-2xl shadow-xl p-8 max-w-4xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-8 items-center">
-                <div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">You Earn 95% of Every Ticket</h3>
-                    <p class="text-gray-600 mb-6">
-                        We believe event creators should keep the majority of their earnings. That's why we only take a small 5% platform fee.
-                    </p>
-                    
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center p-4 bg-green-50 rounded-lg">
-                            <div>
-                                <p class="font-medium text-gray-900">Your Earnings</p>
-                                <p class="text-sm text-gray-600">95% of ticket price</p>
-                            </div>
-                            <span class="text-2xl font-bold text-green-600">95%</span>
-                        </div>
+        <div class="relative group">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
+            <div class="relative backdrop-blur-xl bg-white/70 border border-white/50 rounded-3xl shadow-2xl p-8 max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">You Earn 95% of Every Ticket</h3>
+                        <p class="text-gray-600 mb-6">
+                            We believe event creators should keep the majority of their earnings. That's why we only take a small 5% platform fee.
+                        </p>
                         
-                        <div class="flex justify-between items-center p-4 bg-blue-50 rounded-lg">
-                            <div>
-                                <p class="font-medium text-gray-900">Platform Fee</p>
-                                <p class="text-sm text-gray-600">Covers payment processing & support</p>
+                        <div class="space-y-4">
+                            <div class="relative group/card">
+                                <div class="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-500 rounded-xl blur-md opacity-20 group-hover/card:opacity-30 transition-opacity"></div>
+                                <div class="relative flex justify-between items-center p-4 backdrop-blur-md bg-green-50/80 border border-green-200/50 rounded-xl shadow-lg">
+                                    <div>
+                                        <p class="font-medium text-gray-900">Your Earnings</p>
+                                        <p class="text-sm text-gray-600">95% of ticket price</p>
+                                    </div>
+                                    <span class="text-2xl font-bold text-green-600">95%</span>
+                                </div>
                             </div>
-                            <span class="text-2xl font-bold text-blue-600">5%</span>
+                            
+                            <div class="relative group/card">
+                                <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-xl blur-md opacity-20 group-hover/card:opacity-30 transition-opacity"></div>
+                                <div class="relative flex justify-between items-center p-4 backdrop-blur-md bg-blue-50/80 border border-blue-200/50 rounded-xl shadow-lg">
+                                    <div>
+                                        <p class="font-medium text-gray-900">Platform Fee</p>
+                                        <p class="text-sm text-gray-600">Covers payment processing & support</p>
+                                    </div>
+                                    <span class="text-2xl font-bold text-blue-600">5%</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="bg-gray-900 text-white rounded-xl p-8">
-                    <h4 class="text-xl font-bold mb-6 text-center">Example Payout</h4>
-                    <div class="space-y-6">
-                        <div class="text-center">
-                            <p class="text-gray-300 mb-2">100 tickets sold at</p>
-                            <p class="text-4xl font-bold">₵50 <span class="text-lg text-gray-300">each</span></p>
-                        </div>
-                        
-                        <div class="space-y-3">
-                            <div class="flex justify-between">
-                                <span>Total Revenue</span>
-                                <span class="font-semibold">₵5,000</span>
+                    
+                    <div class="backdrop-blur-md bg-gray-900/90 border border-gray-700/50 text-white rounded-2xl p-8 shadow-2xl">
+                        <h4 class="text-xl font-bold mb-6 text-center">Example Payout</h4>
+                        <div class="space-y-6">
+                            <div class="text-center">
+                                <p class="text-gray-300 mb-2">100 tickets sold at</p>
+                                <p class="text-4xl font-bold">₵50 <span class="text-lg text-gray-300">each</span></p>
                             </div>
-                            <div class="flex justify-between text-gray-300">
-                                <span>Platform Fee (5%)</span>
-                                <span>- ₵250</span>
+                            
+                            <div class="space-y-3">
+                                <div class="flex justify-between">
+                                    <span>Total Revenue</span>
+                                    <span class="font-semibold">₵5,000</span>
+                                </div>
+                                <div class="flex justify-between text-gray-300">
+                                    <span>Platform Fee (5%)</span>
+                                    <span>- ₵250</span>
+                                </div>
+                                <div class="border-t border-gray-700 pt-3 flex justify-between text-lg font-bold">
+                                    <span>Your Payment</span>
+                                    <span class="text-green-400">₵4,750</span>
+                                </div>
                             </div>
-                            <div class="border-t border-gray-700 pt-3 flex justify-between text-lg font-bold">
-                                <span>Your Payment</span>
-                                <span class="text-green-400">₵4,750</span>
+                            
+                            <div class="text-center text-sm text-gray-300">
+                                <i class="fas fa-clock mr-1"></i>
+                                Sent to your mobile money within 24 hours after event ends
                             </div>
-                        </div>
-                        
-                        <div class="text-center text-sm text-gray-300">
-                            <i class="fas fa-clock mr-1"></i>
-                            Sent to your mobile money within 24 hours after event ends
                         </div>
                     </div>
                 </div>
@@ -371,29 +398,35 @@
 </section>
 
 <!-- CTA Section -->
-<section class="py-16 bg-[#344E41]">
+<section class="py-16 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl font-bold text-white mb-6">
+        <h2 class="text-3xl font-bold text-white mb-6 drop-shadow-lg">
             Ready to Start Creating Events?
         </h2>
-        <p class="text-xl text-purple-100 mb-8">
-            Join thousands of event creators who trust EventHub to handle their ticketing and payments.
+        <p class="text-xl text-purple-100 mb-8 drop-shadow-md">
+            Join thousands of event creators who trust EventTribe to handle their ticketing and payments.
         </p>
         {% if request.user|has_group:"organizers" %}
             <button type='button'
                     @click="already_creator.showModal()"
-                    class="bg-white text-purple-600 px-10 py-4 rounded-xl text-lg font-semibold hover:bg-gray-100 transition duration-300 shadow-lg">
-                <i class="fas fa-user-plus mr-2"></i> Register Now
+                    class="relative group inline-block">
+                <div class="absolute inset-0 bg-white rounded-xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
+                <span class="relative inline-flex items-center bg-white text-purple-600 px-10 py-4 rounded-xl text-lg font-semibold hover:scale-105 transition-all duration-300 shadow-2xl">
+                    <i class="fas fa-user-plus mr-2"></i> Register Now
+                </span>
             </button>
             
         {% else %}
             <button type='button'
                     @click="registration_form.showModal()"
-                    class="bg-white text-purple-600 px-10 py-4 rounded-xl text-lg font-semibold hover:bg-gray-100 transition duration-300 shadow-lg">
-                <i class="fas fa-user-plus mr-2"></i> Register Now
+                    class="relative group inline-block">
+                <div class="absolute inset-0 bg-white rounded-xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
+                <span class="relative inline-flex items-center bg-white text-purple-600 px-10 py-4 rounded-xl text-lg font-semibold hover:scale-105 transition-all duration-300 shadow-2xl">
+                    <i class="fas fa-user-plus mr-2"></i> Register Now
+                </span>
             </button>
         {% endif %}
-        <p class="text-purple-200 mt-4">
+        <p class="text-white/90 mt-4 drop-shadow-md">
             No upfront costs. You only pay when you sell tickets.
         </p>
     </div>

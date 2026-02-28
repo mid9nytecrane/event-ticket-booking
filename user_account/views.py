@@ -37,9 +37,20 @@ class Custom_LoginView(LoginView):
 def user_profile(request):
     userprofile = UserProfile.objects.filter(user=request.user)
     profile = UserProfile.objects.get(user=request.user)
+    
+    # Check if user is an organizer and get their momo number
+    organizer_momo = None
+    try:
+        from core.models import Organizer
+        organizer = Organizer.objects.get(user=request.user)
+        organizer_momo = organizer.momo_numb
+    except Organizer.DoesNotExist:
+        pass
+    
     context  = {
         'userprofile':userprofile,
-        'form': ProfileUpdateForm(instance=profile)
+        'form': ProfileUpdateForm(instance=profile),
+        'organizer_momo': organizer_momo,
     }
     return render(request, 'core/auth/user_profile.html', context)
 

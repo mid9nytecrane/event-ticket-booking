@@ -189,6 +189,33 @@
         });
         </script>
 
+     <!-- Event Share Functionality -->
+     <script>
+        function shareEvent(title, description, url) {
+            // Check if Web Share API is supported
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    text: `Check out this event: ${description}`,
+                    url: url
+                })
+                .then(() => console.log('Event shared successfully'))
+                .catch((error) => console.log('Error sharing event:', error));
+            } else {
+                // Fallback: Copy link to clipboard
+                navigator.clipboard.writeText(url)
+                    .then(() => {
+                        alert('Event link copied to clipboard!');
+                    })
+                    .catch((error) => {
+                        console.error('Failed to copy link:', error);
+                        // Final fallback: show the URL
+                        prompt('Copy this link to share:', url);
+                    });
+            }
+        }
+     </script>
+
 
 
     

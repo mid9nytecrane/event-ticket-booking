@@ -232,10 +232,15 @@
             <hr class='border-gray-300'>
 
             <!-- Become a creator -->
-            <a href="{% url 'organizers:register-creator'  %}">
-
-              <button class="w-full py-3 rounded-full bg-[#E4C584] font-semibold text-gray-800 hover:bg-gray-300 transition shadow-sm">
-                  Become a creator
+            <a href="{% url 'organizers:register-creator'  %}" class="relative group block">
+              <div class="absolute inset-0 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 rounded-full blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-300"></div>
+              <button class="relative w-full py-3 rounded-full backdrop-blur-md bg-gradient-to-r from-amber-300/80 to-yellow-400/80 border border-amber-200/50 font-bold text-gray-900 hover:scale-105 hover:shadow-2xl transition-all duration-300 shadow-lg">
+                  <span class="flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                      <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+                    </svg>
+                    Become a creator
+                  </span>
               </button>
             </a>
 
