@@ -195,10 +195,10 @@
           <!-- Account Navigation -->
            <nav class='space-y-2'>
             {% if request.user.is_authenticated %}
-            <!-- Sign Out Button -->
+            <!-- Sign Out Button - Red -->
             <a href="{% url 'account_logout'%}" class="relative group block">
-              <div class="absolute inset-0 bg-gradient-to-r from-red-400 via-orange-400 to-red-500 rounded-full blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-300"></div>
-              <button class="relative w-full py-3 rounded-full backdrop-blur-md bg-gradient-to-r from-red-300/80 to-orange-400/80 border border-red-200/50 font-bold text-gray-900 hover:scale-105 hover:shadow-2xl transition-all duration-300 shadow-lg">
+              <div class="absolute inset-0 bg-gradient-to-r from-red-500 via-red-600 to-red-700 rounded-full blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-300"></div>
+              <button class="relative w-full py-3 rounded-full backdrop-blur-md bg-gradient-to-r from-red-500/80 to-red-600/80 border border-red-300/50 font-bold text-white hover:scale-105 hover:shadow-2xl transition-all duration-300 shadow-lg">
                 <span class="flex items-center justify-center gap-2">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
                     <path fill-rule="evenodd" d="M7.5 3.75A1.5 1.5 0 0 0 6 5.25v13.5a1.5 1.5 0 0 0 1.5 1.5h6a1.5 1.5 0 0 0 1.5-1.5V15a.75.75 0 0 1 1.5 0v3.75a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V5.25a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V9A.75.75 0 0 1 15 9V5.25a1.5 1.5 0 0 0-1.5-1.5h-6Zm10.72 4.72a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 1 1-1.06-1.06l1.72-1.72H9a.75.75 0 0 1 0-1.5h10.94l-1.72-1.72a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
@@ -208,10 +208,10 @@
               </button>
             </a>
              {% else %}
-             <!-- Sign In Button -->
+             <!-- Sign In Button - Blue -->
              <a href="{% url 'account_login'%}" class="relative group block">
-               <div class="absolute inset-0 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 rounded-full blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-300"></div>
-               <button class="relative w-full py-3 rounded-full backdrop-blur-md bg-gradient-to-r from-blue-300/80 to-cyan-400/80 border border-blue-200/50 font-bold text-gray-900 hover:scale-105 hover:shadow-2xl transition-all duration-300 shadow-lg">
+               <div class="absolute inset-0 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 rounded-full blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-300"></div>
+               <button class="relative w-full py-3 rounded-full backdrop-blur-md bg-gradient-to-r from-blue-500/80 to-blue-600/80 border border-blue-300/50 font-bold text-white hover:scale-105 hover:shadow-2xl transition-all duration-300 shadow-lg">
                  <span class="flex items-center justify-center gap-2">
                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
                      <path fill-rule="evenodd" d="M7.5 3.75A1.5 1.5 0 0 0 6 5.25v13.5a1.5 1.5 0 0 0 1.5 1.5h6a1.5 1.5 0 0 0 1.5-1.5V15a.75.75 0 0 1 1.5 0v3.75a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V5.25a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V9A.75.75 0 0 1 15 9V5.25a1.5 1.5 0 0 0-1.5-1.5h-6Zm5.03 4.72a.75.75 0 0 1 0 1.06l-1.72 1.72h10.94a.75.75 0 0 1 0 1.5H10.81l1.72 1.72a.75.75 0 1 1-1.06 1.06l-3-3a.75.75 0 0 1 0-1.06l3-3a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
@@ -221,10 +221,10 @@
                </button>
              </a>
 
-             <!-- Sign Up Button -->
+             <!-- Sign Up Button - Blue -->
              <a href="{% url 'account_signup'%}" class="relative group block">
-               <div class="absolute inset-0 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-500 rounded-full blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-300"></div>
-               <button class="relative w-full py-3 rounded-full backdrop-blur-md bg-gradient-to-r from-purple-300/80 to-pink-400/80 border border-purple-200/50 font-bold text-gray-900 hover:scale-105 hover:shadow-2xl transition-all duration-300 shadow-lg">
+               <div class="absolute inset-0 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 rounded-full blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-300"></div>
+               <button class="relative w-full py-3 rounded-full backdrop-blur-md bg-gradient-to-r from-blue-500/80 to-blue-600/80 border border-blue-300/50 font-bold text-white hover:scale-105 hover:shadow-2xl transition-all duration-300 shadow-lg">
                  <span class="flex items-center justify-center gap-2">
                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
                      <path fill-rule="evenodd" d="M7.5 3.75A1.5 1.5 0 0 0 6 5.25v13.5a1.5 1.5 0 0 0 1.5 1.5h6a1.5 1.5 0 0 0 1.5-1.5V15a.75.75 0 0 1 1.5 0v3.75a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V5.25a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V9A.75.75 0 0 1 15 9V5.25a1.5 1.5 0 0 0-1.5-1.5h-6Zm5.03 4.72a.75.75 0 0 1 0 1.06l-1.72 1.72h10.94a.75.75 0 0 1 0 1.5H10.81l1.72 1.72a.75.75 0 1 1-1.06 1.06l-3-3a.75.75 0 0 1 0-1.06l3-3a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
