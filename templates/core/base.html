@@ -52,10 +52,6 @@
         }" 
     x-init="console.log(window.pageYOffset > 60 ? scrollFromTop = true : scrollFromTop = false)"
     @scroll.window="console.log(window.pageYOffset > 60 ? scrollFromTop = true : scrollFromTop = false)"
-    :class="{
-        'overflow-hidden': navbarOpen,
-        'overflow-auto': ! navbarOpen,
-    }"
     >
 
     {% include "core/partials/navbar.html" %}
