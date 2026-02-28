@@ -78,6 +78,71 @@
         </table>
     </div>
     
-    <!-- Pagination -->
-    {% include "master_admin/partials/pagination.html" %}
+    <!-- Pagination for Attendees -->
+    <div class="bg-linear-to-r from-gray-50 to-indigo-50 px-8 py-6 border-t border-gray-200">
+        {% if attendees_list %}
+            <div class="flex items-center justify-between">
+                <div class="text-sm text-gray-600">
+                    Showing page <span class="font-bold text-gray-800">{{ attendees_list.number }}</span> of <span class="font-bold text-gray-800">{{ attendees_list.paginator.num_pages }}</span>
+                    <span class="ml-2">({{ attendees_list.paginator.count }} total attendees)</span>
+                </div>
+                <div class="flex space-x-3">
+                    <!-- Previous Button -->
+                    {% if attendees_list.has_previous %}
+                        <a href="?page={{ attendees_list.previous_page_number }}">
+                            <button class="inline-flex items-center px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-400 hover:shadow-sm transition-all duration-200">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>
+                                Previous
+                            </button>
+                        </a>
+                    {% else %}
+                        <button class="inline-flex items-center px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-400 bg-gray-100 cursor-not-allowed" disabled>
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                            </svg>
+                            Previous
+                        </button>
+                    {% endif %}
+
+                    <!-- Page Numbers -->
+                    <div class="hidden sm:flex space-x-2">
+                        {% for num in attendees_list.paginator.page_range %}
+                            {% if attendees_list.number == num %}
+                                <span class="inline-flex items-center px-4 py-2.5 border-2 border-indigo-600 rounded-lg text-sm font-bold text-indigo-600 bg-indigo-50">
+                                    {{ num }}
+                                </span>
+                            {% elif num > attendees_list.number|add:'-3' and num < attendees_list.number|add:'3' %}
+                                <a href="?page={{ num }}">
+                                    <button class="inline-flex items-center px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-400 transition-all duration-200">
+                                        {{ num }}
+                                    </button>
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <!-- Next Button -->
+                    {% if attendees_list.has_next %}
+                        <a href="?page={{ attendees_list.next_page_number }}">
+                            <button class="inline-flex items-center px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-400 hover:shadow-sm transition-all duration-200">
+                                Next
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </a>
+                    {% else %}
+                        <button class="inline-flex items-center px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-400 bg-gray-100 cursor-not-allowed" disabled>
+                            Next
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
 </div>
